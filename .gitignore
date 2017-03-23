@@ -1,3 +1,7 @@
+# Log and Issues files
+*.log
+*.issues
+
 # Python created files
 __pycache__
 *.pyc
