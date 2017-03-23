@@ -2,28 +2,42 @@ import os, time, datetime, csv, sys, json
 import argparse
 from Bio import SeqIO
 
-parser = argparse.ArgumentParser()
-parser.add_argument('--datatype', default='sequence', help='type of data being input; default is \"sequence\", other options are \"virus\" or \"titer\"')
-
-parser.add_argument('--path', default='data/', help='path to input file, default is \"data/\"')
-parser.add_argument('--outpath', default='output/', help='path to write output files; default is \"output/\"')
-parser.add_argument('-i', '--infile', default=None, help='filename for file to be processed')
-
 class Dataset:
+    '''
+    Defines 'Dataset' class, containing procedures for uploading documents from un-cleaned FASTA files
+    and turning them into rich JSONs that can be:
+        - Uploaded to the fauna database
+        - imported directly by augur (does not take JSONs at this time, instead needs FASTAs)
+
+    Each instance of a Dataset contains:
+        1. metadata: list of high level information that governs how the data contained in the Dataset
+        are treated by Dataset cleaning functions (TODO: Make these in external scripts as a library of
+        functions that can be imported by the Dataset), as well as the exact location in the fauna
+        database where the dataset should be stored (TODO: specify in a markdown file somewhere exactly
+        what the fauna db should look like).
+
+        ex. [FIGURE OUT WHAT THIS WILL LOOK LIKE]
+
+        2. dataset: A list of dictionaries, each one identical in architecture representing 'documents'
+        that are contained within the Dataset. These dictionaries represent both lower-level metadata,
+        as well as the key information (sequence, titer, etc) that is being stored/run in augur.
+
+        ex. [ {date: 2012-06-11, location: Idaho, sequence: GATTACA}, {date: 2016-06-16, location: Oregon, sequence: CAGGGCCTCCA}, {date: 1985-02-22, location: Brazil, sequence: BANANA} ]
+    '''
     def __init__(self):
         # Wrappers for data
         self.metadata = []
         self.dataset = []
 
         # Log files to cut down on verbose output
-        # TODO: eventually make this an argparse option
         self.date = time.strftime("%Y-%m-%d")
-        print(self.date)
         self.log = self.date + '-fauna.log'
-        print(self.log)
+        print("Run information can be found in " + self.log)
         self.issues = self.date + '-fauna.issues'
+        print("Issues that arise can be found in "+ self.issues)
 
         # TODO: make this accurate to what our most common input looks like
+        # TODO: ask trevor about this
         self.fasta_headers = ['strain', 'virus', 'gisaid_id', 'date', 'region', 'country', 'division', 'city', 'passage', 'whatever']
         self.index_fields = ['strain', 'date', 'gisaid_id', 'whatever']
 
@@ -71,3 +85,12 @@ class Dataset:
 
     def write(self, format):
         return
+
+if name=="__main__":
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--datatype', default='sequence', help='type of data being input; default is \"sequence\", other options are \"virus\" or \"titer\"')
+
+    parser.add_argument('--path', default='data/', help='path to input file, default is \"data/\"')
+    parser.add_argument('--outpath', default='output/', help='path to write output files; default is \"output/\"')
+    parser.add_argument('-i', '--infile', default=None, help='filename for file to be processed')
