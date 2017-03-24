@@ -71,10 +71,10 @@ class Dataset:
 
                 out.append({index : data})
                 # Format properly
-                print(out)
+        print(out)
 
-                return
         # Merge the formatted dictionaries to self.dataset()
+        self.dataset.append(out)
 
     def read_xml(self):
         '''
@@ -85,14 +85,27 @@ class Dataset:
     def merge(self, data):
         return
 
-    def write(self, format):
-        return
+    def write(self, out_type, out_file):
+        # TODO: lol, this didn't work, worth a shot
+        if out_type == 'json':
+            with open(out_file, 'w+') as f:
+                json.dump(self.dataset, f)
 
-if name=="__main__":
+if __name__=="__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--datatype', default='sequence', help='type of data being input; default is \"sequence\", other options are \"virus\" or \"titer\"')
-
     parser.add_argument('--path', default='data/', help='path to input file, default is \"data/\"')
     parser.add_argument('--outpath', default='output/', help='path to write output files; default is \"output/\"')
     parser.add_argument('-i', '--infile', default=None, help='filename for file to be processed')
+    parser.add_argument('--header', default=None, type=str, nargs='*', help='specify the order of fasta header elements in a string: TODO: FIGURE OUT WHAT THE ACCEPTED HEADERS ARE. x indicates a field to skip. ex: ndxlsx for >name|date|exclude|location|state|exclude')
+
+    args = parser.parse_args()
+
+    D = Dataset()
+    if args.datatype == 'sequence':
+        fasta = args.path + args.infile
+        D.read_fasta(fasta)
+
+    testout = args.outpath + 'test.json'
+    D.write('json', testout)
