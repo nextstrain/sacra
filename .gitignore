@@ -2,6 +2,10 @@
 *.log
 *.issues
 
+# Data
+data/*
+output/*
+
 # Python created files
 __pycache__
 *.pyc
