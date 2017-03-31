@@ -1,3 +1,4 @@
+import re
 # Cleaning functions that will clean the data in a dataset object.
 # These are kept separate from class functions to make it easier for the user to
 # add their own functions specific to their own data.
@@ -5,18 +6,7 @@
 # Currently all cleaning functions are from fauna1.0
 # in the process of updating, will remove TODO flag from completed functions
 
-def correct_strain_format(self, strain, original_strain):
-    # TODO
-    # Okay Patterns: B/Brisbane/46/2015, A/HongKong/1968, A/Zambia/13/176/2013 or A/Cologne/Germany/12/2009 or A/Algeria/G0164/15/2015 or A/India/Delhi/DB106/2009, A/Cameroon/LEID/01/11/1387/2011, A/India/M/Enc/1/2003
-    if re.match(r'[A|B]/[A-Za-z-]+/([A-Za-z0-9_-]+/)*[0-9]{4}$', strain) or re.match(r'[A|B]/[A-Za-z-]+/([A-Za-z0-9_-]+/){2}[0-9]{4}$', strain)\
-            or re.match(r'[A|B]/([A-Za-z-]+/){2}([0-9]+/){3}[0-9]{4}$', strain):
-        return True
-    else:
-        print("This strain name was not in the correct format and will be filtered out", strain, original_strain)
-        self.fix.add(strain)
-
-def fix_casing(self, doc):
-    # TODO
+def fix_casing(doc):
     '''
     fix gisaid specific fields casing
     '''

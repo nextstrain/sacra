@@ -23,27 +23,25 @@ class Dataset:
 
         ex. [ {date: 2012-06-11, location: Idaho, sequence: GATTACA}, {date: 2016-06-16, location: Oregon, sequence: CAGGGCCTCCA}, {date: 1985-02-22, location: Brazil, sequence: BANANA} ]
     '''
-    def __init__(self):
+    def __init__(self, db, virus, subtype=None):
         # Wrappers for data, described in class description
-        self.metadata = []
+        self.metadata = {'db': db, 'virus': virus, 'subtype': subtype}
         self.dataset = []
 
         # Log files to cut down on verbose output
-        self.date = time.strftime("%Y-%m-%d")
-        self.log = 'log/' + self.date + '-fauna.log'
-        self.issues = 'log/' + self.date + '-fauna.issues'
+        self.log = 'log/' + time.strftime("%Y-%m-%d") + '-fauna.log'
+        self.issues = 'log/' + time.strftime("%Y-%m-%d") + '-fauna.issues'
 
         print("Run information can be found in " + self.log)
         print("Issues that arise can be found in "+ self.issues)
 
-        # TODO: make this accurate to what our most common input looks like
-        # TODO: ask trevor about this
-        self.fasta_headers = ['strain', 'virus', 'gisaid_id', 'date', 'region', 'country', 'division', 'city', 'passage', 'whatever']
+        # Deafault is most-used GISAID fasta headers, as described in nextstrain documentation
+        self.fasta_headers = ['accession', 'strain', 'isolate_id', 'locus', 'passage', 'submitting_lab']
         # Define fields that will be used to construct unique indices in the fauna database
         self.index_fields = ['strain', 'date', 'gisaid_id', 'whatever']
 
 
-    def read_fasta(self, infile, headers=['strain', 'accession', 'date', 'host', 'country', 'division']):
+    def read_fasta(self, infile):
         '''
         Take a fasta file and a list of information contained in its headers
         and build a dataset object from it.
@@ -67,12 +65,13 @@ class Dataset:
                 index = ''
                 for ind in self.index_fields:
                     index += data[ind]
-
                 out.append({index : data})
                 # Format properly
         print(out)
 
         # Merge the formatted dictionaries to self.dataset()
+        for doc in out:
+            self.merge(doc)
         # TODO: Find a way to resolve index collisions
         self.dataset.append(out)
 
@@ -83,7 +82,16 @@ class Dataset:
         return
 
     def merge(self, data):
-        return
+        '''
+        Make sure all new entries to the dataset
+        '''
+        match = True
+        for key in data:
+            if key not in self.dataset[0].keys():
+                print('Error adding ' + key + 'to dataset, keys don\'t match.')
+                match = False
+        if match:
+            self.dataset.append(data)
 
     def write(self, out_type, out_file):
         # TODO: lol, this didn't work, worth a shot
