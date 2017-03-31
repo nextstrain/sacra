@@ -5,6 +5,7 @@
 # Data
 data/*
 output/*
+log/*
 
 # Python created files
 __pycache__

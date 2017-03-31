@@ -30,8 +30,8 @@ class Dataset:
 
         # Log files to cut down on verbose output
         self.date = time.strftime("%Y-%m-%d")
-        self.log = self.date + '-fauna.log'
-        self.issues = self.date + '-fauna.issues'
+        self.log = 'log/' + self.date + '-fauna.log'
+        self.issues = 'log/' + self.date + '-fauna.issues'
 
         print("Run information can be found in " + self.log)
         print("Issues that arise can be found in "+ self.issues)
@@ -91,7 +91,5 @@ class Dataset:
             with open(out_file, 'w+') as f:
                 json.dump(self.dataset, f)
 
-
-
-    testout = args.outpath + 'test.json'
-    D.write('json', testout)
+    testout = args.outpath + 'output/test.json'
+    D.write('json', testout, tabular=1)
