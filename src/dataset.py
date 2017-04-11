@@ -23,9 +23,9 @@ class Dataset:
 
         ex. [ {date: 2012-06-11, location: Idaho, sequence: GATTACA}, {date: 2016-06-16, location: Oregon, sequence: CAGGGCCTCCA}, {date: 1985-02-22, location: Brazil, sequence: BANANA} ]
     '''
-    def __init__(self, db, virus, subtype=None):
+    def __init__(self, dtype, virus, subtype=None):
         # Wrappers for data, described in class description
-        self.metadata = {'db': db, 'virus': virus, 'subtype': subtype}
+        self.metadata = {'dtype': dtype, 'virus': virus, 'subtype': subtype}
         self.dataset = []
 
         # Log files to cut down on verbose output
@@ -37,6 +37,11 @@ class Dataset:
 
         # Deafault is most-used GISAID fasta headers, as described in nextstrain documentation
         self.fasta_headers = ['accession', 'strain', 'isolate_id', 'locus', 'passage', 'submitting_lab']
+        self.titer_headers = []
+        if dtype == 'sequence':
+            seed = { header : None for header in self.fasta_headers }
+            seed['sequence'] = None
+            self.dataset.append(seed)
         # Define fields that will be used to construct unique indices in the fauna database
         self.index_fields = ['strain', 'date', 'gisaid_id', 'whatever']
 
@@ -56,7 +61,8 @@ class Dataset:
 
             for record in SeqIO.parse(f, "fasta"):
                 data = {}
-                head = record.id.split('|')
+                head = record.description.replace(" ","").split('|')
+                print("head "+"".join(head))
                 for i in range(len(self.fasta_headers)):
                     data[self.fasta_headers[i]] = head[i]
                     data['sequence'] = str(record.seq)
@@ -64,10 +70,12 @@ class Dataset:
         # Try/except clause goes here
                 index = ''
                 for ind in self.index_fields:
-                    index += data[ind]
-                out.append({index : data})
+                    try:
+                        index += data[ind]
+                    except:
+                        pass
+                out.append(data)
                 # Format properly
-        print(out)
 
         # Merge the formatted dictionaries to self.dataset()
         for doc in out:
@@ -83,21 +91,24 @@ class Dataset:
 
     def merge(self, data):
         '''
-        Make sure all new entries to the dataset
+        Make sure all new entries to the dataset have matching keys
         '''
         match = True
         for key in data:
             if key not in self.dataset[0].keys():
-                print('Error adding ' + key + 'to dataset, keys don\'t match.')
+                print('Error adding ' + key + ' to dataset, keys don\'t match.')
                 match = False
+                return
+
         if match:
             self.dataset.append(data)
 
     def write(self, out_type, out_file):
-        # TODO: lol, this didn't work, worth a shot
+        # remove seed
+        temp = self.dataset[-1]
+        self.dataset[0] = temp
+        self.dataset.pop()
+
         if out_type == 'json':
             with open(out_file, 'w+') as f:
-                json.dump(self.dataset, f)
-
-    testout = args.outpath + 'output/test.json'
-    D.write('json', testout, tabular=1)
+                json.dump(self.dataset, f, indent=1)
