@@ -6,6 +6,12 @@ import re
 # Currently all cleaning functions are from fauna1.0
 # in the process of updating, will remove TODO flag from completed functions
 
+def name_fix(doc):
+    if 'strain' in doc:
+        doc['strain'], doc['gisaid_strain'] = fix_name(doc['strain'])
+    else:
+        print("Missing strain name!")
+
 def fix_casing(doc):
     '''
     fix gisaid specific fields casing
@@ -19,6 +25,16 @@ def fix_casing(doc):
     if 'accession' in doc and doc['accession'] is not None:
         doc['accession'] = 'EPI' + doc['accession']
 
+
+
+
+
+
+
+
+
+
+####################################################
 def fix_age(self, doc):
     # TODO
     '''

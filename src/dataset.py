@@ -23,59 +23,44 @@ class Dataset:
 
         ex. [ {date: 2012-06-11, location: Idaho, sequence: GATTACA}, {date: 2016-06-16, location: Oregon, sequence: CAGGGCCTCCA}, {date: 1985-02-22, location: Brazil, sequence: BANANA} ]
     '''
-    def __init__(self, dtype, virus, subtype=None):
+    def __init__(self, datatype, virus, **kwargs):
+        print 'kwargs: '
+        print kwargs
         # Wrappers for data, described in class description
-        self.metadata = {'dtype': dtype, 'virus': virus, 'subtype': subtype}
+        self.metadata = {'datatype': datatype, 'virus': virus}
         self.dataset = []
 
-        # Log files to cut down on verbose output
-        self.log = 'log/' + time.strftime("%Y-%m-%d") + '-fauna.log'
-        self.issues = 'log/' + time.strftime("%Y-%m-%d") + '-fauna.issues'
-
-        print("Run information can be found in " + self.log)
-        print("Issues that arise can be found in "+ self.issues)
-
-        # Deafault is most-used GISAID fasta headers, as described in nextstrain documentation
-        self.fasta_headers = ['accession', 'strain', 'isolate_id', 'locus', 'passage', 'submitting_lab']
-        self.titer_headers = []
-        if dtype == 'sequence':
+        if datatype == 'sequence':
+            self.read_fasta(**kwargs)
             seed = { header : None for header in self.fasta_headers }
             seed['sequence'] = None
             self.dataset.append(seed)
-        # Define fields that will be used to construct unique indices in the fauna database
-        self.index_fields = ['strain', 'date', 'gisaid_id', 'whatever']
 
 
-    def read_fasta(self, infile):
+    def read_fasta(self, infile, source, path, **kwargs):
         '''
         Take a fasta file and a list of information contained in its headers
         and build a dataset object from it.
         '''
+        ######### Update here with new sources, as they are added
+        if source.lower() == 'gisaid':
+            self.fasta_headers = ['accession', 'strain', 'isolate_id', 'locus', 'passage', 'submitting_lab']
+        else:
+            print 'Unable to parse fasta from source %s' % (source)
+            sys.exit()
+        #########
+
         out = []
-        with open(self.log, 'w') as log:
-            t = time.strftime('%Y-%m-%d %H:%M:%S')
-            log.write('['+t+']: Beginning to read ' + infile)
 
         # Read the fasta
-        with open(infile, "rU") as f:
+        with open(path + infile, "rU") as f:
 
             for record in SeqIO.parse(f, "fasta"):
                 data = {}
                 head = record.description.replace(" ","").split('|')
-                print("head "+"".join(head))
                 for i in range(len(self.fasta_headers)):
                     data[self.fasta_headers[i]] = head[i]
                     data['sequence'] = str(record.seq)
-
-        # Try/except clause goes here
-                index = ''
-                for ind in self.index_fields:
-                    try:
-                        index += data[ind]
-                    except:
-                        pass
-                out.append(data)
-                # Format properly
 
         # Merge the formatted dictionaries to self.dataset()
         for doc in out:
@@ -94,14 +79,29 @@ class Dataset:
         Make sure all new entries to the dataset have matching keys
         '''
         match = True
-        for key in data:
-            if key not in self.dataset[0].keys():
-                print('Error adding ' + key + ' to dataset, keys don\'t match.')
-                match = False
-                return
+        indices = data.keys()
+        for doc in indices:
+            for key in data[doc]:
+                if key not in self.dataset[0].keys():
+                    print('Error adding ' + key + ' to dataset, keys don\'t match.')
+                    match = False
 
         if match:
             self.dataset.append(data)
+
+    def clean(self):
+        import CONFIG as c
+        if self.metadata['dtype'] == 'virus':
+            fxns = c.virus_clean
+        elif self.metadata['dtype'] == 'sequence':
+            fxns = c.sequence_clean
+        elif self.metadata['dtype'] == 'titer':
+            fxns = c.titer_clean
+
+        for fxn in fxns:
+            #TODO THIS
+            pass
+
 
     def write(self, out_type, out_file):
         # remove seed
@@ -109,6 +109,12 @@ class Dataset:
         self.dataset[0] = temp
         self.dataset.pop()
 
+        out = {}
+        for key in self.metadata.keys():
+            out[key] = self.metadata[key]
+        out['data'] = self.dataset
+
+
         if out_type == 'json':
             with open(out_file, 'w+') as f:
-                json.dump(self.dataset, f, indent=1)
+                json.dump(out, f, indent=1)
