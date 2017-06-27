@@ -2,6 +2,7 @@ import re
 # Cleaning functions that will clean the data in a dataset object.
 # These are kept separate from class functions to make it easier for the user to
 # add their own functions specific to their own data.
+# Each of these MUST take doc as an input
 
 # Currently all cleaning functions are from fauna1.0
 # in the process of updating, will remove TODO flag from completed functions
@@ -21,16 +22,25 @@ def fix_casing(doc):
             doc[field] = doc[field].replace(' ', '_').replace('-', '_').lower()
     for field in ['gender', 'host', 'locus']:
         if field in doc and doc[field] is not None:
-            doc[field] = self.camelcase_to_snakecase(doc[field])
+            doc[field] = camelcase_to_snakecase(doc[field])
     if 'accession' in doc and doc['accession'] is not None:
         doc['accession'] = 'EPI' + doc['accession']
 
 
 
+##################
+# Accessory fxns #
+##################
 
-
-
-
+def camelcase_to_snakecase(name):
+        '''
+        convert camelcase format to snakecase format
+        :param name:
+        :return:
+        '''
+        if name is not None:
+            s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
+            return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower().replace(" ", "")
 
 
 

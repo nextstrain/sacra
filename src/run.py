@@ -43,6 +43,7 @@ if __name__=="__main__":
     parser.add_argument('--source', default=None, type=str, help='data source')
     parser.add_argument('--subtype', default=None, type=str, help='subtype ')
     parser.add_argument('--test', default=False, action='store_true', help='test run for debugging') # Remove this at some point.
+    parser.add_argument('--output_type', default='json', type=str, help='type of file to be written')
     args = parser.parse_args()
 
     list_options(args.list_viruses, args.list_datatypes)
@@ -50,6 +51,5 @@ if __name__=="__main__":
 
     if args.test:
         D = Dataset(**args.__dict__)
-
         testout = args.outpath + 'test.json'
-        D.write('json', testout)
+        D.write(testout)

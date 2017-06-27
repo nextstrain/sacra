@@ -24,24 +24,23 @@ class Dataset:
         ex. [ {date: 2012-06-11, location: Idaho, sequence: GATTACA}, {date: 2016-06-16, location: Oregon, sequence: CAGGGCCTCCA}, {date: 1985-02-22, location: Brazil, sequence: BANANA} ]
     '''
     def __init__(self, datatype, virus, **kwargs):
-        print 'kwargs: '
-        print kwargs
         # Wrappers for data, described in class description
         self.metadata = {'datatype': datatype, 'virus': virus}
         self.dataset = []
 
         if datatype == 'sequence':
-            print '0'
             self.index_fields = ['accession','locus']
-            print '1'
             self.read_fasta(**kwargs)
-            print '2'
+
+        for doc in self.dataset:
+            self.clean(doc)
 
     def read_fasta(self, infile, source, path, **kwargs):
         '''
         Take a fasta file and a list of information contained in its headers
         and build a dataset object from it.
         '''
+        print 'Reading in %s FASTA from %s%s.' % (source,path,infile)
         ######### Update here with new sources, as they are added
         if source.lower() == 'gisaid':
             self.fasta_headers = ['accession', 'strain', 'isolate_id', 'locus', 'passage', 'submitting_lab']
@@ -70,12 +69,16 @@ class Dataset:
                     except:
                         pass
 
+
         self.seed()
         # Merge the formatted dictionaries to self.dataset()
         for doc in out:
+            try:
+                assert type(doc) == dict
+            except:
+                print 'WARNING: Cannot merge doc of type %s: %s' % (type(doc), (str(doc)[:75] + '..') if len(str(doc)) > 75 else str(doc))
+                pass
             self.merge(doc)
-        # TODO: Find a way to resolve index collisions
-        self.dataset.append(out)
 
     def read_xml(self):
         '''
@@ -91,27 +94,47 @@ class Dataset:
         indices = data.keys()
         for doc in indices:
             for key in data[doc]:
-                if key not in self.dataset[0].keys():
+                if key not in self.dataset[0]['seed'].keys():
                     print('Error adding ' + key + ' to dataset, keys don\'t match.')
                     match = False
 
         if match:
             self.dataset.append(data)
 
-    def clean(self):
-        import CONFIG as c
-        if self.metadata['dtype'] == 'virus':
-            fxns = c.virus_clean
-        elif self.metadata['dtype'] == 'sequence':
+    def clean(self, doc):
+        '''
+        Take a document and return a canonicalized version of that document
+        '''
+        import cfg as c
+        remove = []
+
+        # Remove docs with bad keys or that are not of type dict
+        try:
+            assert type(doc) == dict
+            try:
+                assert len(doc.keys()) == 1
+            except:
+                print 'Documents should have eactly 1 key, this has %s: %s' % (len(doc.keys()), doc)
+                return
+        except:
+            print 'Documents must be of type dict, this one is of type %s:\n%s' % (type(doc), doc)
+            return
+
+        # Use functions specified by cfg.py. Fxn defs in cleaning_functions.py
+        if self.metadata['datatype'] == 'sequence':
             fxns = c.sequence_clean
-        elif self.metadata['dtype'] == 'titer':
+        elif self.metadata['datatype'] == 'titer':
             fxns = c.titer_clean
 
-        for fxn in fxns:
-            #TODO THIS
-            pass
+        key = doc.keys()[0]
 
-    def write(self, out_type, out_file):
+        for fxn in fxns:
+            fxn(doc[key])
+
+    def write(self, out_file, out_type='json'):
+        '''
+        Write self.dataset to an output file, default type is json
+        '''
         # remove seed
         temp = self.dataset[-1]
         self.dataset[0] = temp
@@ -122,7 +145,6 @@ class Dataset:
             out[key] = self.metadata[key]
         out['data'] = self.dataset
 
-
         if out_type == 'json':
             with open(out_file, 'w+') as f:
                 json.dump(out, f, indent=1)
@@ -131,6 +153,6 @@ class Dataset:
         '''
         Make an empty entry in dataset that has all the necessary keys, acts as a merge filter
         '''
-        seed = { header : None for header in self.fasta_headers }
-        seed['sequence'] = None
+        seed = {'seed' : { header : None for header in self.fasta_headers }}
+        seed['seed']['sequence'] = None
         self.dataset.append(seed)
