@@ -69,7 +69,6 @@ class Dataset:
                     except:
                         pass
 
-
         self.seed()
         # Merge the formatted dictionaries to self.dataset()
         print "Merging input FASTA to %s documents." % (len(out))

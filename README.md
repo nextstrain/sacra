@@ -7,3 +7,19 @@ Generally, sacra will encompass:
 * Allowing the user to determine if they want to upload to the fauna database or to have files made locally
 * Outputting either FASTAs or JSONs
 * Accessing data stored in the fauna database and downloading it to the same type of files
+
+## Requirements
+Python 2.7
+
+## Acceptable file types
+Sequence data:
+* .fasta
+Titer data:
+
+Virus data:
+
+## How to run
+
+With a file named `gisaid_test.fasta` in the `data/` directory, a test run of sacra can be done by running:
+`python src/run.py --infile gisaid_test.fasta --source GISAID --test`
+This will write a JSON to the `output` directory.

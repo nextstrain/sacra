@@ -46,6 +46,9 @@ if __name__=="__main__":
     parser.add_argument('--output_type', default='json', type=str, help='type of file to be written')
     args = parser.parse_args()
 
+    if (args.infile[:len(args.path)] == args.path) and (args.path[-1] == '/'):
+        args.infile = args.infile[len(args.path):]
+
     list_options(args.list_viruses, args.list_datatypes)
     assert_valid_input(**args.__dict__)
 
