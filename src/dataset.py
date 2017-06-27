@@ -31,11 +31,11 @@ class Dataset:
         self.dataset = []
 
         if datatype == 'sequence':
+            print '0'
+            self.index_fields = ['accession','locus']
+            print '1'
             self.read_fasta(**kwargs)
-            seed = { header : None for header in self.fasta_headers }
-            seed['sequence'] = None
-            self.dataset.append(seed)
-
+            print '2'
 
     def read_fasta(self, infile, source, path, **kwargs):
         '''
@@ -62,6 +62,15 @@ class Dataset:
                     data[self.fasta_headers[i]] = head[i]
                     data['sequence'] = str(record.seq)
 
+                index = []
+                for ind in self.index_fields:
+                    try:
+                        index.append(data[ind])
+                        out.append({":".join(index): data})
+                    except:
+                        pass
+
+        self.seed()
         # Merge the formatted dictionaries to self.dataset()
         for doc in out:
             self.merge(doc)
@@ -102,7 +111,6 @@ class Dataset:
             #TODO THIS
             pass
 
-
     def write(self, out_type, out_file):
         # remove seed
         temp = self.dataset[-1]
@@ -118,3 +126,11 @@ class Dataset:
         if out_type == 'json':
             with open(out_file, 'w+') as f:
                 json.dump(out, f, indent=1)
+
+    def seed(self):
+        '''
+        Make an empty entry in dataset that has all the necessary keys, acts as a merge filter
+        '''
+        seed = { header : None for header in self.fasta_headers }
+        seed['sequence'] = None
+        self.dataset.append(seed)
