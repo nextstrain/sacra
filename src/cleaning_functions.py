@@ -7,11 +7,10 @@ import re
 # Currently all cleaning functions are from fauna1.0
 # in the process of updating, will remove TODO flag from completed functions
 
-def name_fix(doc):
-    if 'strain' in doc:
-        doc['strain'], doc['gisaid_strain'] = fix_name(doc['strain'])
-    else:
-        print("Missing strain name!")
+
+######################
+# Cleaning functions #
+######################
 
 def fix_casing(doc):
     '''
@@ -25,8 +24,6 @@ def fix_casing(doc):
             doc[field] = camelcase_to_snakecase(doc[field])
     if 'accession' in doc and doc['accession'] is not None:
         doc['accession'] = 'EPI' + doc['accession']
-
-
 
 ##################
 # Accessory fxns #
@@ -42,9 +39,9 @@ def camelcase_to_snakecase(name):
             s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
             return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower().replace(" ", "")
 
-
-
-####################################################
+#################################
+# Functions left to incorporate #
+#################################
 def fix_age(self, doc):
     # TODO
     '''

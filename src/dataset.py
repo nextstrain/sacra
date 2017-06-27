@@ -72,6 +72,7 @@ class Dataset:
 
         self.seed()
         # Merge the formatted dictionaries to self.dataset()
+        print "Merging input FASTA to %s documents." % (len(out))
         for doc in out:
             try:
                 assert type(doc) == dict
@@ -79,6 +80,8 @@ class Dataset:
                 print 'WARNING: Cannot merge doc of type %s: %s' % (type(doc), (str(doc)[:75] + '..') if len(str(doc)) > 75 else str(doc))
                 pass
             self.merge(doc)
+        print "Successfully merged %s documents. Done reading %s." % (len(self.dataset)-1, infile)
+
 
     def read_xml(self):
         '''
@@ -104,6 +107,7 @@ class Dataset:
     def clean(self, doc):
         '''
         Take a document and return a canonicalized version of that document
+        # TODO: Incorporate all the necessary cleaning functions
         '''
         import cfg as c
         remove = []
@@ -135,9 +139,11 @@ class Dataset:
         '''
         Write self.dataset to an output file, default type is json
         '''
-        # remove seed
-        temp = self.dataset[-1]
-        self.dataset[0] = temp
+        print 'Writing dataset to %s' % (out_file)
+
+        # Remove seed
+        # More efficient on large datasets than self.dataset = self.dataset[1:]
+        self.dataset[0] = self.dataset[-1]
         self.dataset.pop()
 
         out = {}
@@ -153,6 +159,8 @@ class Dataset:
         '''
         Make an empty entry in dataset that has all the necessary keys, acts as a merge filter
         '''
+        print "Initializing fields:"
         seed = {'seed' : { header : None for header in self.fasta_headers }}
         seed['seed']['sequence'] = None
         self.dataset.append(seed)
+        print seed['seed']
