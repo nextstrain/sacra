@@ -1,4 +1,4 @@
-import re
+import re, sys
 # Cleaning functions that will clean the data in a dataset object.
 # These are kept separate from class functions to make it easier for the user to
 # add their own functions specific to their own data.
@@ -12,18 +12,44 @@ import re
 # Cleaning functions #
 ######################
 
-def fix_casing(doc):
+def fix_accession(key, doc, remove):
     '''
-    fix gisaid specific fields casing
+    fix errors that can arise with accession field
     '''
-    for field in ['originating_lab', 'submitting_lab']:
-        if field in doc and doc[field] is not None:
-            doc[field] = doc[field].replace(' ', '_').replace('-', '_').lower()
-    for field in ['gender', 'host', 'locus']:
-        if field in doc and doc[field] is not None:
-            doc[field] = camelcase_to_snakecase(doc[field])
     if 'accession' in doc and doc['accession'] is not None:
-        doc['accession'] = 'EPI' + doc['accession']
+        doc['accession'] = doc['accession'].encode('ascii', 'replace')
+        if doc['accession'].startswith('epi'):
+            pass
+        else:
+            doc['accession'] = 'epi' + doc['accession']
+
+def fix_sequence(key, doc, remove):
+    if 'sequence' in doc and doc['sequence'] is not None:
+        doc['sequence'] = doc['sequence'].upper()
+    else:
+        remove.append(key)
+
+def fix_locus(key, doc, remove):
+    pass
+
+def fix_strain(key, doc, remove):
+    pass
+
+def fix_isolate_id(key, doc, remove):
+    pass
+
+def fix_passage(key, doc, remove):
+    # This will be determined by whether we need egg/cell or the specific
+    # TODO: Talk to Trevor about this.
+    pass
+
+def fix_submitting_lab(key, doc, remove):
+    if 'submitting_lab' in doc and doc['submitting_lab'] is not None:
+        if doc['submitting_lab'] == 'CentersforDiseaseControlandPrevention':
+            doc['submitting_lab'] = 'CentersForDiseaseControlAndPrevention'
+        doc['submitting_lab'] = camelcase_to_snakecase(doc['submitting_lab'])
+    else:
+        remove.append(key)
 
 ##################
 # Accessory fxns #

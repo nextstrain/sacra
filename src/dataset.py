@@ -28,6 +28,7 @@ class Dataset:
         self.metadata = {'datatype': datatype, 'virus': virus}
         self.dataset = []
 
+        # This should go out of __init__ somewhere.
         if datatype == 'sequence':
             self.index_fields = ['accession','locus']
             self.read_fasta(**kwargs)
@@ -132,7 +133,7 @@ class Dataset:
         key = doc.keys()[0]
 
         for fxn in fxns:
-            fxn(doc[key])
+            fxn(key, doc[key], remove)
 
     def write(self, out_file, out_type='json'):
         '''

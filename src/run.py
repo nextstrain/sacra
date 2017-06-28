@@ -1,4 +1,3 @@
-# This will be where all(ish) arguments for sacra should live, so that class defining files only need to contain their class functions.
 from dataset import Dataset
 import cfg as cfg
 import argparse
@@ -46,6 +45,7 @@ if __name__=="__main__":
     parser.add_argument('--output_type', default='json', type=str, help='type of file to be written')
     args = parser.parse_args()
 
+    # TODO: Make this smarter
     if (args.infile[:len(args.path)] == args.path) and (args.path[-1] == '/'):
         args.infile = args.infile[len(args.path):]
 
