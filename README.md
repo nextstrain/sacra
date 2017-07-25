@@ -21,5 +21,7 @@ Virus data:
 ## How to run
 
 With a file named `gisaid_test.fasta` in the `data/` directory, a test run of sacra can be done by running:
-`python src/run.py --infile gisaid_test.fasta --source GISAID --test`
+`python src/run.py --infiles gisaid_test.fasta --source GISAID --test`
 This will write a JSON to the `output` directory.
+
+If uploading multiple files is necessary, the call can be altered as `python src/run.py --infiles split_file_1.fasta split_file_2.fasta --source gisaid --test`.
