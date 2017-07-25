@@ -23,19 +23,32 @@ class Dataset:
 
         ex. [ {date: 2012-06-11, location: Idaho, sequence: GATTACA}, {date: 2016-06-16, location: Oregon, sequence: CAGGGCCTCCA}, {date: 1985-02-22, location: Brazil, sequence: BANANA} ]
     '''
-    def __init__(self, datatype, virus, infiles, **kwargs):
+    def __init__(self, datatype, virus, **kwargs):
         # Wrappers for data, described in class description
         self.metadata = {'datatype': datatype, 'virus': virus}
         self.dataset = []
 
-        # This should go out of __init__ somewhere.
-        if datatype == 'sequence':
-            self.index_fields = ['accession','locus']
-            for infile in infiles:
-                self.read_fasta(infile, **kwargs)
+        self.read_files(datatype, **kwargs)
 
         for doc in self.dataset:
             self.clean(doc)
+
+    def read_files(self, datatype, infiles, **kwargs):
+        '''
+        Look at all infiles, and determine what file type they are. Based in that determination,
+        import each file individually.
+        '''
+        self.seed(datatype)
+        if datatype == 'sequence':
+            fasta_suffixes = ['.fasta', '.fa', '.f']
+            # Set fields that will be used to key into fauna table, these should be unique for every document
+            self.index_fields = ['accession','locus']
+            for infile in infiles:
+                for suffix in fasta_suffixes:
+                    if infile.lower().endswith(suffix):
+                        self.read_fasta(infile, **kwargs)
+                    else:
+                        pass
 
     def read_fasta(self, infile, source, path, **kwargs):
         '''
@@ -71,7 +84,6 @@ class Dataset:
                     except:
                         pass
 
-        self.seed()
         # Merge the formatted dictionaries to self.dataset()
         print "Merging input FASTA to %s documents." % (len(out))
         for doc in out:
@@ -156,12 +168,15 @@ class Dataset:
             with open(out_file, 'w+') as f:
                 json.dump(out, f, indent=1)
 
-    def seed(self):
+    def seed(self, datatype):
         '''
         Make an empty entry in dataset that has all the necessary keys, acts as a merge filter
         '''
-        print "Initializing fields:"
-        seed = {'seed' : { header : None for header in self.fasta_headers }}
-        seed['seed']['sequence'] = None
-        self.dataset.append(seed)
-        print seed['seed']
+        if datatype == 'sequence':
+            print "Initializing fields:"
+            seed = {'seed' : { header : None for header in self.fasta_headers }}
+            seed['seed']['sequence'] = None
+            self.dataset.append(seed)
+            print seed['seed']
+        else:
+            pass
