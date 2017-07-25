@@ -23,7 +23,7 @@ class Dataset:
 
         ex. [ {date: 2012-06-11, location: Idaho, sequence: GATTACA}, {date: 2016-06-16, location: Oregon, sequence: CAGGGCCTCCA}, {date: 1985-02-22, location: Brazil, sequence: BANANA} ]
     '''
-    def __init__(self, datatype, virus, **kwargs):
+    def __init__(self, datatype, virus, infiles, **kwargs):
         # Wrappers for data, described in class description
         self.metadata = {'datatype': datatype, 'virus': virus}
         self.dataset = []
@@ -31,7 +31,8 @@ class Dataset:
         # This should go out of __init__ somewhere.
         if datatype == 'sequence':
             self.index_fields = ['accession','locus']
-            self.read_fasta(**kwargs)
+            for infile in infiles:
+                self.read_fasta(infile, **kwargs)
 
         for doc in self.dataset:
             self.clean(doc)

@@ -3,7 +3,7 @@ import cfg as cfg
 import argparse
 import os, sys
 
-def assert_valid_input(virus, datatype, path, outpath, infile, source, subtype, **kwargs):
+def assert_valid_input(virus, datatype, path, outpath, infiles, source, subtype, **kwargs):
     '''
     Make sure that all the given arguments are valid.
     '''
@@ -13,7 +13,8 @@ def assert_valid_input(virus, datatype, path, outpath, infile, source, subtype, 
     if not os.path.isdir(outpath):
         print "Writing %s" % (path)
         os.makedirs(outpath)
-    assert os.path.isfile(path+infile), 'Invalid input file: %s' % (infile)
+    for infile in infiles:
+        assert os.path.isfile(path+infile), 'Invalid input file: %s' % (infile)
     assert source.lower() in cfg.sources[datatype], 'Invalid source for %s data %s' % (datatype, source)
     if subtype:
         assert subtype in cfg.subtypes[virus], 'Invalid subtype %s for virus %s' % (subtype, virus)
@@ -36,7 +37,7 @@ if __name__=="__main__":
     parser.add_argument('--datatype', default='sequence', type=str, help='type of data being input; default is \"sequence\", other options are \"virus\" or \"titer\"')
     parser.add_argument('-p', '--path', default='data/', type=str, help='path to input file, default is \"data/\"')
     parser.add_argument('-o', '--outpath', default='output/', type=str, help='path to write output files; default is \"output/\"')
-    parser.add_argument('-i', '--infile', default=None, type=str, help='filename for file to be processed')
+    parser.add_argument('-i', '--infiles', default=None, nargs='+', help='filename for file to be processed')
     parser.add_argument('--list_viruses', default=False, action='store_true', help='list all supported viruses and exit')
     parser.add_argument('--list_datatypes', default=False,  action='store_true', help='list all supported datatypes and exit')
     parser.add_argument('--source', default=None, type=str, help='data source')
@@ -45,9 +46,7 @@ if __name__=="__main__":
     parser.add_argument('--output_type', default='json', type=str, help='type of file to be written')
     args = parser.parse_args()
 
-    # TODO: Make this smarter
-    if (args.infile[:len(args.path)] == args.path) and (args.path[-1] == '/'):
-        args.infile = args.infile[len(args.path):]
+
 
     list_options(args.list_viruses, args.list_datatypes)
     assert_valid_input(**args.__dict__)
