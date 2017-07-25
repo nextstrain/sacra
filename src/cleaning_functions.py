@@ -30,7 +30,10 @@ def fix_sequence(key, doc, remove):
         remove.append(key)
 
 def fix_locus(key, doc, remove):
-    pass
+    if 'locus' in doc and doc['locus'] is not None:
+        doc['locus'] = doc['locus'].lower()
+    else:
+        remove.append(key)
 
 def fix_strain(key, doc, remove):
     pass
