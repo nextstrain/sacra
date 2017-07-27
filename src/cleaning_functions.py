@@ -54,6 +54,41 @@ def fix_submitting_lab(key, doc, remove):
     else:
         remove.append(key)
 
+def fix_age(doc, *args):
+    # TODO
+    '''
+    Combine gisaid age information into one age field
+    '''
+    if 'age' in doc.keys():
+	if doc['age'].endswith('y') or doc['age'].endswith('m') or doc['age'].endswith('d'):
+	    continue
+	else:
+	    try:
+		str(doc['age'])
+	    except:
+		print "Could not parse %s as a host age." % doc['age']
+		doc['age'] = None
+	    else:
+		doc['age'] = doc['age'] + 'y'
+    else:
+	temp_age, temp_age_unit = None, None
+	doc['age'] = None
+	if 'Host_Age' in doc:
+	    try:
+		temp_age = str(int(float(doc['Host_Age'])))
+	    except:
+		pass
+	    del doc['Host_Age']
+	if 'Host_Age_Unit' in doc:
+	    if isinstance(doc['Host_Age_Unit'], basestring):
+		temp_age_unit = doc['Host_Age_Unit'].lower()
+	    else:
+		temp_age_unit = 'y'
+	    del doc['Host_Age_Unit']
+	if isinstance(temp_age, basestring) and isinstance(temp_age_unit, basestring):
+	    doc['age'] = temp_age + temp_age_unit
+	return doc
+
 ##################
 # Accessory fxns #
 ##################
@@ -71,28 +106,6 @@ def camelcase_to_snakecase(name):
 #################################
 # Functions left to incorporate #
 #################################
-def fix_age(self, doc):
-    # TODO
-    '''
-    Combine gisaid age information into one age field
-    '''
-    temp_age, temp_age_unit = None, None
-    doc['age'] = None
-    if 'Host_Age' in doc:
-        try:
-            temp_age = str(int(float(doc['Host_Age'])))
-        except:
-            pass
-        del doc['Host_Age']
-    if 'Host_Age_Unit' in doc:
-        if isinstance(doc['Host_Age_Unit'], basestring):
-            temp_age_unit = doc['Host_Age_Unit'].lower()
-        else:
-            temp_age_unit = 'y'
-        del doc['Host_Age_Unit']
-    if isinstance(temp_age, basestring) and isinstance(temp_age_unit, basestring):
-        doc['age'] = temp_age + temp_age_unit
-    return doc
 
 def define_location_fixes(self, fname):
     # TODO
