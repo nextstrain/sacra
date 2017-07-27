@@ -1,4 +1,5 @@
 import os, time, datetime, csv, sys, json
+import cfg
 from Bio import SeqIO
 
 class Dataset:
@@ -27,41 +28,45 @@ class Dataset:
         # Wrappers for data, described in class description
         self.metadata = {'datatype': datatype, 'virus': virus}
         self.dataset = []
+        if 'subtype' in kwargs.keys():
+            self.metadata['subtype'] = kwargs['subtype']
 
         self.read_files(datatype, **kwargs)
 
         for doc in self.dataset:
             self.clean(doc)
 
-    def read_files(self, datatype, infiles, **kwargs):
+    def read_files(self, datatype, infiles, ftype, **kwargs):
         '''
         Look at all infiles, and determine what file type they are. Based in that determination,
         import each file individually.
         '''
-        self.seed(datatype)
         if datatype == 'sequence':
-            fasta_suffixes = ['.fasta', '.fa', '.f']
+            fasta_suffixes = ['fasta', 'fa', 'f']
             # Set fields that will be used to key into fauna table, these should be unique for every document
             self.index_fields = ['accession','locus']
-            for infile in infiles:
-                for suffix in fasta_suffixes:
-                    if infile.lower().endswith(suffix):
-                        self.read_fasta(infile, **kwargs)
-                    else:
-                        pass
+            if ftype.lower() in fasta_suffixes:
+                for infile in infiles:
+                    self.read_fasta(infile, datatype=datatype, **kwargs)
+            else:
+                pass
 
-    def read_fasta(self, infile, source, path, **kwargs):
+    def read_fasta(self, infile, source, path, datatype, **kwargs):
         '''
         Take a fasta file and a list of information contained in its headers
         and build a dataset object from it.
         '''
         print 'Reading in %s FASTA from %s%s.' % (source,path,infile)
         ######### Update here with new sources, as they are added
-        if source.lower() == 'gisaid':
-            self.fasta_headers = ['accession', 'strain', 'isolate_id', 'locus', 'passage', 'submitting_lab']
-        else:
-            print 'Unable to parse fasta from source %s' % (source)
-            sys.exit()
+        # if source.lower() == 'gisaid':
+        #     self.fasta_headers = ['accession', 'strain', 'isolate_id', 'locus', 'passage', 'submitting_lab']
+        # elif source.lower() == 'fauna':
+        #     self.fasta_headers = ['strain', 'virus', 'accession', 'collection_date', 'region', 'country', 'division', 'location', 'passage', 'source', 'age']
+        # else:
+        #     print 'Unable to parse fasta from source %s' % (source)
+        #     sys.exit()
+        self.fasta_headers = cfg.fasta_headers[source.lower()]
+        self.seed(datatype)
         #########
 
         out = []
