@@ -62,7 +62,7 @@ def fix_age(doc, *args):
     '''
     if 'age' in doc.keys():
         if doc['age'].endswith('y') or doc['age'].endswith('m') or doc['age'].endswith('d'):
-            continue
+            pass
         else:
             try:
                 str(doc['age'])
