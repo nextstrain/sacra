@@ -3,12 +3,13 @@ import cfg as cfg
 import argparse
 import os, sys
 
-def assert_valid_input(virus, datatype, path, outpath, infiles, source, subtype, **kwargs):
+def assert_valid_input(virus, datatype, path, outpath, infiles, source, subtype, ftype, **kwargs):
     '''
     Make sure that all the given arguments are valid.
     '''
     assert virus.lower() in cfg.viruses, 'Unknown virus, currently supported viruses are: %s' % (", ".join(cfg.viruses))
     assert datatype.lower() in cfg.datatypes, 'Unknown datatype, currently supported datatypes are: %s' % (", ".join(cfg.datatypes))
+    assert ftype.lower() in cfg.filetypes, 'Unknown filetype, currently supported filetypes are: %s' % (", ".join(cfg.filetypes))
     assert os.path.isdir(path), 'Invalid input path: %s' % (path)
     if not os.path.isdir(outpath):
         print "Writing %s" % (path)
@@ -38,6 +39,7 @@ if __name__=="__main__":
     parser.add_argument('-p', '--path', default='data/', type=str, help='path to input file, default is \"data/\"')
     parser.add_argument('-o', '--outpath', default='output/', type=str, help='path to write output files; default is \"output/\"')
     parser.add_argument('-i', '--infiles', default=None, nargs='+', help='filename for file to be processed')
+    parser.add_argument('--ftype', default='fasta', type=str, help='file type to be processed; default is fasta')
     parser.add_argument('--list_viruses', default=False, action='store_true', help='list all supported viruses and exit')
     parser.add_argument('--list_datatypes', default=False,  action='store_true', help='list all supported datatypes and exit')
     parser.add_argument('--source', default=None, type=str, help='data source')
@@ -45,8 +47,6 @@ if __name__=="__main__":
     parser.add_argument('--test', default=False, action='store_true', help='test run for debugging') # Remove this at some point.
     parser.add_argument('--output_type', default='json', type=str, help='type of file to be written')
     args = parser.parse_args()
-
-
 
     list_options(args.list_viruses, args.list_datatypes)
     assert_valid_input(**args.__dict__)
