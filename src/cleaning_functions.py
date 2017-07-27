@@ -18,6 +18,7 @@ def fix_accession(key, doc, remove):
     '''
     if 'accession' in doc and doc['accession'] is not None:
         doc['accession'] = doc['accession'].encode('ascii', 'replace')
+	doc['accession'] = doc['accession'].lower()
         if doc['accession'].startswith('epi'):
             pass
         else:
