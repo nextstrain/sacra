@@ -12,7 +12,7 @@ import re, sys
 # Cleaning functions #
 ######################
 
-def fix_accession(key, doc, remove):
+def fix_accession(doc, key, remove):
     '''
     fix errors that can arise with accession field
     '''
@@ -24,30 +24,30 @@ def fix_accession(key, doc, remove):
         else:
             doc['accession'] = 'epi' + doc['accession']
 
-def fix_sequence(key, doc, remove):
+def fix_sequence(doc, key, remove):
     if 'sequence' in doc and doc['sequence'] is not None:
         doc['sequence'] = doc['sequence'].upper()
     else:
         remove.append(key)
 
-def fix_locus(key, doc, remove):
+def fix_locus(doc, key, remove):
     if 'locus' in doc and doc['locus'] is not None:
         doc['locus'] = doc['locus'].lower()
     else:
         remove.append(key)
 
-def fix_strain(key, doc, remove):
+def fix_strain(doc, key, remove):
     pass
 
-def fix_isolate_id(key, doc, remove):
+def fix_isolate_id(doc, key, remove):
     pass
 
-def fix_passage(key, doc, remove):
+def fix_passage(doc, key, remove):
     # This will be determined by whether we need egg/cell or the specific
     # TODO: Talk to Trevor about this.
     pass
 
-def fix_submitting_lab(key, doc, remove):
+def fix_submitting_lab(doc, key, remove):
     if 'submitting_lab' in doc and doc['submitting_lab'] is not None:
         if doc['submitting_lab'] == 'CentersforDiseaseControlandPrevention':
             doc['submitting_lab'] = 'CentersForDiseaseControlAndPrevention'
@@ -60,7 +60,7 @@ def fix_age(doc, *args):
     '''
     Combine gisaid age information into one age field
     '''
-    if 'age' in doc.keys():
+    if 'age' in doc.keys() and doc['age'] is not None:
         if doc['age'].endswith('y') or doc['age'].endswith('m') or doc['age'].endswith('d'):
             pass
         else:

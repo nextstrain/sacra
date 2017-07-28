@@ -33,8 +33,9 @@ class Dataset:
 
         self.read_files(datatype, **kwargs)
 
-        for doc in self.dataset:
-            self.clean(doc)
+        for i in range(len(dataset)):
+            self.clean(dataset[i], i)
+        self.remove_bad_docs()
 
     def read_files(self, datatype, infiles, ftype, **kwargs):
         '''
@@ -57,17 +58,8 @@ class Dataset:
         and build a dataset object from it.
         '''
         print 'Reading in %s FASTA from %s%s.' % (source,path,infile)
-        ######### Update here with new sources, as they are added
-        # if source.lower() == 'gisaid':
-        #     self.fasta_headers = ['accession', 'strain', 'isolate_id', 'locus', 'passage', 'submitting_lab']
-        # elif source.lower() == 'fauna':
-        #     self.fasta_headers = ['strain', 'virus', 'accession', 'collection_date', 'region', 'country', 'division', 'location', 'passage', 'source', 'age']
-        # else:
-        #     print 'Unable to parse fasta from source %s' % (source)
-        #     sys.exit()
         self.fasta_headers = cfg.fasta_headers[source.lower()]
         self.seed(datatype)
-        #########
 
         out = []
 
@@ -122,13 +114,21 @@ class Dataset:
         if match:
             self.dataset.append(data)
 
-    def clean(self, doc):
+    def clean(self, doc, key):
         '''
         Take a document and return a canonicalized version of that document
         # TODO: Incorporate all the necessary cleaning functions
         '''
         import cfg as c
-        remove = []
+        # Track which
+        self.bad_docs = []
+
+        # Remove seed
+        # More efficient on large datasets than self.dataset = self.dataset[1:]
+        t = self.dataset[0]
+        self.dataset[0] = self.dataset[-1]
+        self.dataset[-1] = t
+        self.dataset = self.dataset[:-1]
 
         # Remove docs with bad keys or that are not of type dict
         try:
@@ -148,21 +148,27 @@ class Dataset:
         elif self.metadata['datatype'] == 'titer':
             fxns = c.titer_clean
 
-        key = doc.keys()[0]
-
         for fxn in fxns:
-            fxn(key, doc[key], remove)
+            fxn(doc[key], key, self.bad_docs)
+
+    def remove_bad_docs(self):
+
+        # Not working because of key errors, they should be ints
+        if self.bad_docs != []:
+            print self.bad_docs
+            self.bad_docs = self.bad_docs.sort().reverse()
+            for key in self.bad_docs:
+                t = self.dataset[key]
+                self.dataset[key] = self.dataset[-1]
+                self.dataset[-1] = t
+                self.dataset.pop()
+
 
     def write(self, out_file, out_type='json'):
         '''
         Write self.dataset to an output file, default type is json
         '''
         print 'Writing dataset to %s' % (out_file)
-
-        # Remove seed
-        # More efficient on large datasets than self.dataset = self.dataset[1:]
-        self.dataset[0] = self.dataset[-1]
-        self.dataset.pop()
 
         out = {}
         for key in self.metadata.keys():
@@ -178,10 +184,8 @@ class Dataset:
         Make an empty entry in dataset that has all the necessary keys, acts as a merge filter
         '''
         if datatype == 'sequence':
-            print "Initializing fields:"
             seed = {'seed' : { header : None for header in self.fasta_headers }}
             seed['seed']['sequence'] = None
             self.dataset.append(seed)
-            print seed['seed']
         else:
             pass
