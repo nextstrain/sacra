@@ -10,7 +10,7 @@ filetypes = [ 'fasta' ]
 ### Cleaning functions for different datatypes ###
 # Functions should be defined in cleaning_functions.py
 virus_clean = []
-sequence_clean = [ fix_accession, fix_sequence, fix_locus, fix_strain, fix_isolate_id, fix_passage, fix_submitting_lab, fix_age ]
+sequence_clean = [ fix_accession, fix_sequence, fix_locus, fix_strain, fix_isolate_id, fix_passage, fix_submitting_lab, fix_age, determine_passage_category ]
 
 ### Mappings used by sacra ###
 # Lists sources from which different datatypes come from
@@ -20,3 +20,7 @@ sources = { 'sequence' : [ 'gisaid', 'fauna', 'vipr' ],
 fasta_headers = { 'gisaid' : [ 'accession', 'strain', 'isolate_id', 'locus', 'passage', 'submitting_lab' ],
                   'fauna' : [ 'strain', 'virus', 'accession', 'collection_date', 'region', 'country', 'division', 'location', 'passage', 'source', 'age' ],
                   'vipr': [ 'accession', 'strain', 'locus', 'date', 'host', 'country', 'subtype', 'virus' ] }
+
+required_fields = { 'sequence' : { 'strain', 'date', 'accession', 'source', 'locus', 'sequence', 'isolate_id' } }
+optional_fields = { 'sequence': { 'strain', 'date', 'passage_category', 'source', 'submitting_lab',
+                                  'accession', 'host_age', 'locus', 'sequence', 'isolate_id' } }
