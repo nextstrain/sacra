@@ -19,6 +19,7 @@ def assert_valid_input(virus, datatype, path, outpath, infiles, source, subtype,
     assert source.lower() in cfg.sources[datatype], 'Invalid source for %s data %s' % (datatype, source)
     if subtype:
         assert subtype in cfg.subtypes[virus], 'Invalid subtype %s for virus %s' % (subtype, virus)
+    assert cfg.required_fields[datatype].issubset(cfg.optional_fields[datatype]), 'Not all required_fields for %s are listed in optional_fields.' % (datatype)
 
 def list_options(list_viruses, list_datatypes):
     if list_viruses and list_datatypes:
