@@ -162,7 +162,6 @@ class Dataset:
                 self.dataset[-1] = t
                 self.dataset.pop()
 
-
     def write(self, out_file, out_type='json'):
         '''
         Write self.dataset to an output file, default type is json
@@ -177,7 +176,7 @@ class Dataset:
         if out_type == 'json':
             with open(out_file, 'w+') as f:
                 json.dump(out, f, indent=1)
-        print '~~~~~ Wrote output in %s seconds ~~~~~' % (time.time()-t) 
+	    print '~~~~~ Wrote output in %s seconds ~~~~~' % (time.time()-t)
 
     def seed(self, datatype):
         '''
