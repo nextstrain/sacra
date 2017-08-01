@@ -32,16 +32,19 @@ class Dataset:
             self.metadata['subtype'] = kwargs['subtype']
 
         self.read_files(datatype, **kwargs)
-
-        for i in range(len(dataset)):
-            self.clean(dataset[i], i)
+        self.remove_seed()
+        t = time.time()
+        for i in range(len(self.dataset)):
+            self.clean(self.dataset[i], i)
         self.remove_bad_docs()
+        print '~~~~~ Cleaned %s documents in %s seconds ~~~~~' % (len(self.dataset), (time.time()-t))
 
     def read_files(self, datatype, infiles, ftype, **kwargs):
         '''
         Look at all infiles, and determine what file type they are. Based in that determination,
         import each file individually.
         '''
+        t = time.time()
         if datatype == 'sequence':
             fasta_suffixes = ['fasta', 'fa', 'f']
             # Set fields that will be used to key into fauna table, these should be unique for every document
@@ -51,6 +54,7 @@ class Dataset:
                     self.read_fasta(infile, datatype=datatype, **kwargs)
             else:
                 pass
+        print '~~~~~ Read %s files in %s seconds ~~~~~' % (len(infiles), (time.time()-t))
 
     def read_fasta(self, infile, source, path, datatype, **kwargs):
         '''
@@ -123,13 +127,6 @@ class Dataset:
         # Track which
         self.bad_docs = []
 
-        # Remove seed
-        # More efficient on large datasets than self.dataset = self.dataset[1:]
-        t = self.dataset[0]
-        self.dataset[0] = self.dataset[-1]
-        self.dataset[-1] = t
-        self.dataset = self.dataset[:-1]
-
         # Remove docs with bad keys or that are not of type dict
         try:
             assert type(doc) == dict
@@ -142,6 +139,8 @@ class Dataset:
             print 'Documents must be of type dict, this one is of type %s:\n%s' % (type(doc), doc)
             return
 
+        k = doc.keys()[0]
+
         # Use functions specified by cfg.py. Fxn defs in cleaning_functions.py
         if self.metadata['datatype'] == 'sequence':
             fxns = c.sequence_clean
@@ -149,7 +148,7 @@ class Dataset:
             fxns = c.titer_clean
 
         for fxn in fxns:
-            fxn(doc[key], key, self.bad_docs)
+            fxn(doc[k], key, self.bad_docs)
 
     def remove_bad_docs(self):
 
@@ -169,7 +168,7 @@ class Dataset:
         Write self.dataset to an output file, default type is json
         '''
         print 'Writing dataset to %s' % (out_file)
-
+        t = time.time()
         out = {}
         for key in self.metadata.keys():
             out[key] = self.metadata[key]
@@ -178,14 +177,21 @@ class Dataset:
         if out_type == 'json':
             with open(out_file, 'w+') as f:
                 json.dump(out, f, indent=1)
+        print '~~~~~ Wrote output in %s seconds ~~~~~' % (time.time()-t) 
 
     def seed(self, datatype):
         '''
         Make an empty entry in dataset that has all the necessary keys, acts as a merge filter
         '''
-        if datatype == 'sequence':
-            seed = {'seed' : { header : None for header in self.fasta_headers }}
-            seed['seed']['sequence'] = None
-            self.dataset.append(seed)
-        else:
-            pass
+        seed = {'seed' : { field : None for field in cfg.optional_fields[datatype] }}
+        seed['seed']['sequence'] = None
+        print "Seeding with:"
+        print seed
+        self.dataset.append(seed)
+
+    def remove_seed(self):
+        # More efficient on large datasets than self.dataset = self.dataset[1:]
+        t = self.dataset[0]
+        self.dataset[0] = self.dataset[-1]
+        self.dataset[-1] = t
+        self.dataset = self.dataset[:-1]
