@@ -14,6 +14,7 @@ Python 2.7
 ## Acceptable file types
 Sequence data:
 * .fasta
+
 Titer data:
 
 Virus data:
@@ -24,4 +25,35 @@ With a file named `gisaid_test.fasta` in the `data/` directory, a test run of sa
 `python src/run.py --infiles gisaid_test.fasta --source GISAID --test`
 This will write a JSON to the `output` directory.
 
-If uploading multiple files is necessary, the call can be altered as `python src/run.py --infiles split_file_1.fasta split_file_2.fasta --source gisaid --test`.
+If uploading multiple files is necessary, the call can be altered to: `python src/run.py --infiles split_file_1.fasta split_file_2.fasta --source gisaid --test`.
+
+## Explanation of options
+- `-v`, `--virus`:
+  - Virus species that will be processed in the dataset run. To avoid errors, this should be present in `src/cfg.py`.
+  - _Default:_ `seasonal_flu`
+- `-d`, `--datatype`:
+  - Type of data that will be processed (i.e. sequence, titer, epi). To avoid errors, this should be present in `src/cfg.py`
+  - _Default:_ `sequence`
+- `-p`, `--path`:
+  - Path to directory containing input files.
+  - _Default:_ `data/`
+- `-o`, `--outpath`:
+  - Path to directory where output files will be written.
+  - _Default:_ `output/`
+- `-i`, `--infiles`:
+  - Filenames that will be handled in a single Sacra run. To avoid errors, make sure that all listed files are of the same filetype (see below).
+- `--ftype`:
+  - Type of file to be processed. Supported filetypes need to be listed in `src/cfg.py`.
+  - _Options:_ `fasta`
+  - _Default:_ `fasta`
+- `--source`:
+  - Source from which the data came. Used in `src/cfg.py` to specify parameters specific to a given source (i.e. order of metadata in a FASTA header)
+- `--subtype`:
+  - Subtype of a given virus, if known.
+- `--output_type`:
+  - Type of output file that will be written.
+  - _Default:_ `json`
+-  `--list_viruses`:
+  - Lists all supported viruses and exits.
+- `--list_datatypes`:
+  - Lists all supported datatypes and exits.
