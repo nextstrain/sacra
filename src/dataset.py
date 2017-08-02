@@ -86,9 +86,9 @@ class Dataset:
                 for ind in self.index_fields:
                     try:
                         index.append(data[ind])
-                        out.append({":".join(index): data})
                     except:
                         pass
+                out.append({":".join(index): data})
 
         # Merge the formatted dictionaries to self.dataset()
         print 'Fixing names for new documents'
