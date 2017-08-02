@@ -25,5 +25,8 @@ required_fields = { 'sequence' : { 'strain', 'date', 'accession', 'source', 'loc
 optional_fields = { 'sequence': { 'strain', 'date', 'passage_category', 'source', 'submitting_lab',
                                   'accession', 'host_age', 'locus', 'sequence', 'isolate_id' } }
 
+
+### Mappings used by cleaning functions ###
+# Used in strain name formatting
 strain_fix_fname = { 'seasonal_flu' : 'source-data/flu_strain_name_fix.tsv' }
 label_fix_fname = { 'seasonal_flu' : 'source-data/flu_fix_location_label.tsv' }

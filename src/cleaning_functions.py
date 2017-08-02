@@ -59,7 +59,6 @@ def fix_submitting_lab(doc, key, remove, *args):
         remove.append(key)
 
 def fix_age(doc, *args):
-    # TODO
     '''
     Combine gisaid age information into one age field
     '''
@@ -155,7 +154,6 @@ def format_names(docs, virus):
             doc[key]['strain'] = fix_name(doc[key]['strain'], fix_whole_name, label_to_fix)[0]
 
 def fix_name(name, fix_whole_name, label_to_fix):
-    # TODO
     '''
     Fix strain names
     '''

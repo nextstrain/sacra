@@ -37,17 +37,17 @@ def list_options(list_viruses, list_datatypes):
 if __name__=="__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('-v', '--virus', default='seasonal_flu', type=str, help='virus type to be processed; default is seasonal_flu')
-    parser.add_argument('--datatype', default='sequence', type=str, help='type of data being input; default is \"sequence\", other options are \"virus\" or \"titer\"')
-    parser.add_argument('-p', '--path', default='data/', type=str, help='path to input file, default is \"data/\"')
+    parser.add_argument('-d', '--datatype', default='sequence', type=str, help='type of data being input; default is \"sequence\", other options are \"virus\" or \"titer\"')
+    parser.add_argument('-p', '--path', default='data/', type=str, help='path to input file(s), default is \"data/\"')
     parser.add_argument('-o', '--outpath', default='output/', type=str, help='path to write output files; default is \"output/\"')
     parser.add_argument('-i', '--infiles', default=None, nargs='+', help='filename for file to be processed')
     parser.add_argument('--ftype', default='fasta', type=str, help='file type to be processed; default is fasta')
+    parser.add_argument('--source', default=None, type=str, help='data source')
+    parser.add_argument('--subtype', default=None, type=str, help='subtype of virus')
+    parser.add_argument('--output_type', default='json', type=str, help='type of file to be written')
     parser.add_argument('--list_viruses', default=False, action='store_true', help='list all supported viruses and exit')
     parser.add_argument('--list_datatypes', default=False,  action='store_true', help='list all supported datatypes and exit')
-    parser.add_argument('--source', default=None, type=str, help='data source')
-    parser.add_argument('--subtype', default=None, type=str, help='subtype ')
     parser.add_argument('--test', default=False, action='store_true', help='test run for debugging') # Remove this at some point.
-    parser.add_argument('--output_type', default='json', type=str, help='type of file to be written')
     args = parser.parse_args()
 
     list_options(args.list_viruses, args.list_datatypes)
