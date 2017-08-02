@@ -2,6 +2,7 @@ from dataset import Dataset
 import cfg as cfg
 import argparse
 import os, sys
+sys.path.append('')
 
 def assert_valid_input(virus, datatype, path, outpath, infiles, source, subtype, ftype, **kwargs):
     '''

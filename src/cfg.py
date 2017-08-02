@@ -24,3 +24,6 @@ fasta_headers = { 'gisaid' : [ 'accession', 'strain', 'isolate_id', 'locus', 'pa
 required_fields = { 'sequence' : { 'strain', 'date', 'accession', 'source', 'locus', 'sequence', 'isolate_id' } }
 optional_fields = { 'sequence': { 'strain', 'date', 'passage_category', 'source', 'submitting_lab',
                                   'accession', 'host_age', 'locus', 'sequence', 'isolate_id' } }
+
+strain_fix_fname = { 'seasonal_flu' : 'source-data/flu_strain_name_fix.tsv' }
+label_fix_fname = { 'seasonal_flu' : 'source-data/flu_fix_location_label.tsv' }

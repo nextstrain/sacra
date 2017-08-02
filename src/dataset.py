@@ -1,6 +1,7 @@
 import os, time, datetime, csv, sys, json
 import cfg
 from Bio import SeqIO
+sys.path.append('')
 
 class Dataset:
     '''
@@ -30,6 +31,9 @@ class Dataset:
         self.dataset = []
         if 'subtype' in kwargs.keys():
             self.metadata['subtype'] = kwargs['subtype']
+
+        # Track which documents should be removed
+        self.bad_docs = []
 
         self.read_files(datatype, **kwargs)
         self.remove_seed()
@@ -61,6 +65,7 @@ class Dataset:
         Take a fasta file and a list of information contained in its headers
         and build a dataset object from it.
         '''
+        import cleaning_functions as cf
         print 'Reading in %s FASTA from %s%s.' % (source,path,infile)
         self.fasta_headers = cfg.fasta_headers[source.lower()]
         self.seed(datatype)
@@ -86,15 +91,20 @@ class Dataset:
                         pass
 
         # Merge the formatted dictionaries to self.dataset()
-        print "Merging input FASTA to %s documents." % (len(out))
+        print 'Fixing names for new documents'
+        t = time.time()
+        cf.format_names(out, self.metadata['virus'])
+        print '~~~~~ Fixed names in %s seconds ~~~~~' % (time.time()-t)
+
+        print 'Merging input FASTA to %s documents.' % (len(out))
         for doc in out:
             try:
-                assert type(doc) == dict
+                assert isinstance(doc, dict)
             except:
                 print 'WARNING: Cannot merge doc of type %s: %s' % (type(doc), (str(doc)[:75] + '..') if len(str(doc)) > 75 else str(doc))
                 pass
             self.merge(doc)
-        print "Successfully merged %s documents. Done reading %s." % (len(self.dataset)-1, infile)
+        print 'Successfully merged %s documents. Done reading %s.' % (len(self.dataset)-1, infile)
 
 
     def read_xml(self):
@@ -105,31 +115,18 @@ class Dataset:
 
     def merge(self, data):
         '''
-        Make sure all new entries to the dataset have matching keys
+        Make sure all new entries to the dataset have formatted names
         '''
-        match = True
-        indices = data.keys()
-        for doc in indices:
-            for key in data[doc]:
-                if key not in self.dataset[0]['seed'].keys():
-                    print('Error adding ' + key + ' to dataset, keys don\'t match.')
-                    match = False
-
-        if match:
-            self.dataset.append(data)
+        self.dataset.append(data)
 
     def clean(self, doc, key):
         '''
         Take a document and return a canonicalized version of that document
         # TODO: Incorporate all the necessary cleaning functions
         '''
-        import cfg as c
-        # Track which
-        self.bad_docs = []
-
         # Remove docs with bad keys or that are not of type dict
         try:
-            assert type(doc) == dict
+            assert isinstance(doc, dict)
             try:
                 assert len(doc.keys()) == 1
             except:
@@ -143,18 +140,18 @@ class Dataset:
 
         # Use functions specified by cfg.py. Fxn defs in cleaning_functions.py
         if self.metadata['datatype'] == 'sequence':
-            fxns = c.sequence_clean
+            fxns = cfg.sequence_clean
         elif self.metadata['datatype'] == 'titer':
-            fxns = c.titer_clean
+            fxns = cfg.titer_clean
 
         for fxn in fxns:
-            fxn(doc[k], key, self.bad_docs)
+            fxn(doc[k], key, self.bad_docs, self.metadata['virus'])
 
     def remove_bad_docs(self):
 
         # Not working because of key errors, they should be ints
         if self.bad_docs != []:
-            print self.bad_docs
+            print 'Documents that need to be removed : %s ' % (self.bad_docs)
             self.bad_docs = self.bad_docs.sort().reverse()
             for key in self.bad_docs:
                 t = self.dataset[key]
@@ -184,7 +181,7 @@ class Dataset:
         '''
         seed = {'seed' : { field : None for field in cfg.optional_fields[datatype] }}
         seed['seed']['sequence'] = None
-        print "Seeding with:"
+        print 'Seeding with:'
         print seed
         self.dataset.append(seed)
 

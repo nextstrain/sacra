@@ -1,4 +1,7 @@
 import re, sys
+import cfg
+import csv
+sys.path.append('')
 # Cleaning functions that will clean the data in a dataset object.
 # These are kept separate from class functions to make it easier for the user to
 # add their own functions specific to their own data.
@@ -12,7 +15,7 @@ import re, sys
 # Cleaning functions #
 ######################
 
-def fix_accession(doc, key, remove):
+def fix_accession(doc, key, remove, *args):
     '''
     fix errors that can arise with accession field
     '''
@@ -24,30 +27,30 @@ def fix_accession(doc, key, remove):
         else:
             doc['accession'] = 'epi' + doc['accession']
 
-def fix_sequence(doc, key, remove):
+def fix_sequence(doc, key, remove, *args):
     if 'sequence' in doc and doc['sequence'] is not None:
         doc['sequence'] = doc['sequence'].upper()
     else:
         remove.append(key)
 
-def fix_locus(doc, key, remove):
+def fix_locus(doc, key, remove, *args):
     if 'locus' in doc and doc['locus'] is not None:
         doc['locus'] = doc['locus'].lower()
     else:
         remove.append(key)
 
-def fix_strain(doc, key, remove):
+def fix_strain(doc, key, remove, *args):
     pass
 
-def fix_isolate_id(doc, key, remove):
+def fix_isolate_id(doc, key, remove, *args):
     pass
 
-def fix_passage(doc, key, remove):
+def fix_passage(doc, key, remove, *args):
     # This will be determined by whether we need egg/cell or the specific
     # TODO: Talk to Trevor about this.
     pass
 
-def fix_submitting_lab(doc, key, remove):
+def fix_submitting_lab(doc, key, remove, *args):
     if 'submitting_lab' in doc and doc['submitting_lab'] is not None:
         if doc['submitting_lab'] == 'CentersforDiseaseControlandPrevention':
             doc['submitting_lab'] = 'CentersForDiseaseControlAndPrevention'
@@ -139,18 +142,19 @@ def camelcase_to_snakecase(name):
             s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
             return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower().replace(" ", "")
 
-#################################
-# Functions left to incorporate #
-#################################
+################################
+# Strain name fixing functions #
+################################
 
-def define_location_fixes(self, fname):
-    # TODO
-    reader = csv.DictReader(filter(lambda row: row[0]!='#', open(fname)), delimiter='\t')
-    self.label_to_fix = {}
-    for line in reader:
-        self.label_to_fix[line['label'].decode('unicode-escape').replace(' ', '').lower()] = line['fix']
+def format_names(docs, virus):
+    fix_whole_name = define_strain_fixes(cfg.strain_fix_fname[virus])
+    label_to_fix = define_location_fixes(cfg.label_fix_fname[virus])
+    for doc in docs:
+        # Fix this when switching docs to dict
+        for key in doc:
+            doc[key]['strain'] = fix_name(doc[key]['strain'], fix_whole_name, label_to_fix)[0]
 
-def fix_name(self, name):
+def fix_name(name, fix_whole_name, label_to_fix):
     # TODO
     '''
     Fix strain names
@@ -158,17 +162,17 @@ def fix_name(self, name):
     # replace all accents with ? mark
     original_name = name.encode('ascii', 'replace')
     # Replace whole strain names
-    name = self.replace_strain_name(original_name, self.fix_whole_name)
+    name = replace_strain_name(original_name, fix_whole_name)
     name = name.replace('H1N1', '').replace('H5N6', '').replace('H3N2', '').replace('Human', '')\
         .replace('human', '').replace('//', '/').replace('.', '').replace(',', '').replace('&', '').replace(' ', '')\
         .replace('\'', '').replace('>', '').replace('-like', '').replace('+', '')
     split_name = name.split('/')
     # check location labels in strain names for fixing
     for index, label in enumerate(split_name):
-        if label.replace(' ', '').lower() in self.label_to_fix:
-            split_name[index] = self.label_to_fix[label.replace(' ', '').lower()]
+        if label.replace(' ', '').lower() in label_to_fix:
+            split_name[index] = label_to_fix[label.replace(' ', '').lower()]
     name = '/'.join(split_name)
-    name = self.flu_fix_patterns(name)
+    name = flu_fix_patterns(name)
 
     # Strip leading zeroes, change all capitalization location field to title case
     split_name = name.split('/')
@@ -180,8 +184,33 @@ def fix_name(self, name):
     result_name = '/'.join(split_name).strip()
     return result_name, original_name
 
-def flu_fix_patterns(self, name):
-    # TODO
+def replace_strain_name(original_name, fixes={}):
+    '''
+    return the new strain name that will replace the original
+    '''
+    if original_name in fixes:
+        return fixes[original_name]
+    else:
+        return original_name
+
+def define_strain_fixes(fname):
+    '''
+    Open strain name fixing files and define corresponding dictionaries
+    '''
+    reader = csv.DictReader(filter(lambda row: row[0]!='#', open(fname)), delimiter='\t')
+    fix_whole_name = {}
+    for line in reader:
+        fix_whole_name[line['label'].decode('unicode-escape')] = line['fix']
+    return fix_whole_name
+
+def define_location_fixes(fname):
+    reader = csv.DictReader(filter(lambda row: row[0]!='#', open(fname)), delimiter='\t')
+    label_to_fix = {}
+    for line in reader:
+        label_to_fix[line['label'].decode('unicode-escape').replace(' ', '').lower()] = line['fix']
+    return label_to_fix
+
+def flu_fix_patterns(name):
     # various name patterns that need to be fixed
     # capitalization of virus type
     if re.match(r'([a|b])([\w\s\-/]+)', name):  #b/sydney/508/2008    B/sydney/508/2008
@@ -224,6 +253,12 @@ def flu_fix_patterns(self, name):
         else:
             name = re.match(r'([\w\s\-/]+)/([0-9][0-9])$', name).group(1) + "/19" + year
     return name
+
+
+#################################
+# Functions left to incorporate #
+#################################
+
 
 def format_country(self, v):
     # TODO
