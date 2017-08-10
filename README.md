@@ -13,11 +13,12 @@ Python 2.7
 
 ## Acceptable file types
 Sequence data:
-* .fasta
+* fasta
+* fasta + tsv
+* json
+* sacra output json
 
 Titer data:
-
-Virus data:
 
 ## How to run
 
@@ -50,10 +51,12 @@ If uploading multiple files is necessary, the call can be altered to: `python sr
   - Source from which the data came. Used in `src/cfg.py` to specify parameters specific to a given source (i.e. order of metadata in a FASTA header)
 - `--subtype`:
   - Subtype of a given virus, if known.
-- `--output_type`:
-  - Type of output file that will be written.
-  - _Default:_ `json`
 -  `--list_viruses`:
   - Lists all supported viruses and exits.
 - `--list_datatypes`:
   - Lists all supported datatypes and exits.
+
+# Datasets
+
+
+# `cfg.py` and `cleaning_functions.py`
