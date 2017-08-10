@@ -25,12 +25,10 @@ class Dataset:
 
         ex. [ {date: 2012-06-11, location: Idaho, sequence: GATTACA}, {date: 2016-06-16, location: Oregon, sequence: CAGGGCCTCCA}, {date: 1985-02-22, location: Brazil, sequence: BANANA} ]
     '''
-    def __init__(self, datatype, virus, **kwargs):
+    def __init__(self, datatype, virus, outpath, **kwargs):
         # Wrappers for data, described in class description
         self.metadata = {'datatype': datatype, 'virus': virus}
-        self.dataset = []
-        if 'subtype' in kwargs.keys():
-            self.metadata['subtype'] = kwargs['subtype']
+        self.dataset = {}
 
         # Track which documents should be removed
         self.bad_docs = []
@@ -38,10 +36,11 @@ class Dataset:
         self.read_files(datatype, **kwargs)
         self.remove_seed()
         t = time.time()
-        for i in range(len(self.dataset)):
-            self.clean(self.dataset[i], i)
+        for key in self.dataset.keys():
+            self.clean(key, self.dataset[key])
         self.remove_bad_docs()
         print '~~~~~ Cleaned %s documents in %s seconds ~~~~~' % (len(self.dataset), (time.time()-t))
+        self.write('%s%s_%s.json' % (outpath, virus, datatype))
 
     def read_files(self, datatype, infiles, ftype, **kwargs):
         '''
@@ -52,7 +51,7 @@ class Dataset:
         if datatype == 'sequence':
             fasta_suffixes = ['fasta', 'fa', 'f']
             # Set fields that will be used to key into fauna table, these should be unique for every document
-            self.index_fields = ['accession','locus']
+            self.index_fields = ['accession']
             if ftype.lower() in fasta_suffixes:
                 for infile in infiles:
                     self.read_fasta(infile, datatype=datatype, **kwargs)
@@ -103,7 +102,8 @@ class Dataset:
             except:
                 print 'WARNING: Cannot merge doc of type %s: %s' % (type(doc), (str(doc)[:75] + '..') if len(str(doc)) > 75 else str(doc))
                 pass
-            self.merge(doc)
+            assert len(doc.keys()) == 1, 'More than 1 key in %s' % (doc)
+            self.merge(doc.keys()[0], doc[doc.keys()[0]])
         print 'Successfully merged %s documents. Done reading %s.' % (len(self.dataset)-1, infile)
 
 
@@ -113,13 +113,13 @@ class Dataset:
         '''
         return
 
-    def merge(self, data):
+    def merge(self, key, data):
         '''
         Make sure all new entries to the dataset have formatted names
         '''
-        self.dataset.append(data)
+        self.dataset[key] = data
 
-    def clean(self, doc, key):
+    def clean(self, key, doc):
         '''
         Take a document and return a canonicalized version of that document
         # TODO: Incorporate all the necessary cleaning functions
@@ -127,11 +127,6 @@ class Dataset:
         # Remove docs with bad keys or that are not of type dict
         try:
             assert isinstance(doc, dict)
-            try:
-                assert len(doc.keys()) == 1
-            except:
-                print 'Documents should have eactly 1 key, this has %s: %s' % (len(doc.keys()), doc)
-                return
         except:
             print 'Documents must be of type dict, this one is of type %s:\n%s' % (type(doc), doc)
             return
@@ -145,7 +140,7 @@ class Dataset:
             fxns = cfg.titer_clean
 
         for fxn in fxns:
-            fxn(doc[k], key, self.bad_docs, self.metadata['virus'])
+            fxn(doc, key, self.bad_docs, self.metadata['virus'])
 
     def remove_bad_docs(self):
 
@@ -159,7 +154,7 @@ class Dataset:
                 self.dataset[-1] = t
                 self.dataset.pop()
 
-    def write(self, out_file, out_type='json'):
+    def write(self, out_file):
         '''
         Write self.dataset to an output file, default type is json
         '''
@@ -170,24 +165,23 @@ class Dataset:
             out[key] = self.metadata[key]
         out['data'] = self.dataset
 
-        if out_type == 'json':
-            with open(out_file, 'w+') as f:
-                json.dump(out, f, indent=1)
+        with open(out_file, 'w+') as f:
+            json.dump(out, f, indent=1)
 	    print '~~~~~ Wrote output in %s seconds ~~~~~' % (time.time()-t)
 
     def seed(self, datatype):
         '''
         Make an empty entry in dataset that has all the necessary keys, acts as a merge filter
         '''
-        seed = {'seed' : { field : None for field in cfg.optional_fields[datatype] }}
-        seed['seed']['sequence'] = None
+        seed = { field : None for field in cfg.optional_fields[datatype] }
+        seed['sequence'] = None
         print 'Seeding with:'
         print seed
-        self.dataset.append(seed)
+        self.dataset['seed'] = seed
 
     def remove_seed(self):
         # More efficient on large datasets than self.dataset = self.dataset[1:]
-        t = self.dataset[0]
-        self.dataset[0] = self.dataset[-1]
-        self.dataset[-1] = t
-        self.dataset = self.dataset[:-1]
+        self.dataset.pop('seed',None)
+        # self.dataset[0] = self.dataset[-1]
+        # self.dataset[-1] = t
+        # self.dataset = self.dataset[:-1]
