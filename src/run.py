@@ -44,7 +44,6 @@ if __name__=="__main__":
     parser.add_argument('--ftype', default='fasta', type=str, help='file type to be processed; default is fasta')
     parser.add_argument('--source', default=None, type=str, help='data source')
     parser.add_argument('--subtype', default=None, type=str, help='subtype of virus')
-    parser.add_argument('--output_type', default='json', type=str, help='type of file to be written')
     parser.add_argument('--list_viruses', default=False, action='store_true', help='list all supported viruses and exit')
     parser.add_argument('--list_datatypes', default=False,  action='store_true', help='list all supported datatypes and exit')
     parser.add_argument('--test', default=False, action='store_true', help='test run for debugging') # Remove this at some point.
@@ -55,5 +54,3 @@ if __name__=="__main__":
 
     if args.test:
         D = Dataset(**args.__dict__)
-        testout = args.outpath + 'test.json'
-        D.write(testout)
