@@ -21,6 +21,7 @@ fasta_headers = { 'gisaid' : [ 'accession', 'strain', 'isolate_id', 'locus', 'pa
                   'fauna' : [ 'strain', 'virus', 'accession', 'collection_date', 'region', 'country', 'division', 'location', 'passage', 'source', 'age' ],
                   'vipr': [ 'accession', 'strain', 'locus', 'date', 'host', 'country', 'subtype', 'virus' ] }
 
+metadata_fields = set( [ 'isolate_id', 'subtype', 'submitting_lab', 'passage_history', 'location', 'collection_date' ] )
 required_fields = { 'sequence' : { 'strain', 'date', 'accession', 'source', 'locus', 'sequence', 'isolate_id' } }
 optional_fields = { 'sequence': { 'strain', 'date', 'passage_category', 'source', 'submitting_lab',
                                   'accession', 'host_age', 'locus', 'sequence', 'isolate_id' } }
