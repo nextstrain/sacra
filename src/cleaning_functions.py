@@ -97,8 +97,6 @@ def determine_passage_category(doc, *args):
     Separate passage into general categories, update document with determined category or None
     Regex borrowed from McWhite et al. 2016
     '''
-    if 'passage' in doc:
-        print doc['passage']
     if 'passage' in doc and doc['passage'] is not None:
         passage = doc['passage'].upper()
         passage_category = "undetermined"

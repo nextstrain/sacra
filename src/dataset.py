@@ -30,10 +30,12 @@ class Dataset:
         self.metadata = {'datatype': datatype, 'virus': virus}
         self.dataset = {}
 
+        self.read_metadata(**kwargs)
+
         # Track which documents should be removed
         self.bad_docs = []
 
-        self.read_files(datatype, **kwargs)
+        self.read_data_files(datatype, **kwargs)
         self.remove_seed()
         t = time.time()
         for key in self.dataset.keys():
@@ -42,7 +44,7 @@ class Dataset:
         print '~~~~~ Cleaned %s documents in %s seconds ~~~~~' % (len(self.dataset), (time.time()-t))
         self.write('%s%s_%s.json' % (outpath, virus, datatype))
 
-    def read_files(self, datatype, infiles, ftype, **kwargs):
+    def read_data_files(self, datatype, infiles, ftype, **kwargs):
         '''
         Look at all infiles, and determine what file type they are. Based in that determination,
         import each file individually.
@@ -107,11 +109,20 @@ class Dataset:
         print 'Successfully merged %s documents. Done reading %s.' % (len(self.dataset)-1, infile)
 
 
-    def read_xml(self):
+    def read_metadata(self, path, metafile, **kwargs):
         '''
         Read an xml file to a metadata dataset
         '''
-        return
+        if metafile is not None:
+            import pandas as pd
+            xl = pd.ExcelFile(path + metafile)
+            meta = xl.parse("Tabelle1")
+            print meta.columns
+            meta.columns = [x.lower() for x in meta.columns]
+            print meta.columns
+            for index, row in meta.iterrows():
+                # TODO: this
+                pass
 
     def merge(self, key, data):
         '''
