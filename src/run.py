@@ -41,7 +41,7 @@ if __name__=="__main__":
     parser.add_argument('-p', '--path', default='data/', type=str, help='path to input file(s), default is \"data/\"')
     parser.add_argument('-m', '--metafile', default=None, type=str, help='name of file containing virus metadata')
     parser.add_argument('-o', '--outpath', default='output/', type=str, help='path to write output files; default is \"output/\"')
-    parser.add_argument('-i', '--infiles', default=None, nargs='+', help='filename for file to be processed')
+    parser.add_argument('-i', '--infiles', default=None, nargs='+', help='filename(s) to be processed')
     parser.add_argument('--ftype', default='fasta', type=str, help='file type to be processed; default is fasta')
     parser.add_argument('--source', default=None, type=str, help='data source')
     parser.add_argument('--subtype', default=None, type=str, help='subtype of virus')
