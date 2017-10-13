@@ -42,6 +42,7 @@ class Dataset:
             self.clean(key, self.dataset[key])
         self.remove_bad_docs()
         print '~~~~~ Cleaned %s documents in %s seconds ~~~~~' % (len(self.dataset), (time.time()-t))
+        self.compile_virus_table()
         self.write('%s%s_%s.json' % (outpath, virus, datatype))
 
     def read_data_files(self, datatype, infiles, ftype, **kwargs):
@@ -175,6 +176,7 @@ class Dataset:
         for key in self.metadata.keys():
             out[key] = self.metadata[key]
         out['data'] = self.dataset
+        out['viruses'] = self.viruses
 
         with open(out_file, 'w+') as f:
             json.dump(out, f, indent=1)
@@ -196,3 +198,15 @@ class Dataset:
         # self.dataset[0] = self.dataset[-1]
         # self.dataset[-1] = t
         # self.dataset = self.dataset[:-1]
+
+    def compile_virus_table(self):
+        vs = {}
+        for virus in self.dataset.keys():
+            name = self.dataset[virus]['strain']
+            if name not in vs.keys():
+                vs[name] = {'strain' : name }
+            if 'accessions' in vs[name].keys():
+                vs[name]['accessions'].append(self.dataset[virus]['accession'])
+            else:
+                vs[name]['accessions'] = [self.dataset[virus]['accession']]
+        self.viruses = vs
