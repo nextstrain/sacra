@@ -1,0 +1,23 @@
+{
+  "datatype" : "sequence",
+  "virus" : "seasonal_flu",
+  "viruses" : {
+    "A/Example/0000/2017" : {
+      "accessions" : [
+        "1"
+      ]
+    }
+  },
+  "data" : {
+    "1" : {
+      "strain" : "A/Example/0000/2017",
+      "accession" : "1",
+      "locus" : "pb1",
+      "passage_category" : "cell",
+      "submitting_lab" : "centers_for_disease_control_and_prevention",
+      "age" : null,
+      "isolate_id" : "EPI_ISL_000000",
+      "sequence" : "CATCATCAT"
+    }
+  }
+}
