@@ -23,9 +23,7 @@ def fix_accession(doc, key, remove, *args):
         doc['accession'] = doc['accession'].encode('ascii', 'replace')
         doc['accession'] = doc['accession'].lower()
         if doc['accession'].startswith('epi'):
-            pass
-        else:
-            doc['accession'] = 'epi' + doc['accession']
+            doc['accession'] = doc['accession'][2:]
 
 def fix_sequence(doc, key, remove, *args):
     if 'sequence' in doc and doc['sequence'] is not None:
