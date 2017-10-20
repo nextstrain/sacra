@@ -43,7 +43,8 @@
         "accession1",
         "accession2",
         "accession3"
-      ]
+      ],
+      "publication_name" : "name"
     }
   }
 }
