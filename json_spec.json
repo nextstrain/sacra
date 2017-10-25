@@ -13,7 +13,7 @@
       "isolate_ids" : [
         "EPI_ISL_000000"
       ],
-      "lineage" : "h3n2, h1n1pdm, etc.",
+      "subtype" : "h3n2, h1n1pdm, etc.",
       "number_of_segments" : "8",
       "un_locode" : "US SEA; seems like a good location classification system"
     }
