@@ -42,7 +42,7 @@ class Dataset:
             self.clean(key, self.dataset[key])
         self.remove_bad_docs()
         print '~~~~~ Cleaned %s documents in %s seconds ~~~~~' % (len(self.dataset), (time.time()-t))
-        self.compile_virus_table()
+        self.compile_virus_table(**kwargs)
         self.write('%s%s_%s.json' % (outpath, virus, datatype))
 
     def read_data_files(self, datatype, infiles, ftype, **kwargs):
@@ -60,7 +60,7 @@ class Dataset:
                     self.read_fasta(infile, datatype=datatype, **kwargs)
             else:
                 pass
-        print '~~~~~ Read %s files in %s seconds ~~~~~' % (len(infiles), (time.time()-t))
+        print '~~~~~ Read %s file(s) in %s seconds ~~~~~' % (len(infiles), (time.time()-t))
 
     def read_fasta(self, infile, source, path, datatype, **kwargs):
         '''
@@ -199,9 +199,10 @@ class Dataset:
         # self.dataset[-1] = t
         # self.dataset = self.dataset[:-1]
 
-    def compile_virus_table(self):
+    def compile_virus_table(self, subtype, **kwargs):
         vs = {}
         for virus in self.dataset.keys():
+            # Initialize virus dict
             name = self.dataset[virus]['strain']
             if name not in vs.keys():
                 vs[name] = {'strain' : name }
@@ -209,4 +210,54 @@ class Dataset:
                 vs[name]['accessions'].append(self.dataset[virus]['accession'])
             else:
                 vs[name]['accessions'] = [self.dataset[virus]['accession']]
+
+            # Scrape virus host
+            # TODO: Resolve issues if there are different hosts
+            if 'host' not in self.dataset[virus].keys():
+                vs[name]['host'] = 'human'
+            elif self.dataset[virus]['host'] == None:
+                vs[name]['host'] = 'human'
+                self.dataset[virus].pop('host',None)
+            else:
+                vs[name]['host'] = name['host']
+                self.dataset[virus].pop('host',None)
+
+            # Scrape host age
+            # TODO: Resolve issues if there are different ages
+            if 'age' not in self.dataset[virus].keys():
+                vs[name]['host_age'] = None
+            elif self.dataset[virus]['age'] == None:
+                vs[name]['host_age'] = None
+                self.dataset[virus].pop('age',None)
+            else:
+                vs[name]['host_age'] = name['age']
+                self.dataset[virus].pop('age',None)
+
+            # Scrape subtype
+            if subtype != None:
+                vs[name]['subtype'] = subtype
+            elif ('subtype' in self.dataset[virus].keys()) and (self.dataset[virus]['subtype'] is not None):
+                vs[name]['subtype'] = self.dataset[virus]['subtype']
+                self.dataset[virus].pop('subtype', None)
+            else:
+                vs[name]['subtype'] == None
+
+        for name in vs.keys():
+            # Scrape number of segments
+            segments = set()
+            for a in vs[name]['accessions']:
+                segments.add(self.dataset[a]['locus'])
+            vs[name]['number_of_segments'] = len(segments)
+
+            # Scrape isolate ids
+            ids = set()
+            for a in vs[name]['accessions']:
+                ids.add(self.dataset[a]['isolate_id'])
+            vs[name]['isolate_ids'] = list(ids)
+
+            # Placeholder for un_locode
+            vs[name]['un_locode'] = 'placehoder'
+            # location = name.split('/')[1]
+            # vs[name]['un_locode'] = lookup_locode(location) TODO: Write this fxn
+
         self.viruses = vs
