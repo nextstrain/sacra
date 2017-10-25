@@ -43,7 +43,7 @@ class Dataset:
         self.remove_bad_docs()
         print '~~~~~ Cleaned %s documents in %s seconds ~~~~~' % (len(self.dataset), (time.time()-t))
         self.compile_virus_table(**kwargs)
-        self.write('%s%s_%s.json' % (outpath, virus, datatype))
+        self.build_references_table()
 
     def read_data_files(self, datatype, infiles, ftype, **kwargs):
         '''
@@ -177,6 +177,7 @@ class Dataset:
             out[key] = self.metadata[key]
         out['data'] = self.dataset
         out['viruses'] = self.viruses
+        out['references'] = self.references
 
         with open(out_file, 'w+') as f:
             json.dump(out, f, indent=1)
@@ -198,6 +199,10 @@ class Dataset:
         # self.dataset[0] = self.dataset[-1]
         # self.dataset[-1] = t
         # self.dataset = self.dataset[:-1]
+
+    def set_sequence_permissions(self, permissions, **kwargs):
+        for a in self.dataset:
+            self.dataset[a]['permissions'] = permissions
 
     def compile_virus_table(self, subtype, **kwargs):
         vs = {}
@@ -261,3 +266,43 @@ class Dataset:
             # vs[name]['un_locode'] = lookup_locode(location) TODO: Write this fxn
 
         self.viruses = vs
+
+    def build_references_table(self):
+        '''
+        This is a placeholder function right now, it will build a reference
+        table for each upload according to the spec:
+        {
+        "pubmed_id" : {
+          "authors" : [
+            "author1",
+            "author2",
+            "author3"
+          ],
+          "journal" : "journal name",
+          "date" : "publication date",
+          "accessions" : [
+            "accession1",
+            "accession2",
+            "accession3"
+          ],
+          "publication_name" : "name"
+        }
+        '''
+        refs = {
+        "pubmed_id" : {
+          "authors" : [
+            "author1",
+            "author2",
+            "author3"
+          ],
+          "journal" : "journal name",
+          "date" : "publication date",
+          "accessions" : [
+            "accession1",
+            "accession2",
+            "accession3"
+          ],
+          "publication_name" : "name"
+        } }
+
+        self.references = refs

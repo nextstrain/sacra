@@ -47,6 +47,7 @@ if __name__=="__main__":
     parser.add_argument('--subtype', default=None, type=str, help='subtype of virus')
     parser.add_argument('--list_viruses', default=False, action='store_true', help='list all supported viruses and exit')
     parser.add_argument('--list_datatypes', default=False,  action='store_true', help='list all supported datatypes and exit')
+    parser.add_argument('--permissions', default='public', help='permissions level for documents in JSON')
     parser.add_argument('--test', default=False, action='store_true', help='test run for debugging') # Remove this at some point.
     args = parser.parse_args()
 
@@ -55,3 +56,5 @@ if __name__=="__main__":
 
     if args.test:
         D = Dataset(**args.__dict__)
+        D.set_sequence_permissions(args.permissions)
+        D.write('%s%s_%s.json' % (args.outpath, args.virus, args.datatype))
