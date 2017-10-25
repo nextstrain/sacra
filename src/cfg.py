@@ -10,7 +10,7 @@ filetypes = [ 'fasta' ]
 ### Cleaning functions for different datatypes ###
 # Functions should be defined in cleaning_functions.py
 virus_clean = []
-sequence_clean = [ fix_accession, fix_sequence, fix_locus, fix_strain, fix_isolate_id, fix_passage, fix_submitting_lab, fix_age, determine_passage_category ]
+sequence_clean = [ fix_accession, fix_sequence, fix_locus, fix_strain, remove_isolate_id, fix_passage, fix_submitting_lab, fix_age, determine_passage_category ]
 
 ### Mappings used by sacra ###
 # Lists sources from which different datatypes come from

@@ -40,8 +40,9 @@ def fix_locus(doc, key, remove, *args):
 def fix_strain(doc, key, remove, *args):
     pass
 
-def fix_isolate_id(doc, key, remove, *args):
-    pass
+def remove_isolate_id(doc, key, remove, *args):
+    if 'isolate_id' in doc:
+        doc.pop('isolate_id', None)
 
 def fix_passage(doc, key, remove, *args):
     # This will be determined by whether we need egg/cell or the specific

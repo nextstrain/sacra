@@ -249,11 +249,11 @@ class Dataset:
                 segments.add(self.dataset[a]['locus'])
             vs[name]['number_of_segments'] = len(segments)
 
-            # Scrape isolate ids
-            ids = set()
-            for a in vs[name]['accessions']:
-                ids.add(self.dataset[a]['isolate_id'])
-            vs[name]['isolate_ids'] = list(ids)
+            # # Scrape isolate ids
+            # ids = set()
+            # for a in vs[name]['accessions']:
+            #     ids.add(self.dataset[a]['isolate_id'])
+            # vs[name]['isolate_ids'] = list(ids)
 
             # Placeholder for un_locode
             vs[name]['un_locode'] = 'placehoder'
