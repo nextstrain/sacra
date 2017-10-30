@@ -1,12 +1,13 @@
 {
-  "datatype" : "sequence or titer",
-  "virus" : "seasonal_flu, dengue, ebola, etc.",
-  "viruses" : {
-    "A/Example/0000/2017" : {
+  "dbinfo" : {
+    "virus" : "seasonal_flu, dengue, ebola, etc."
+  },
+  "viruses" : [
+    {
+      "strain" : "A/Example/0000/2017",
       "accessions" : [
         "accession1",
-        "accession2",
-        "accession3"
+        "etc."
       ],
       "host" : "human, probably",
       "host_age": 24,
@@ -14,9 +15,9 @@
       "number_of_segments" : "8",
       "un_locode" : "US SEA; seems like a good location classification system"
     }
-  },
-  "data" : {
-    "1" : {
+  ],
+  "sequences" : [
+    {
       "accession" : "accession1",
       "locus" : "pb1",
       "passage_category" : "cell",
@@ -25,22 +26,22 @@
       "security" : "public or private",
       "initial_upload_date" : "date of initial upload to gisaid/vipr/github/etc"
     }
-  },
-  "references" : {
-    "pubmed_id" : {
-      "authors" : [
-        "author1",
-        "author2",
-        "author3"
-      ],
-      "journal" : "journal name",
-      "date" : "publication date",
-      "accessions" : [
-        "accession1",
-        "accession2",
-        "accession3"
-      ],
-      "publication_name" : "name"
+  ],
+  "references" : [
+    {
+      "pubmed_id" : {
+        "authors" : [
+          "author1",
+          "etc."
+        ],
+        "journal" : "journal name",
+        "date" : "publication date",
+        "accessions" : [
+          "accession1",
+          "etc."
+        ],
+        "publication_name" : "name"
+      }
     }
-  }
+  ]
 }
