@@ -120,8 +120,9 @@ def determine_passage_category(doc, *args):
         elif re.search(r'UNKNOWN|UNDEFINED|NOT SPECIFIED|DIFFERENT ISOLATION SOURCES', passage):
             pass
         doc['passage_category'] = passage_category
-    else:
-        doc['passage_category'] = "undetermined"
+    # Remove this for all 'create' fxns
+    # else:
+    #     doc['passage_category'] = "undetermined"
 
     if 'passage' in doc:
         doc.pop('passage',None)
