@@ -57,9 +57,18 @@ class Dataset:
             self.index_fields = ['accession']
             if ftype.lower() in fasta_suffixes:
                 for infile in infiles:
+                    try:
+                        assert True in [ infile.endswith(s) for s in fasta_suffixes ]
+                    except:
+                        print "Can't recognize %s as a fasta file, make sure file suffix in in (%s)." % (infile, ", ".join(fasta_suffixes))
+                        pass
                     self.read_fasta(infile, datatype=datatype, **kwargs)
             else:
+                # TODO: Add Sacra JSON reading here
                 pass
+        else:
+            # TODO: Add titer reading here
+            pass
         print '~~~~~ Read %s file(s) in %s seconds ~~~~~' % (len(infiles), (time.time()-t))
 
     def read_fasta(self, infile, source, path, datatype, **kwargs):
@@ -189,16 +198,10 @@ class Dataset:
         '''
         seed = { field : None for field in cfg.optional_fields[datatype] }
         seed['sequence'] = None
-        print 'Seeding with:'
-        print seed
         self.dataset['seed'] = seed
 
     def remove_seed(self):
-        # More efficient on large datasets than self.dataset = self.dataset[1:]
         self.dataset.pop('seed',None)
-        # self.dataset[0] = self.dataset[-1]
-        # self.dataset[-1] = t
-        # self.dataset = self.dataset[:-1]
 
     def set_sequence_permissions(self, permissions, **kwargs):
         for a in self.dataset:
@@ -245,7 +248,7 @@ class Dataset:
                 vs[name]['subtype'] = self.dataset[virus]['subtype']
                 self.dataset[virus].pop('subtype', None)
             else:
-                vs[name]['subtype'] == None
+                vs[name]['subtype'] = None
 
         for name in vs.keys():
             # Scrape number of segments
