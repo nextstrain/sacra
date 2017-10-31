@@ -17,6 +17,7 @@ sys.path.append('')
 
 def fix_accession(doc, key, remove, *args):
     '''
+    Moved to cleaning_functions/fix/accession.py
     fix errors that can arise with accession field
     '''
     if 'accession' in doc and doc['accession'] is not None:
@@ -26,30 +27,48 @@ def fix_accession(doc, key, remove, *args):
             doc['accession'] = doc['accession'][2:]
 
 def fix_sequence(doc, key, remove, *args):
+    '''
+    Moved to cleaning_functions/fix/sequence.py
+    '''
     if 'sequence' in doc and doc['sequence'] is not None:
         doc['sequence'] = doc['sequence'].upper()
     else:
         remove.append(key)
 
 def fix_locus(doc, key, remove, *args):
+    '''
+    Moved to cleaning_functions/fix/locus.py
+    '''
     if 'locus' in doc and doc['locus'] is not None:
         doc['locus'] = doc['locus'].lower()
     else:
         remove.append(key)
 
 def fix_strain(doc, key, remove, *args):
+    '''
+    Moved to cleaning_functions/fix/strain.py
+    '''
     pass
 
 def remove_isolate_id(doc, key, remove, *args):
+    '''
+    Moved to cleaning_functions/drop/isolate_id.py
+    '''
     if 'isolate_id' in doc:
         doc.pop('isolate_id', None)
 
 def fix_passage(doc, key, remove, *args):
+    '''
+    Moved to cleaning_functions/fix/passage.py
+    '''
     # This will be determined by whether we need egg/cell or the specific
     # TODO: Talk to Trevor about this.
     pass
 
 def fix_submitting_lab(doc, key, remove, *args):
+    '''
+    Moved to cleaning_functions/fix/submitting_lab.py
+    '''
     if 'submitting_lab' in doc and doc['submitting_lab'] is not None:
         if doc['submitting_lab'] == 'CentersforDiseaseControlandPrevention':
             doc['submitting_lab'] = 'CentersForDiseaseControlAndPrevention'
@@ -59,6 +78,7 @@ def fix_submitting_lab(doc, key, remove, *args):
 
 def fix_age(doc, *args):
     '''
+    Moved to cleaning_functions/fix/age.py
     Combine gisaid age information into one age field
     '''
     if 'age' in doc.keys() and doc['age'] is not None:
@@ -93,6 +113,7 @@ def fix_age(doc, *args):
 
 def determine_passage_category(doc, *args):
     '''
+    Moved to cleaning_functions/create/passage_category.py
     Separate passage into general categories, update document with determined category or None
     Regex borrowed from McWhite et al. 2016
     '''
@@ -144,6 +165,8 @@ def camelcase_to_snakecase(name):
 ################################
 # Strain name fixing functions #
 ################################
+
+## Moved to cleaning_functions/fix/strain.py
 
 def format_names(docs, virus):
     fix_whole_name = define_strain_fixes(cfg.strain_fix_fname[virus])
