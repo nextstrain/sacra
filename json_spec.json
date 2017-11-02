@@ -17,7 +17,7 @@
       "gps" : null,
       "accessions" : [
         "LC325484"
-      ]      
+      ]
     }
   ],
   "sequences" : [
@@ -34,12 +34,12 @@
   ],
   "attributions" : [
     {
-      "attribution" : "black_et_al_2017"
+      "attribution" : "black_et_al_2017",
       "pubmed_id" : "null",
       "journal_or_source" : "github",
       "attribution_date" : "2017-03-15",
       "publication_name" : "Evolutionary analysis of USVI Zika epidemic",
-      "url" : "https://github.com/blab/zika-usvi",      
+      "url" : "https://github.com/blab/zika-usvi",
       "authors" : [
         "Allison Black",
         "Trevor Bedford"
