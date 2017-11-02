@@ -1,16 +1,15 @@
 from dataset import Dataset
 import cfg as cfg
 import argparse
-import os, sys
+import os, sys, time
 sys.path.append('')
 
-def assert_valid_input(virus, datatype, path, outpath, infiles, source, subtype, ftype, **kwargs):
+def assert_valid_input(virus, datatype, path, outpath, infiles, source, subtype, **kwargs):
     '''
     Make sure that all the given arguments are valid.
     '''
     assert virus.lower() in cfg.viruses, 'Unknown virus, currently supported viruses are: %s' % (", ".join(cfg.viruses))
     assert datatype.lower() in cfg.datatypes, 'Unknown datatype, currently supported datatypes are: %s' % (", ".join(cfg.datatypes))
-    assert ftype.lower() in cfg.filetypes, 'Unknown filetype, currently supported filetypes are: %s' % (", ".join(cfg.filetypes))
     assert os.path.isdir(path), 'Invalid input path: %s' % (path)
     if not os.path.isdir(outpath):
         print "Writing %s" % (path)
@@ -42,7 +41,6 @@ if __name__=="__main__":
     parser.add_argument('-m', '--metafile', default=None, type=str, help='name of file containing virus metadata')
     parser.add_argument('-o', '--outpath', default='output/', type=str, help='path to write output files; default is \"output/\"')
     parser.add_argument('-i', '--infiles', default=None, nargs='+', help='filename(s) to be processed')
-    parser.add_argument('--ftype', default='fasta', type=str, help='file type to be processed; default is fasta')
     parser.add_argument('--source', default=None, type=str, help='data source')
     parser.add_argument('--subtype', default=None, type=str, help='subtype of virus')
     parser.add_argument('--list_viruses', default=False, action='store_true', help='list all supported viruses and exit')
@@ -56,5 +54,16 @@ if __name__=="__main__":
 
     if args.test:
         D = Dataset(**args.__dict__)
+        # TODO: Add abstraction layer to read_data_files()
+        # for read_and_clean_file()
+        D.read_metadata(**args.__dict__)
+        D.read_data_files(**args.__dict__)
+        t = time.time()
+        for key in D.dataset.keys():
+            D.clean(key, D.dataset[key])
+        D.remove_bad_docs()
+        print '~~~~~ Cleaned %s documents in %s seconds ~~~~~' % (len(D.dataset), (time.time()-t))
+        D.compile_virus_table(**args.__dict__)
+        D.build_references_table()
         D.set_sequence_permissions(args.permissions)
         D.write('%s%s_%s.json' % (args.outpath, args.virus, args.datatype))
