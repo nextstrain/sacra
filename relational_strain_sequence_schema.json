@@ -31,7 +31,8 @@
       "locus" : "genome",
       "submitting_lab" : "Bedford lab",
       "sharing" : "public",
-      "url" : "https://github.com/blab/zika-usvi/blob/master/data/fastas/zika_usvi_good.fasta"
+      "url" : "https://github.com/blab/zika-usvi/blob/master/data/fastas/zika_usvi_good.fasta",
+      "attribution" : "black_2017_genetic",
       "sequence" : "gattag...",
       "version" : 1,
       "created" : "2017-03-28-15-33",
@@ -40,7 +41,7 @@
   ],
   "attributions" : [
     {
-      "attribution" : "black_et_al_2017",
+      "attribution" : "black_2017_genetic",
       "owner" : "bpotter",
       "pubmed_id" : "null",
       "source" : "github",
