@@ -2,6 +2,8 @@ import os, time, datetime, csv, sys, json
 import cfg
 from Bio import SeqIO
 sys.path.append('')
+# sys.path.append('src/')
+# import cleaning_functions as c
 
 class Dataset:
     '''
@@ -29,57 +31,88 @@ class Dataset:
         # Wrappers for data, described in class description
         self.metadata = {'datatype': datatype, 'virus': virus}
         self.dataset = {}
-
-        self.read_metadata(**kwargs)
-
         # Track which documents should be removed
         self.bad_docs = []
 
-        self.read_data_files(datatype, **kwargs)
-        self.remove_seed()
-        t = time.time()
-        for key in self.dataset.keys():
-            self.clean(key, self.dataset[key])
-        self.remove_bad_docs()
-        print '~~~~~ Cleaned %s documents in %s seconds ~~~~~' % (len(self.dataset), (time.time()-t))
-        self.compile_virus_table(**kwargs)
-        self.build_references_table()
-
-    def read_data_files(self, datatype, infiles, ftype, **kwargs):
+    def read_data_files(self, infiles, **kwargs):
         '''
-        Look at all infiles, and determine what file type they are. Based in that determination,
-        import each file individually.
+        Look at all infiles, and determine what file type they are. Based in that determination, import each file individually.
+        Files should be specified in the format:
+          filename[:<filetype>[:<source>]]
         '''
         t = time.time()
-        if datatype == 'sequence':
-            fasta_suffixes = ['fasta', 'fa', 'f']
-            # Set fields that will be used to key into fauna table, these should be unique for every document
-            self.index_fields = ['accession']
-            if ftype.lower() in fasta_suffixes:
-                for infile in infiles:
-                    try:
-                        assert True in [ infile.endswith(s) for s in fasta_suffixes ]
-                    except:
-                        print "Can't recognize %s as a fasta file, make sure file suffix in in (%s)." % (infile, ", ".join(fasta_suffixes))
-                        pass
-                    self.read_fasta(infile, datatype=datatype, **kwargs)
+        for infile in infiles:
+            filetype = self.determine_filetype(infile)
+            if filetype in ['fasta', 'delimited', 'excel', 'json']:
+                self.read_clean_reshape_merge(infile,filetype, **kwargs)
             else:
-                # TODO: Add Sacra JSON reading here
-                pass
-        else:
-            # TODO: Add titer reading here
-            pass
+                print "Could not read %s, unknown filetype"
+
         print '~~~~~ Read %s file(s) in %s seconds ~~~~~' % (len(infiles), (time.time()-t))
+
+    def determine_filetype(self, infile):
+        '''
+        Look at a file and determine what type of file it is.
+        '''
+        infile = infile.lower()
+        # Parse if infile format is specified by user
+        if len(infile.split(':')) > 1:
+            return infile.split(':')[1]
+
+        fasta_suffixes = ['fasta', 'fa', 'f']
+        csv_tsv_suffixes = ['csv', 'tsv', 'txt']
+        excel_suffixes = ['xls', 'xlsx']
+        json_suffixes = ['json']
+
+        if (True in [ infile.endswith(s) for s in fasta_suffixes ]):
+            return 'fasta'
+        elif (True in [ infile.endswith(s) for s in csv_tsv_suffixes ]):
+            return 'delimited'
+        elif (True in [ infile.endswith(s) for s in excel_suffixes ]):
+            return 'excel'
+        elif (True in [ infile.endswith(s) for s in json_suffixes ]):
+            return 'json'
+        else:
+            return 'unknown'
+
+    def read_clean_reshape_merge(self, infile, ftype, **kwargs):
+        '''
+        infile:file -> docs:list(dict) -> reshaped_docs:set(dict)
+        This function performs 4 primary functions:
+          1. read in a file of a known type into a list of dictionaries called docs
+          2. clean each doc in docs according to all functions in cleaning_functions
+          3. reshape docs into a set of dicts
+          4. merge the dicts into self
+        '''
+        # Read in a file of a known type into a list of dictionaries
+        if ftype == 'fasta':
+            docs = self.read_fasta(infile, **kwargs)
+        elif ftype != 'fasta':
+            # TODO: other file types
+            return
+
+        # Clean each doc in docs according to all functions in cleaning_functions
+        docs = [ self.clean(doc) for doc in docs ]
+
+        # Reshape docs into a set of dicts
+        # TODO: write self.reshape()
+        reshaped_docs = self.reshape(docs)
+
+        # merge the dicts into self
+        # TODO: write self.merge_reshaped_docs()
+        self.merge_reshaped_docs(reshaped_docs)
 
     def read_fasta(self, infile, source, path, datatype, **kwargs):
         '''
         Take a fasta file and a list of information contained in its headers
         and build a dataset object from it.
+
+        # TODO: This should return a docs structure
+        # (list of docs dicts) instead of its current behavior
         '''
         import cleaning_functions as cf
         print 'Reading in %s FASTA from %s%s.' % (source,path,infile)
         self.fasta_headers = cfg.fasta_headers[source.lower()]
-        self.seed(datatype)
 
         out = []
 
