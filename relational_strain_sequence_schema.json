@@ -5,48 +5,61 @@
   "strains" : [
     {
       "strain" : "USVI/1/2016",
+      "owner" : "bpotter",
       "host" : "human",
       "host_age": "23y",
-      "number_of_segments" : "1",
-      "subtype" : null,
-      "owner" : "bpotter",
-      "collection_date" : "2016-06-06",
+      "collection_date" : "2016-09-28",
       "country" : "usvi",
-      "division" : "saint_thomas",
+      "division" : "saint_croix",
       "subdivision" : null,
       "gps" : null,
       "accessions" : [
-        "LC325484"
-      ]
+        "VI1"
+      ],
+      "version" : 1,
+      "created" : "2017-03-28-15-33",
+      "updated": "2017-06-27-21-48"
     }
   ],
   "sequences" : [
     {
-      "accession" : "LC325484",
-      "tissue" : "serum",
-      "locus" : "genome",
+      "accession" : "HVZ5T68AE1WF",
+      "owner" : "bpotter",
       "passage" : "unpassaged",
+      "tissue" : "serum",
+      "ct" : "25",
+      "locus" : "genome",
       "submitting_lab" : "Bedford lab",
-      "sequence" : "gattag...",
       "sharing" : "public",
-      "initial_upload_date" : "2016-12-21"
+      "url" : "https://github.com/blab/zika-usvi/blob/master/data/fastas/zika_usvi_good.fasta"
+      "sequence" : "gattag...",
+      "version" : 1,
+      "created" : "2017-03-28-15-33",
+      "updated": "2017-06-27-21-48"
     }
   ],
   "attributions" : [
     {
       "attribution" : "black_et_al_2017",
+      "owner" : "bpotter",
       "pubmed_id" : "null",
-      "journal_or_source" : "github",
-      "attribution_date" : "2017-03-15",
-      "publication_name" : "Evolutionary analysis of USVI Zika epidemic",
+      "source" : "github",
+      "publication_status" : "unpublished",
+      "attribution_date" : "2017-03-03",
+      "publication_name" : "Genetic characterization of the Zika virus epidemic in the US Virgin Islands",
+      "journal": null,
       "url" : "https://github.com/blab/zika-usvi",
       "authors" : [
         "Allison Black",
+        "Barney Potter",
         "Trevor Bedford"
       ],
       "accessions" : [
-          "LC325484"
-      ]
+          "HVZ5T68AE1WF"
+      ],
+      "version" : 1,
+      "created" : "2017-03-28-15-33",
+      "updated": "2017-06-27-21-48"
     }
   ]
 }
