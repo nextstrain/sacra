@@ -1,47 +1,52 @@
 {
   "dbinfo" : {
-    "virus" : "seasonal_flu, dengue, ebola, etc."
+    "virus" : "zika"
   },
-  "viruses" : [
+  "strains" : [
     {
-      "strain" : "A/Example/0000/2017",
+      "strain" : "USVI/1/2016",
+      "host" : "human",
+      "host_age": "23y",
+      "number_of_segments" : "1",
+      "subtype" : null,
+      "owner" : "bpotter",
+      "collection_date" : "2016-06-06",
+      "country" : "usvi",
+      "division" : "saint_thomas",
+      "subdivision" : null,
+      "gps" : null,
       "accessions" : [
-        "accession1",
-        "etc."
-      ],
-      "host" : "human, probably",
-      "host_age": 24,
-      "subtype" : "h3n2, h1n1pdm, etc.",
-      "number_of_segments" : "8",
-      "un_locode" : "US SEA; seems like a good location classification system"
+        "LC325484"
+      ]      
     }
   ],
   "sequences" : [
     {
-      "accession" : "accession1",
-      "locus" : "pb1",
-      "passage_category" : "cell",
-      "submitting_lab" : "centers_for_disease_control_and_prevention",
-      "sequence" : "CATCATCAT",
-      "security" : "public or private",
-      "initial_upload_date" : "date of initial upload to gisaid/vipr/github/etc"
+      "accession" : "LC325484",
+      "tissue" : "serum",
+      "locus" : "genome",
+      "passage" : "unpassaged",
+      "submitting_lab" : "Bedford lab",
+      "sequence" : "gattag...",
+      "sharing" : "public",
+      "initial_upload_date" : "2016-12-21"
     }
   ],
-  "references" : [
+  "attributions" : [
     {
-      "pubmed_id" : {
-        "authors" : [
-          "author1",
-          "etc."
-        ],
-        "journal" : "journal name",
-        "date" : "publication date",
-        "accessions" : [
-          "accession1",
-          "etc."
-        ],
-        "publication_name" : "name"
-      }
+      "attribution" : "black_et_al_2017"
+      "pubmed_id" : "null",
+      "journal_or_source" : "github",
+      "attribution_date" : "2017-03-15",
+      "publication_name" : "Evolutionary analysis of USVI Zika epidemic",
+      "url" : "https://github.com/blab/zika-usvi",      
+      "authors" : [
+        "Allison Black",
+        "Trevor Bedford"
+      ],
+      "accessions" : [
+          "LC325484"
+      ]
     }
   ]
 }

@@ -6,9 +6,8 @@
     {
       "strain" : "USVI/1/2016",
       "host" : "human",
-      "host_age" : "23",
+      "host_age" : "23y",
       "number_of_segments" : "1",
-      "strain_owner" : "blab",
       "subtype" : null,
       "owner" : "bpotter",
       "samples" : [
@@ -19,7 +18,7 @@
           "division" : "saint_thomas",
           "subdivision" : null,
           "gps" : null,
-          "collecting_lab" : "cdc",
+          "collecting_lab" : "Bedford lab",
           "passage" : "unpassaged",
           "tissue" : "serum",
           "ct" : "25",
@@ -29,7 +28,8 @@
               "sequencing_lab" : "blab",
               "initial_upload_date" : "2016-12-21",
               "attribution" : "black_et_al_2017",
-              "locus" : "genome"
+              "locus" : "genome",
+              "sharing" : "public",
               "sequence" : "gattag..."
             }
           ]
@@ -42,12 +42,11 @@
       "attribution" : "black_et_al_2017",
       "pubmed_id" : null,
       "journal_or_source" : "github",
-      "attribution_date" : "2017_03-15",
+      "attribution_date" : "2017-03-15",
       "publication_name" : "Evolutionary analysis of USVI Zika epidemic",
-      "contact" : "url:https://github.com/blab/zika-usvi",
+      "url" : "https://github.com/blab/zika-usvi",
       "authors": [
         "Allison Black",
-        "...",
         "Trevor Bedford"
       ],
       "accessions" : [
