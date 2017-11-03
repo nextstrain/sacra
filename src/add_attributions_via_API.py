@@ -5,6 +5,7 @@ from pdb import set_trace
 import argparse
 from Bio import Entrez
 from Bio import SeqIO
+from functools import partial
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--infile', required=True, type=str, help='data source')
@@ -23,39 +24,37 @@ def parse_sacra_json(filename):
 def get_accessions(data):
     return set([x["accession"] for x in data["sequences"]])
 
-def interrogate_genbank(data, handle, **kwargs):
-    SeqIO_records = SeqIO.parse(handle, "genbank")
-    for record in SeqIO_records:
-        accession = re.match(r'^([^.]*)', record.id).group(0).upper()  # get everything before the '.'?
-        if accession not in data:
-            logger.warn("Error with accession {}".format(accession))
-            continue
-        references = record.annotations["references"]
-        if len(references):
-            # is there a reference which is not a "Direct Submission"?
-            data[accession] = {}
-            titles = [reference.title for reference in references]
-            try:
-                idx = [i for i, j in enumerate(titles) if j is not None and j != "Direct Submission"][0]
-            except IndexError: # fall back to direct submission
-                idx = [i for i, j in enumerate(titles) if j is not None][0]
-            reference = references[idx] # <class 'Bio.SeqFeature.Reference'>
-            keys = reference.__dict__.keys()
-            data[accession]['title'] = reference.title
-            if "authors" in keys and reference.authors is not None:
-                first_author = re.match(r'^([^,]*)', reference.authors).group(0)
-                data[accession]['authors'] = first_author + " et al"
-            if "journal" in keys and reference.journal is not None:
-                data[accession]['journal'] = reference.journal
-            if "pubmed_id" in keys and reference.pubmed_id is not None:
-                data[accession]["puburl"] = "https://www.ncbi.nlm.nih.gov/pubmed/" + reference.pubmed_id
-            logger.debug("{} -> {}".format(accession, data[accession]))
+def extract_attributions(data, record, **kwargs):
+    accession = re.match(r'^([^.]*)', record.id).group(0).upper()  # get everything before the '.'?
+    if accession not in data:
+        logger.warn("Error with accession {}".format(accession))
+        return
+    references = record.annotations["references"]
+    if len(references):
+        # is there a reference which is not a "Direct Submission"?
+        data[accession] = {}
+        titles = [reference.title for reference in references]
+        try:
+            idx = [i for i, j in enumerate(titles) if j is not None and j != "Direct Submission"][0]
+        except IndexError: # fall back to direct submission
+            idx = [i for i, j in enumerate(titles) if j is not None][0]
+        reference = references[idx] # <class 'Bio.SeqFeature.Reference'>
+        keys = reference.__dict__.keys()
+        data[accession]['title'] = reference.title
+        if "authors" in keys and reference.authors is not None:
+            first_author = re.match(r'^([^,]*)', reference.authors).group(0)
+            data[accession]['authors'] = first_author + " et al"
+        if "journal" in keys and reference.journal is not None:
+            data[accession]['journal'] = reference.journal
+        if "pubmed_id" in keys and reference.pubmed_id is not None:
+            data[accession]["puburl"] = "https://www.ncbi.nlm.nih.gov/pubmed/" + reference.pubmed_id
+        logger.debug("{} -> {}".format(accession, data[accession]))
 
-        else:
-            logger.debug("{} had no references".format(accession))
+    else:
+        logger.debug("{} had no references".format(accession))
 
 
-def extract_attributions_from_genbank(accessions, email=None, retmax=10, n_entrez=10, gbdb="nuccore", **kwargs):
+def query_genbank(accessions, parser, email=None, retmax=10, n_entrez=10, gbdb="nuccore", **kwargs):
     # https://www.biostars.org/p/66921/
     logger = logging.getLogger(__name__)
     if not email:
@@ -99,7 +98,6 @@ def extract_attributions_from_genbank(accessions, email=None, retmax=10, n_entre
     except:
         logger.critical("ERROR: Couldn't connect with entrez, please run again")
         sys.exit(2)
-    genbank_data = {x: None for x in accessions}
     for start in range(0, len(gi_numbers), retmax):
         #fetch entries in batch
         try:
@@ -107,8 +105,9 @@ def extract_attributions_from_genbank(accessions, email=None, retmax=10, n_entre
         except IOError:
             logger.critical("ERROR: Couldn't connect with entrez, please run again")
         else:
-            interrogate_genbank(genbank_data, handle, **kwargs)
-    return genbank_data
+            SeqIO_records = SeqIO.parse(handle, "genbank")
+            for record in SeqIO_records:
+                parser(record, **kwargs)
 
 
 if __name__=="__main__":
@@ -120,5 +119,9 @@ if __name__=="__main__":
 
     data = parse_sacra_json(args.infile)
     accs = get_accessions(data)
-    gb = extract_attributions_from_genbank(accessions=list(accs), **vars(args))
+
+    attributions = {x: None for x in accs}
+    extract_attributions_bind = partial(extract_attributions, attributions)
+
+    query_genbank(accessions=list(accs), parser=extract_attributions_bind, **vars(args))
     set_trace()
