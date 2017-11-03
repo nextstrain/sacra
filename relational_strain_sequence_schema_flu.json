@@ -1,0 +1,143 @@
+{
+  "dbinfo" : {
+    "virus" : "flu"
+  },
+  "strains" : [
+    {
+      "strain" : "A/Adana/12/2016",
+      "patient_id" : null,
+      "owner" : "tbedford",
+      "host" : "human",
+      "host_age" : "22y",
+      "collection_date" : "2015-12-30 AND 2016-01-04 --- this is a problem",
+      "country" : "turkey",
+      "division" : "adana",
+      "subdivision" : null,
+      "gps" : null,
+      "accessions" : [
+        "EPI760746",
+        "EPI760747",
+        "KX097045",
+        "KX364485"
+      ],
+      "version" : 1,
+      "created" : "2017-03-28-15-33",
+      "updated": "2017-06-27-21-48"
+    }
+  ],
+  "sequences" : [
+    {
+      "accession" : "EPI760746",
+      "strain" : "A/Adana/12/2016",
+      "owner" : "tbedford",
+      "passage" : "SIAT1/MDCK1",
+      "tissue" : null,
+      "ct" : null,
+      "locus" : "ha",
+      "sequencing_lab" : "Crick Worldwide Influenza Centre",
+      "sharing" : "private",
+      "url" : "https://gisaid.org/epi3/EPI_ISL_221846/",
+      "attribution" : "crick_worldwide_influenza_centre",
+      "sequence" : "gattag...",
+      "version" : 1,
+      "created" : "2017-03-28-15-33",
+      "updated": "2017-06-27-21-48"
+    },
+    {
+      "accession" : "EPI760747",
+      "strain" : "A/Adana/12/2016",
+      "owner" : "tbedford",
+      "passage" : "SIAT1/MDCK1",
+      "tissue" : null,
+      "ct" : null,
+      "locus" : "na",
+      "sequencing_lab" : "Crick Worldwide Influenza Centre",
+      "sharing" : "private",
+      "url" : "https://gisaid.org/epi3/EPI_ISL_221846/",
+      "attribution" : "crick_worldwide_influenza_centre",
+      "sequence" : "tcagca...",
+      "version" : 1,
+      "created" : "2017-03-28-15-33",
+      "updated": "2017-06-27-21-48"
+    },
+    {
+      "accession" : "KX097045",
+      "strain" : "A/Adana/12/2016",
+      "owner" : "tbedford",
+      "passage" : null,
+      "tissue" : "nasal swab",
+      "ct" : null,
+      "locus" : "ha",
+      "sequencing_lab" : null,
+      "sharing" : "public",
+      "url" : "https://www.ncbi.nlm.nih.gov/nuccore/KX097045",
+      "attribution" : "coskun_ari_2016_h1n1",
+      "sequence" : "gattag...",
+      "version" : 1,
+      "created" : "2017-03-28-15-33",
+      "updated": "2017-06-27-21-48"
+    },
+    {
+      "accession" : "KX364485",
+      "strain" : "A/Adana/12/2016",
+      "owner" : "tbedford",
+      "passage" : null,
+      "tissue" : "nasal swab",
+      "ct" : null,
+      "locus" : "na",
+      "sequencing_lab" : null,
+      "sharing" : "public",
+      "url" : "https://www.ncbi.nlm.nih.gov/nuccore/KX364485",
+      "attribution" : "coskun_ari_2016_h1n1",
+      "sequence" : "tcagca...",
+      "version" : 1,
+      "created" : "2017-03-28-15-33",
+      "updated": "2017-06-27-21-48"
+    }
+  ],
+  "attributions" : [
+    {
+      "attribution" : "crick_worldwide_influenza_centre",
+      "owner" : "tbedford",
+      "pubmed_id" : null,
+      "source" : "gisaid",
+      "publication_status" : "unpublished",
+      "attribution_date" : null,
+      "publication_name" : null,
+      "journal": null,
+      "url" : null,
+      "authors" : [
+        "Vicki  Gregory",
+        "John McCauley"
+      ],
+      "accessions" : [
+          "EPI760746",
+          "EPI760747"
+      ],
+      "version" : 1,
+      "created" : "2017-03-28-15-33",
+      "updated": "2017-06-27-21-48"
+    },
+    {
+      "attribution" : "coskun_ari_2016_h1n1",
+      "owner" : "tbedford",
+      "pubmed_id" : null,
+      "source" : "genbank",
+      "publication_status" : "unpublished",
+      "attribution_date" : "2016-05-16",
+      "publication_name" : "H1N1 strains circulating in Turkey during 2015-2016 season",
+      "journal": null,
+      "url" : "https://www.ncbi.nlm.nih.gov/nuccore/KX097045 --- this is not ideal",
+      "authors": [
+        "Coskun Ari,F.F., Altas,B., Bakkaloglu,Z., Bayrakdar,F., Guldemir,D., Unaldi,O., Korukluoglu,G., Aktas,A.R. and Durmaz,R."
+      ],
+      "accessions" : [
+        "KX097045",
+        "KX364485"
+      ],
+      "version" : 1,
+      "created" : "2017-03-28-15-33",
+      "updated": "2017-06-27-21-48"
+    }
+  ]
+}
