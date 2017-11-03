@@ -10,7 +10,7 @@
       "host_age" : "23y",
       "samples" : [
         {
-          "sample" : "VI1",
+          "sample" : "VI1.1",
           "collection_date" : "2016-09-28",
           "country" : "usvi",
           "division" : "saint_croix",
@@ -23,6 +23,30 @@
           "sequences" : [
             {
               "accession" : "HVZ5T68AE1WF",
+              "sequencing_lab" : "Bedford lab",
+              "initial_upload_date" : "2016-12-21",
+              "attribution" : "black_2017_genetic",
+              "locus" : "genome",
+              "sharing" : "public",
+              "url" : "https://github.com/blab/zika-usvi/blob/master/data/fastas/zika_usvi_good.fasta",
+              "sequence" : "gattag..."
+            }
+          ]
+        },
+        {
+          "sample" : "VI1.2",
+          "collection_date" : "2016-09-30",
+          "country" : "usvi",
+          "division" : "saint_croix",
+          "subdivision" : null,
+          "gps" : null,
+          "collecting_lab" : "Bedford lab",
+          "passage" : "unpassaged",
+          "tissue" : "serum",
+          "ct" : 28,
+          "sequences" : [
+            {
+              "accession" : "M89GXFKC236I",
               "sequencing_lab" : "Bedford lab",
               "initial_upload_date" : "2016-12-21",
               "attribution" : "black_2017_genetic",
@@ -56,7 +80,8 @@
         "Trevor Bedford"
       ],
       "accessions" : [
-        "HVZ5T68AE1WF"
+        "HVZ5T68AE1WF",
+        "M89GXFKC236I"
       ],
       "version" : 1,
       "created" : "2017-03-28-15-33",

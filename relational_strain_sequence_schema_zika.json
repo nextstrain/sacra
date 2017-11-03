@@ -4,33 +4,36 @@
   },
   "strains" : [
     {
-      "strain" : "USVI/1/2016",
+      "strain" : "USVI/1.1/2016",
+      "patient_id" : "043129473214",
       "owner" : "bpotter",
       "host" : "human",
-      "host_age": "23y",
-      "samples" : [
-        "VI1"
-      ],
-      "version" : 1,
-      "created" : "2017-03-28-15-33",
-      "updated": "2017-06-27-21-48"
-    }
-  ],
-  "samples" : [
-    {
-      "sample" : "VI1",
-      "owner" : "bpotter",
+      "host_age" : "23y",
       "collection_date" : "2016-09-28",
       "country" : "usvi",
       "division" : "saint_croix",
       "subdivision" : null,
       "gps" : null,
-      "collecting_lab" : "Bedford lab",
-      "passage" : "unpassaged",
-      "tissue" : "serum",
-      "ct" : 25,
       "accessions" : [
         "HVZ5T68AE1WF"
+      ],
+      "version" : 1,
+      "created" : "2017-03-28-15-33",
+      "updated": "2017-06-27-21-48"
+    },
+    {
+      "strain" : "USVI/1.2/2016",
+      "patient_id" : "043129473214",
+      "owner" : "bpotter",
+      "host" : "human",
+      "host_age": "23y",
+      "collection_date" : "2016-09-30",
+      "country" : "usvi",
+      "division" : "saint_croix",
+      "subdivision" : null,
+      "gps" : null,
+      "accessions" : [
+        "M89GXFKC236I"
       ],
       "version" : 1,
       "created" : "2017-03-28-15-33",
@@ -40,7 +43,28 @@
   "sequences" : [
     {
       "accession" : "HVZ5T68AE1WF",
+      "strain" : "USVI/1.1/2016",
       "owner" : "bpotter",
+      "passage" : "unpassaged",
+      "tissue" : "serum",
+      "ct" : 25,
+      "locus" : "genome",
+      "sequencing_lab" : "Bedford lab",
+      "sharing" : "public",
+      "url" : "https://github.com/blab/zika-usvi/blob/master/data/fastas/zika_usvi_good.fasta",
+      "attribution" : "black_2017_genetic",
+      "sequence" : "gattag...",
+      "version" : 1,
+      "created" : "2017-03-28-15-33",
+      "updated": "2017-06-27-21-48"
+    },
+    {
+      "accession" : "M89GXFKC236I",
+      "strain" : "USVI/1.2/2016",
+      "owner" : "bpotter",
+      "passage" : "unpassaged",
+      "tissue" : "serum",
+      "ct" : 28,
       "locus" : "genome",
       "sequencing_lab" : "Bedford lab",
       "sharing" : "public",
@@ -69,7 +93,8 @@
         "Trevor Bedford"
       ],
       "accessions" : [
-          "HVZ5T68AE1WF"
+          "HVZ5T68AE1WF",
+          "M89GXFKC236I"
       ],
       "version" : 1,
       "created" : "2017-03-28-15-33",
