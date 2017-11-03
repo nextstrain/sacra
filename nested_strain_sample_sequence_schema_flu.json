@@ -41,6 +41,38 @@
               "url" : "https://gisaid.org/epi3/EPI_ISL_221846/",
               "sequence" : "tcagca..."
             }
+          ],
+          "titers" : [
+            {
+              "id" : "GZY9N5MNZK3T",
+              "serum_strain" : "A/Astrakhan/1/2011",
+              "serum_id" : "F22/13",
+              "serum_host" : "ferret",
+              "serum_passage" : "MDCK",
+              "assay_date" : "2016-03-21",
+              "sharing" : "private",
+              "titer" : "640"
+            },
+            {
+              "id" : "2JEZ7X7VS1ZH",
+              "serum_strain" : "A/Bayern/69/2009",
+              "serum_id" : "F09/15",
+              "serum_host" : "ferret",
+              "serum_passage" : "MDCK",
+              "assay_date" : "2016-03-21",
+              "sharing" : "private",
+              "titer" : "320"
+            },
+            {
+              "id" : "JBXQIFZWAYQP",              
+              "serum_strain" : "A/California/7/2009",
+              "serum_id" : "F06/16",
+              "serum_host" : "ferret",
+              "serum_passage" : "MDCK",
+              "assay_date" : "2016-03-21",
+              "sharing" : "private",
+              "titer" : "1280"
+            }
           ]
         },
         {

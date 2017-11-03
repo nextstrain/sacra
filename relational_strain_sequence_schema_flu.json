@@ -95,6 +95,44 @@
       "updated": "2017-06-27-21-48"
     }
   ],
+  "titers" : [
+    {
+      "id" : "GZY9N5MNZK3T",
+      "virus_strain" : "A/Adana/12/2016",
+      "virus_passage" : "SIAT1/MDCK1",
+      "serum_strain" : "A/Astrakhan/1/2011",
+      "serum_id" : "F22/13",
+      "serum_host" : "ferret",
+      "serum_passage" : "MDCK",
+      "assay_date" : "2016-03-21",
+      "sharing" : "private",
+      "titer" : "640"
+    },
+    {
+      "id" : "2JEZ7X7VS1ZH",
+      "virus_strain" : "A/Adana/12/2016",
+      "virus_passage" : "SIAT1/MDCK1",
+      "serum_strain" : "A/Bayern/69/2009",
+      "serum_id" : "F09/15",
+      "serum_host" : "ferret",
+      "serum_passage" : "MDCK",
+      "assay_date" : "2016-03-21",
+      "sharing" : "private",
+      "titer" : "320"
+    },
+    {
+      "id" : "JBXQIFZWAYQP",
+      "virus_strain" : "A/Adana/12/2016",
+      "virus_passage" : "SIAT1/MDCK1",      
+      "serum_strain" : "A/California/7/2009",
+      "serum_id" : "F06/16",
+      "serum_host" : "ferret",
+      "serum_passage" : "MDCK",
+      "assay_date" : "2016-03-21",
+      "sharing" : "private",
+      "titer" : "1280"
+    }
+  ],
   "attributions" : [
     {
       "attribution" : "crick_worldwide_influenza_centre",
