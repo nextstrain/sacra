@@ -8,11 +8,27 @@
       "owner" : "bpotter",
       "host" : "human",
       "host_age": "23y",
+      "samples" : [
+        "VI1"
+      ],
+      "version" : 1,
+      "created" : "2017-03-28-15-33",
+      "updated": "2017-06-27-21-48"
+    }
+  ],
+  "samples" : [
+    {
+      "sample" : "VI1",
+      "owner" : "bpotter",
       "collection_date" : "2016-09-28",
       "country" : "usvi",
       "division" : "saint_croix",
       "subdivision" : null,
       "gps" : null,
+      "collecting_lab" : "Bedford lab",
+      "passage" : "unpassaged",
+      "tissue" : "serum",
+      "ct" : 25,
       "accessions" : [
         "HVZ5T68AE1WF"
       ],
@@ -24,11 +40,7 @@
   "sequences" : [
     {
       "accession" : "HVZ5T68AE1WF",
-      "strain" : "USVI/1/2016",
       "owner" : "bpotter",
-      "passage" : "unpassaged",
-      "tissue" : "serum",
-      "ct" : 25,
       "locus" : "genome",
       "sequencing_lab" : "Bedford lab",
       "sharing" : "public",
