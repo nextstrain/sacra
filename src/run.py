@@ -1,8 +1,14 @@
 from dataset import Dataset
+from genbank_API import query_genbank
+from genbank_parsers import extract_attributions
 import cfg as cfg
 import argparse
 import os, sys
+from pdb import set_trace
+import logging
+from functools import partial
 sys.path.append('')
+
 
 def assert_valid_input(virus, datatype, path, outpath, infiles, source, subtype, ftype, **kwargs):
     '''
@@ -36,7 +42,7 @@ def list_options(list_viruses, list_datatypes):
 
 if __name__=="__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('-v', '--virus', default='seasonal_flu', type=str, help='virus type to be processed; default is seasonal_flu')
+    parser.add_argument('-v', '--virus', required=True, type=str, help='virus type to be processed; default is seasonal_flu')
     parser.add_argument('-d', '--datatype', default='sequence', type=str, help='type of data being input; default is \"sequence\", other options are \"virus\" or \"titer\"')
     parser.add_argument('-p', '--path', default='data/', type=str, help='path to input file(s), default is \"data/\"')
     parser.add_argument('-m', '--metafile', default=None, type=str, help='name of file containing virus metadata')
@@ -49,12 +55,29 @@ if __name__=="__main__":
     parser.add_argument('--list_datatypes', default=False,  action='store_true', help='list all supported datatypes and exit')
     parser.add_argument('--permissions', default='public', help='permissions level for documents in JSON')
     parser.add_argument('--test', default=False, action='store_true', help='test run for debugging') # Remove this at some point.
+    parser.add_argument("--debug", action="store_const", dest="loglevel", const=logging.DEBUG, help="Enable debugging logging")
+    parser.add_argument("--update_attributions_via_genbank", action="store_true", default=False, help="Use the genbank API to fill in attributions for accession numbers")
+    ## there will be heaps of arguments here (about 15 just for genbank API) - we should look into argument grouping
     args = parser.parse_args()
 
     list_options(args.list_viruses, args.list_datatypes)
     assert_valid_input(**args.__dict__)
 
+    ## set up logger - it can now be used anywhere simply via
+    ## logger = logging.getLogger(__name__)
+    if not args.loglevel: args.loglevel = logging.INFO
+    logging.basicConfig(level=args.loglevel, format='%(asctime)-15s %(message)s')
+    logger = logging.getLogger(__name__)
+
     if args.test:
         D = Dataset(**args.__dict__)
         D.set_sequence_permissions(args.permissions)
+        ## not sure of the best interface here...
+        if (args.update_attributions_via_genbank):
+            accessions = D.dataset.keys() # this will change
+            attributions = {x: None for x in accessions}
+            extract_attributions_bound = partial(extract_attributions, attributions)
+            query_genbank(accessions=accessions, parsers=[extract_attributions_bound], **vars(args))
+            ## now merge attributions into D
+            ## i'm leaving this for now as the schema is changing
         D.write('%s%s_%s.json' % (args.outpath, args.virus, args.datatype))
