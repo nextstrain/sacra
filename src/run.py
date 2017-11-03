@@ -1,10 +1,14 @@
 from dataset import Dataset
+from genbank_API import query_genbank
+from genbank_parsers import extract_attributions
 import cfg as cfg
 import argparse
 import os, sys
 from pdb import set_trace
 import logging
+from functools import partial
 sys.path.append('')
+
 
 def assert_valid_input(virus, datatype, path, outpath, infiles, source, subtype, ftype, **kwargs):
     '''
@@ -52,6 +56,8 @@ if __name__=="__main__":
     parser.add_argument('--permissions', default='public', help='permissions level for documents in JSON')
     parser.add_argument('--test', default=False, action='store_true', help='test run for debugging') # Remove this at some point.
     parser.add_argument("--debug", action="store_const", dest="loglevel", const=logging.DEBUG, help="Enable debugging logging")
+    parser.add_argument("--update_attributions_via_genbank", action="store_true", default=False, help="Use the genbank API to fill in attributions for accession numbers")
+    ## there will be heaps of arguments here (about 15 just for genbank API) - we should look into argument grouping
     args = parser.parse_args()
 
     list_options(args.list_viruses, args.list_datatypes)
@@ -66,8 +72,12 @@ if __name__=="__main__":
     if args.test:
         D = Dataset(**args.__dict__)
         D.set_sequence_permissions(args.permissions)
+        ## not sure of the best interface here...
         if (args.update_attributions_via_genbank):
-            set_trace()
-            ## not sure of the best interface here...
-
+            accessions = D.dataset.keys() # this will change
+            attributions = {x: None for x in accessions}
+            extract_attributions_bound = partial(extract_attributions, attributions)
+            query_genbank(accessions=accessions, parsers=[extract_attributions_bound], **vars(args))
+            ## now merge attributions into D
+            ## i'm leaving this for now as the schema is changing
         D.write('%s%s_%s.json' % (args.outpath, args.virus, args.datatype))
