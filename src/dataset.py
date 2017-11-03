@@ -1,6 +1,7 @@
 import os, time, datetime, csv, sys, json
 import cfg
 from Bio import SeqIO
+from pdb import set_trace
 sys.path.append('')
 
 class Dataset:
@@ -227,7 +228,7 @@ class Dataset:
                 vs[name]['host'] = 'human'
                 self.dataset[virus].pop('host',None)
             else:
-                vs[name]['host'] = name['host']
+                vs[name]['host'] = self.dataset[virus]['host']
                 self.dataset[virus].pop('host',None)
 
             # Scrape host age
@@ -253,9 +254,10 @@ class Dataset:
         for name in vs.keys():
             # Scrape number of segments
             segments = set()
-            for a in vs[name]['accessions']:
-                segments.add(self.dataset[a]['locus'])
-            vs[name]['number_of_segments'] = len(segments)
+            for acc in vs[name]['accessions']:
+                if 'locus' in self.dataset[acc]:
+                    segments.add(self.dataset[acc]['locus'])
+            vs[name]['number_of_segments'] = len(segments) if len(segments) else 1
 
             # # Scrape isolate ids
             # ids = set()
