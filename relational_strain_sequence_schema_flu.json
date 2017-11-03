@@ -19,10 +19,7 @@
         "EPI760747",
         "KX097045",
         "KX364485"
-      ],
-      "version" : 1,
-      "created" : "2017-03-28-15-33",
-      "updated": "2017-06-27-21-48"
+      ]
     }
   ],
   "sequences" : [
@@ -38,10 +35,7 @@
       "sharing" : "private",
       "url" : "https://gisaid.org/epi3/EPI_ISL_221846/",
       "attribution" : "crick_worldwide_influenza_centre",
-      "sequence" : "gattag...",
-      "version" : 1,
-      "created" : "2017-03-28-15-33",
-      "updated": "2017-06-27-21-48"
+      "sequence" : "gattag..."
     },
     {
       "accession" : "EPI760747",
@@ -55,10 +49,7 @@
       "sharing" : "private",
       "url" : "https://gisaid.org/epi3/EPI_ISL_221846/",
       "attribution" : "crick_worldwide_influenza_centre",
-      "sequence" : "tcagca...",
-      "version" : 1,
-      "created" : "2017-03-28-15-33",
-      "updated": "2017-06-27-21-48"
+      "sequence" : "tcagca..."
     },
     {
       "accession" : "KX097045",
@@ -72,10 +63,7 @@
       "sharing" : "public",
       "url" : "https://www.ncbi.nlm.nih.gov/nuccore/KX097045",
       "attribution" : "coskun_ari_2016_h1n1",
-      "sequence" : "gattag...",
-      "version" : 1,
-      "created" : "2017-03-28-15-33",
-      "updated": "2017-06-27-21-48"
+      "sequence" : "gattag..."
     },
     {
       "accession" : "KX364485",
@@ -89,10 +77,7 @@
       "sharing" : "public",
       "url" : "https://www.ncbi.nlm.nih.gov/nuccore/KX364485",
       "attribution" : "coskun_ari_2016_h1n1",
-      "sequence" : "tcagca...",
-      "version" : 1,
-      "created" : "2017-03-28-15-33",
-      "updated": "2017-06-27-21-48"
+      "sequence" : "tcagca..."
     }
   ],
   "titers" : [
@@ -123,7 +108,7 @@
     {
       "id" : "JBXQIFZWAYQP",
       "virus_strain" : "A/Adana/12/2016",
-      "virus_passage" : "SIAT1/MDCK1",      
+      "virus_passage" : "SIAT1/MDCK1",
       "serum_strain" : "A/California/7/2009",
       "serum_id" : "F06/16",
       "serum_host" : "ferret",
@@ -151,10 +136,7 @@
       "accessions" : [
           "EPI760746",
           "EPI760747"
-      ],
-      "version" : 1,
-      "created" : "2017-03-28-15-33",
-      "updated": "2017-06-27-21-48"
+      ]
     },
     {
       "attribution" : "coskun_ari_2016_h1n1",
@@ -172,10 +154,7 @@
       "accessions" : [
         "KX097045",
         "KX364485"
-      ],
-      "version" : 1,
-      "created" : "2017-03-28-15-33",
-      "updated": "2017-06-27-21-48"
+      ]
     }
   ]
 }

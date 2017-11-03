@@ -11,10 +11,7 @@
       "samples" : [
         "VI1.1",
         "VI1.2"
-      ],
-      "version" : 1,
-      "created" : "2017-03-28-15-33",
-      "updated": "2017-06-27-21-48"
+      ]
     }
   ],
   "samples" : [
@@ -32,10 +29,7 @@
       "ct" : 25,
       "accessions" : [
         "HVZ5T68AE1WF"
-      ],
-      "version" : 1,
-      "created" : "2017-03-28-15-33",
-      "updated": "2017-06-27-21-48"
+      ]
     },
     {
       "sample" : "VI1.2",
@@ -51,10 +45,7 @@
       "ct" : 28,
       "accessions" : [
         "M89GXFKC236I"
-      ],
-      "version" : 1,
-      "created" : "2017-03-28-15-33",
-      "updated": "2017-06-27-21-48"
+      ]
     }
   ],
   "sequences" : [
@@ -66,10 +57,7 @@
       "sharing" : "public",
       "url" : "https://github.com/blab/zika-usvi/blob/master/data/fastas/zika_usvi_good.fasta",
       "attribution" : "black_2017_genetic",
-      "sequence" : "gattag...",
-      "version" : 1,
-      "created" : "2017-03-28-15-33",
-      "updated": "2017-06-27-21-48"
+      "sequence" : "gattag..."
     },
     {
       "accession" : "M89GXFKC236I",
@@ -79,10 +67,7 @@
       "sharing" : "public",
       "url" : "https://github.com/blab/zika-usvi/blob/master/data/fastas/zika_usvi_good.fasta",
       "attribution" : "black_2017_genetic",
-      "sequence" : "gattag...",
-      "version" : 1,
-      "created" : "2017-03-28-15-33",
-      "updated": "2017-06-27-21-48"
+      "sequence" : "gattag..."
     }
   ],
   "attributions" : [
@@ -103,11 +88,8 @@
       ],
       "accessions" : [
           "HVZ5T68AE1WF",
-          "M89GXFKC236I"          
-      ],
-      "version" : 1,
-      "created" : "2017-03-28-15-33",
-      "updated": "2017-06-27-21-48"
+          "M89GXFKC236I"
+      ]
     }
   ]
 }

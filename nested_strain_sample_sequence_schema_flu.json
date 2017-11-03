@@ -64,7 +64,7 @@
               "titer" : "320"
             },
             {
-              "id" : "JBXQIFZWAYQP",              
+              "id" : "JBXQIFZWAYQP",
               "serum_strain" : "A/California/7/2009",
               "serum_id" : "F06/16",
               "serum_host" : "ferret",
@@ -109,10 +109,7 @@
             }
           ]
         }
-      ],
-      "version" : 1,
-      "created" : "2017-03-28-15-33",
-      "updated": "2017-06-27-21-48"
+      ]
     }
   ],
   "attributions" : [
@@ -133,10 +130,7 @@
       "accessions" : [
         "EPI760746",
         "EPI760747"
-      ],
-      "version" : 1,
-      "created" : "2017-03-28-15-33",
-      "updated": "2017-06-27-21-48"
+      ]
     },
     {
       "attribution" : "coskun_ari_2016_h1n1",
@@ -154,10 +148,7 @@
       "accessions" : [
         "KX097045",
         "KX364485"
-      ],
-      "version" : 1,
-      "created" : "2017-03-28-15-33",
-      "updated": "2017-06-27-21-48"
+      ]
     }
   ]
 }
