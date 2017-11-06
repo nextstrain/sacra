@@ -1,6 +1,7 @@
 # Log and Issues files
 *.log
 *.issues
+environment*
 
 # Data
 data/*

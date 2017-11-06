@@ -1,0 +1,56 @@
+{
+  "dbinfo" : {
+    "pathogen" : "PATHOGEN"
+  },
+  "strains" : [
+    {
+      "id" : "STRAINNAME",
+      "strain_name" : "STRAINNAME",
+      "owner" : "OWNER",
+      "host_species" : null,
+      "host_age": null,
+      "host_sex" : null,
+      "symptom_onset_date" : null,
+      "symptoms" : null,
+      "samples" : [
+        "STRAINNAME|1"
+      ]
+    }
+  ],
+  "samples" : [
+    {
+      "id" : "STRAINNAME|1",
+      "strain_name" : "STRAINNAME",
+      "sample_name" : "1",
+      "owner" : "OWNER",
+      "collection_date" : null,
+      "country" : null,
+      "division" : null,
+      "subdivision" : null,
+      "gps" : null,
+      "collecting_lab" : null,
+      "passage" : null,
+      "tissue" : null,
+      "ct" : null,
+      "sequences" : [
+        "STRAINNAME|1|1"
+      ]
+    }
+  ],
+  "sequences" : [
+    {
+      "id" : "STRAINNAME|1|1",
+      "strain_name" : "STRAINNAME",
+      "sample_name" : "1",
+      "sequence_accession": "1",
+      "owner" : "OWNER",
+      "sequence_locus" : null,
+      "sequence_type" : null,
+      "sequencing_lab" : null,
+      "sharing" : null,
+      "sequence_url" : null,
+      "attribution" : null,
+      "sequence" : "SEQUENCE"
+    }
+  ]
+}

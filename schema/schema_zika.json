@@ -1,0 +1,208 @@
+{
+  "dbinfo" : {
+    "pathogen" : "zika"
+  },
+  "strains" : [
+    {
+      "id" : "USVI/1/2016",
+      "strain_name" : "USVI/1/2016",
+      "owner" : "bpotter",
+      "host_species" : "human",
+      "host_age": "23y",
+      "host_sex" : "female",
+      "symptom_onset_date" : "2016-09-25",
+      "symptoms" : null,
+      "samples" : [
+        "USVI/1/2016|VI1.1",
+        "USVI/1/2016|VI1.2"
+      ],
+      "pregnancy_status" : true,
+      "pregnancy_week" : 24,
+      "microcephaly_status" : false,
+      "usvi_doh_patient_id" : "094370941324974"
+    },
+    {
+      "id" : "DominicanRepublic/2016/PD",
+      "strain_name" : "DominicanRepublic/2016/PD",
+      "owner" : "tbedford",
+      "host_species" : "human",
+      "host_age": null,
+      "host_sex" : null,
+      "symptom_onset_date" : null,      
+      "symptoms" : null,
+      "samples" : [
+        "DominicanRepublic/2016/PD|PD1",
+        "DominicanRepublic/2016/PD|PD2"
+      ],
+      "infection_origin_country" : "dominican_republic"
+    }
+  ],
+  "samples" : [
+    {
+      "id" : "USVI/1/2016|VI1.1",
+      "strain_name" : "USVI/1/2016",
+      "sample_name" : "VI1.1",
+      "owner" : "bpotter",
+      "collection_date" : "2016-09-28",
+      "country" : "usvi",
+      "division" : "saint_croix",
+      "subdivision" : null,
+      "gps" : null,
+      "collecting_lab" : "USVI DoH",
+      "passage" : "unpassaged",
+      "tissue" : "serum",
+      "ct" : 25,
+      "sequences" : [
+        "USVI/1/2016|VI1.1|1"
+      ],
+      "usvi_doh_sample_id" : "G125"
+    },
+    {
+      "id" : "USVI/1/2016|VI1.2",
+      "strain_name" : "USVI/1/2016",
+      "sample_name" : "VI1.2",
+      "owner" : "bpotter",
+      "collection_date" : "2016-09-30",
+      "country" : "usvi",
+      "division" : "saint_croix",
+      "subdivision" : null,
+      "gps" : null,
+      "collecting_lab" : "USVI DoH",
+      "passage" : "unpassaged",
+      "tissue" : "serum",
+      "ct" : 28,
+      "sequences" : [
+        "USVI/1/2016|VI1.2|1"
+      ],
+      "usvi_doh_sample_id" : "G126"
+    },
+    {
+      "id" : "DominicanRepublic/2016/PD|PD1",
+      "strain_name" : "DominicanRepublic/2016/PD",
+      "sample_name" : "PD1",
+      "owner" : "tbedford",
+      "collection_date" : "2016-02-01",
+      "country" : "italy",
+      "division" : "padua",
+      "subdivision" : null,
+      "gps" : null,
+      "collecting_lab" : null,
+      "passage" : "unpassaged",
+      "tissue" : "urine",
+      "ct" : null,
+      "sequences" : [
+        "DominicanRepublic/2016/PD|PD1|KU853012"
+      ]
+    },
+    {
+      "id" : "DominicanRepublic/2016/PD|PD2",
+      "strain_name" : "DominicanRepublic/2016/PD",
+      "sample_name" : "PD2",
+      "owner" : "tbedford",
+      "collection_date" : "2016-02-01",
+      "country" : "italy",
+      "division" : "padua",
+      "subdivision" : null,
+      "gps" : null,
+      "collecting_lab" : null,
+      "passage" : "cell culture",
+      "tissue" : null,
+      "ct" : null,
+      "sequences" : [
+        "DominicanRepublic/2016/PD|PD2|KU853013"
+      ]
+    }
+  ],
+  "sequences" : [
+    {
+      "id" : "USVI/1/2016|VI1.1|1",
+      "strain_name" : "USVI/1/2016",
+      "sample_name" : "VI1.1",
+      "sequence_accession": "1",
+      "owner" : "bpotter",
+      "sequence_locus" : "genome",
+      "sequence_type" : "consensus",
+      "sequencing_lab" : "Bedford lab",
+      "sharing" : "public",
+      "sequence_url" : "https://github.com/blab/zika-usvi/blob/master/data/fastas/zika_usvi_good.fasta",
+      "attribution" : "black_2017_genetic",
+      "sequence" : "gattag..."
+    },
+    {
+      "id" : "USVI/1/2016|VI1.2|1",
+      "strain_name" : "USVI/1/2016",
+      "sample_name" : "VI1.2",
+      "sequence_accession": "1",
+      "owner" : "bpotter",
+      "sequence_locus" : "genome",
+      "sequence_type" : "consensus",
+      "sequencing_lab" : "Bedford lab",
+      "sharing" : "public",
+      "sequence_url" : "https://github.com/blab/zika-usvi/blob/master/data/fastas/zika_usvi_good.fasta",
+      "attribution" : "black_2017_genetic",
+      "sequence" : "gattag..."
+    },
+    {
+      "id" : "DominicanRepublic/2016/PD|PD1|KU853012",
+      "strain_name" : "DominicanRepublic/2016/PD",
+      "sample_name" : "PD1",
+      "sequence_accession": "KU853012",
+      "owner" : "tbedford",
+      "sequence_locus" : "genome",
+      "sequence_type" : "consensus",
+      "sequencing_lab" : null,
+      "sharing" : "public",
+      "sequence_url" : "https://www.ncbi.nlm.nih.gov/nuccore/KU853012",
+      "attribution" : "barzon_2016_isolation",
+      "sequence" : "gattag..."
+    },
+    {
+      "id" : "DominicanRepublic/2016/PD|PD2|KU853013",
+      "strain_name" : "DominicanRepublic/2016/PD",
+      "sample_name" : "PD2",
+      "sequence_accession": "KU853013",
+      "owner" : "tbedford",
+      "sequence_locus" : "genome",
+      "sequence_type" : "consensus",
+      "sequencing_lab" : null,
+      "sharing" : "public",
+      "sequence_url" : "https://www.ncbi.nlm.nih.gov/nuccore/KU853013",
+      "attribution" : "barzon_2016_isolation",
+      "sequence" : "gattag..."
+    }
+  ],
+  "attributions" : [
+    {
+      "id" : "black_2017_genetic",
+      "owner" : "bpotter",
+      "source" : "github",
+      "publication_status" : "unpublished",
+      "attribution_date" : "2017-03-03",
+      "attribution_title" : "Genetic characterization of the Zika virus epidemic in the US Virgin Islands",
+      "attribution_journal": null,
+      "attribution_url" : "https://github.com/blab/zika-usvi",
+      "authors" : "Allison Black, Barney Potter, Gytis Dudas, Leora Feldstein, M. Elizabeth Halloran, Nathan D. Grubaugh, Kristian G. Andersen, Brett R. Ellis, Esther M. Ellis, Trevor Bedford",
+      "pubmed_id" : null,
+      "sequences" : [
+          "USVI/1/2016|VI1.1|1",
+          "USVI/1/2016|VI1.2|1"
+      ]
+    },
+    {
+      "id" : "barzon_2016_isolation",
+      "owner" : "tbedford",
+      "source" : "genbank",
+      "publication_status" : "published",
+      "attribution_date" : "2016-03-18",
+      "attribution_title" : "Isolation of infectious Zika virus from saliva and prolonged viral RNA shedding in a traveller returning from the Dominican Republic to Italy, January 2016",
+      "attribution_journal": "Euro Surveill",
+      "attribution_url" : "https://dx.doi.org/10.2807/1560-7917.ES.2016.21.10.30159",
+      "authors" : "Barzon L, Pacenti M, Berto A, Sinigaglia A, Franchin E, Lavezzo E, Brugnaro P, Palù G.",
+      "pubmed_id" : "26987769",
+      "sequences" : [
+          "DominicanRepublic/2016/PD|PD1|KU853012",
+          "DominicanRepublic/2016/PD|PD2|KU853013"
+      ]
+    }
+  ]
+}
