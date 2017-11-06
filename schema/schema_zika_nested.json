@@ -13,9 +13,7 @@
       "symptoms" : null,
       "samples" : [
         {
-          "strain_name" : "USVI/1/2016",
           "sample_name" : "VI1.1",
-          "owner" : "bpotter",
           "collection_date" : "2016-09-28",
           "country" : "usvi",
           "division" : "saint_croix",
@@ -27,10 +25,7 @@
           "ct" : 25,
           "sequences" : [
             {
-              "strain_name" : "USVI/1/2016",
-              "sample_name" : "VI1.1",
               "sequence_accession": "1",
-              "owner" : "bpotter",
               "sequence_locus" : "genome",
               "sequence_type" : "consensus",
               "sequencing_lab" : "Bedford lab",
@@ -43,9 +38,7 @@
           "usvi_doh_sample_id" : "G125"
         },
         {
-          "strain_name" : "USVI/1/2016",
           "sample_name" : "VI1.2",
-          "owner" : "bpotter",
           "collection_date" : "2016-09-30",
           "country" : "usvi",
           "division" : "saint_croix",
@@ -57,10 +50,7 @@
           "ct" : 28,
           "sequences" : [
             {
-              "strain_name" : "USVI/1/2016",
-              "sample_name" : "VI1.2",
               "sequence_accession": "1",
-              "owner" : "bpotter",
               "sequence_locus" : "genome",
               "sequence_type" : "consensus",
               "sequencing_lab" : "Bedford lab",
@@ -88,9 +78,7 @@
       "symptoms" : null,
       "samples" : [
         {
-          "strain_name" : "DominicanRepublic/2016/PD",
           "sample_name" : "PD1",
-          "owner" : "tbedford",
           "collection_date" : "2016-02-01",
           "country" : "italy",
           "division" : "padua",
@@ -102,10 +90,7 @@
           "ct" : null,
           "sequences" : [
             {
-              "strain_name" : "DominicanRepublic/2016/PD",
-              "sample_name" : "PD1",
               "sequence_accession": "KU853012",
-              "owner" : "tbedford",
               "sequence_locus" : "genome",
               "sequence_type" : "consensus",
               "sequencing_lab" : null,
@@ -117,9 +102,7 @@
           ]
         },
         {
-          "strain_name" : "DominicanRepublic/2016/PD",
           "sample_name" : "PD2",
-          "owner" : "tbedford",
           "collection_date" : "2016-02-01",
           "country" : "italy",
           "division" : "padua",
@@ -131,10 +114,7 @@
           "ct" : null,
           "sequences" : [
             {
-              "strain_name" : "DominicanRepublic/2016/PD",
-              "sample_name" : "PD2",
               "sequence_accession": "KU853013",
-              "owner" : "tbedford",
               "sequence_locus" : "genome",
               "sequence_type" : "consensus",
               "sequencing_lab" : null,
