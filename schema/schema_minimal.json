@@ -11,10 +11,7 @@
       "host_age": null,
       "host_sex" : null,
       "symptom_onset_date" : null,
-      "symptoms" : null,
-      "samples" : [
-        "STRAINNAME|1"
-      ]
+      "symptoms" : null
     }
   ],
   "samples" : [
@@ -31,10 +28,7 @@
       "collecting_lab" : null,
       "passage" : null,
       "tissue" : null,
-      "ct" : null,
-      "sequences" : [
-        "STRAINNAME|1|1"
-      ]
+      "ct" : null
     }
   ],
   "sequences" : [
