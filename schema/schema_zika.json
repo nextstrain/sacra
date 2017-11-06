@@ -28,7 +28,7 @@
       "host_species" : "human",
       "host_age": null,
       "host_sex" : null,
-      "symptom_onset_date" : null,      
+      "symptom_onset_date" : null,
       "symptoms" : null,
       "samples" : [
         "DominicanRepublic/2016/PD|PD1",
