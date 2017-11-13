@@ -14,3 +14,6 @@ __pycache__
 
 # Code duplicated for python3
 2to3/*
+
+# Other
+notes.txt
