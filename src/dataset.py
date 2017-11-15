@@ -31,6 +31,12 @@ class Dataset:
         # Wrappers for data, described in class description
         self.metadata = {'datatype': datatype, 'virus': virus}
         self.dataset = {}
+
+        # New schema TODO: make dump use these fields
+        self.dbinfo = {'pathogen' : virus}
+        self.strains = {}
+        self.samples = {}
+        self.sequences = {}
         # Track which documents should be removed
         self.bad_docs = []
 
@@ -75,6 +81,11 @@ class Dataset:
         else:
             return 'unknown'
 
+###################################################
+####### Read, clean, reshape, and merge functions #
+###################################################
+
+##### Control
     def read_clean_reshape_merge(self, infile, ftype, **kwargs):
         '''
         infile:file -> docs:list(dict) -> reshaped_docs:set(dict)
@@ -102,6 +113,7 @@ class Dataset:
         # TODO: write self.merge_reshaped_docs()
         self.merge_reshaped_docs(reshaped_docs)
 
+##### Read
     def read_fasta(self, infile, source, path, datatype, **kwargs):
         '''
         Take a fasta file and a list of information contained in its headers
@@ -114,7 +126,7 @@ class Dataset:
         print 'Reading in %s FASTA from %s%s.' % (source,path,infile)
         self.fasta_headers = cfg.fasta_headers[source.lower()]
 
-        out = []
+        docs = []
 
         # Read the fasta
         with open(path + infile, "rU") as f:
@@ -125,31 +137,86 @@ class Dataset:
                 for i in range(len(self.fasta_headers)):
                     data[self.fasta_headers[i]] = head[i]
                     data['sequence'] = str(record.seq)
+                docs.append(data)
 
-                index = []
-                for ind in self.index_fields:
-                    try:
-                        index.append(data[ind])
-                    except:
-                        pass
-                out.append({":".join(index): data})
+        return docs
 
-        # Merge the formatted dictionaries to self.dataset()
-        print 'Fixing names for new documents'
-        t = time.time()
-        cf.format_names(out, self.metadata['virus'])
-        print '~~~~~ Fixed names in %s seconds ~~~~~' % (time.time()-t)
+        # # Merge the formatted dictionaries to self.dataset()
+        # print 'Fixing names for new documents'
+        # t = time.time()
+        # cf.format_names(out, self.metadata['virus'])
+        # print '~~~~~ Fixed names in %s seconds ~~~~~' % (time.time()-t)
+        #
+        # print 'Merging input FASTA to %s documents.' % (len(out))
+        # for doc in out:
+        #     try:
+        #         assert isinstance(doc, dict)
+        #     except:
+        #         print 'WARNING: Cannot merge doc of type %s: %s' % (type(doc), (str(doc)[:75] + '..') if len(str(doc)) > 75 else str(doc))
+        #         pass
+        #     assert len(doc.keys()) == 1, 'More than 1 key in %s' % (doc)
+        #     self.merge(doc.keys()[0], doc[doc.keys()[0]])
+        # print 'Successfully merged %s documents. Done reading %s.' % (len(self.dataset)-1, infile)
 
-        print 'Merging input FASTA to %s documents.' % (len(out))
-        for doc in out:
-            try:
-                assert isinstance(doc, dict)
-            except:
-                print 'WARNING: Cannot merge doc of type %s: %s' % (type(doc), (str(doc)[:75] + '..') if len(str(doc)) > 75 else str(doc))
-                pass
-            assert len(doc.keys()) == 1, 'More than 1 key in %s' % (doc)
-            self.merge(doc.keys()[0], doc[doc.keys()[0]])
-        print 'Successfully merged %s documents. Done reading %s.' % (len(self.dataset)-1, infile)
+##### Clean
+    def clean(self, doc):
+        '''
+        Take a document dictionary and return a canonicalized version of that document dictionary
+        # TODO: Incorporate all the necessary cleaning functions
+        '''
+        # Remove docs with bad keys or that are not of type dict
+        try:
+            assert isinstance(doc, dict)
+        except:
+            print 'Documents must be of type dict, this one is of type %s:\n%s' % (type(doc), doc)
+            return
+
+        # Use functions specified by cfg.py. Fxn defs in cleaning_functions.py
+        fxns = cfg.sequence_clean
+
+        for fxn in fxns:
+            fxn(doc, None, self.bad_docs, self.metadata['virus'])
+
+##### Reshape
+    def reshape(self,docs):
+        table_to_fields = cfg.table_to_fields
+        for doc in docs:
+            # Make new entries for strains, samples, and sequences
+            # Walk downward through hierarchy
+            # TODO: Think about what to do if only "sequence_name" is available for some reason
+
+            if 'strain_name' in doc.keys():
+                strain_id = doc['strain_name']
+                if doc[strain_id] not in self.strains.keys():
+                    self.strains[strain_id] = {}
+                for field in doc.keys():
+                    if field in table_to_fields["strains"]:
+                        self.strains[strain_id][field] = doc[field]
+                if 'sample_name' in doc.keys():
+                    sample_id = strain_id + '|' + doc['sample_name']
+                    if doc[sample_id] not in self.samples.keys():
+                        self.samples[sample_id] = {}
+                    for field in doc.keys():
+                        if field in table_to_fields["samples"]:
+                            self.samples[sample_id][field] = doc[field]
+                    if 'sequence_name' in doc.keys():
+                        sequence_id = sample_id + '|' + doc['sequence_name']
+                        if doc[sequence_id] not in self.sequences.keys():
+                            self.sequences[sequence_id] = {}
+                        for field in doc.keys():
+                            if field in table_to_fields["sequences"]:
+                                self.sequences[sequence_id][field] = doc[field]
+
+##### Merge
+    def merge(self, key, data):
+        '''
+        Make sure all new entries to the dataset have formatted names
+        '''
+        self.dataset[key] = data
+
+###################################################
+####### End of RCRM functions #####################
+###################################################
 
 
     def read_metadata(self, path, metafile, **kwargs):
@@ -166,35 +233,6 @@ class Dataset:
             for index, row in meta.iterrows():
                 # TODO: this
                 pass
-
-    def merge(self, key, data):
-        '''
-        Make sure all new entries to the dataset have formatted names
-        '''
-        self.dataset[key] = data
-
-    def clean(self, key, doc):
-        '''
-        Take a document and return a canonicalized version of that document
-        # TODO: Incorporate all the necessary cleaning functions
-        '''
-        # Remove docs with bad keys or that are not of type dict
-        try:
-            assert isinstance(doc, dict)
-        except:
-            print 'Documents must be of type dict, this one is of type %s:\n%s' % (type(doc), doc)
-            return
-
-        k = doc.keys()[0]
-
-        # Use functions specified by cfg.py. Fxn defs in cleaning_functions.py
-        if self.metadata['datatype'] == 'sequence':
-            fxns = cfg.sequence_clean
-        elif self.metadata['datatype'] == 'titer':
-            fxns = cfg.titer_clean
-
-        for fxn in fxns:
-            fxn(doc, key, self.bad_docs, self.metadata['virus'])
 
     def remove_bad_docs(self):
 
