@@ -16,27 +16,6 @@ sequence_clean = [ fix_accession, fix_sequence, fix_locus, fix_strain, remove_is
 # Lists sources from which different datatypes come from
 sources = { 'sequence' : [ 'gisaid', 'fauna', 'vipr' ],
             'titer' : [ 'crick', 'cdc' ] }
-# When running reshape, figure out which fields belong in which table
-# Lifted from schema/schema_zika.json
-table_to_fields = { 'dbinfo' : ['pathogen'],
-                    'strains' : ['strain_id', 'strain_name', 'strain_owner',
-                                 'host_species', 'host_age', 'host_sex',
-                                 'symptom_onset_date', 'symptoms',
-                                 'pregnancy_status', 'pregnancy_week',
-                                 'microcephaly_status', 'usvi_doh_patient_id'],
-                    'samples' : ['sample_id', 'sample_name', 'sample_owner',
-                                 'collection_date', 'country', 'division', 'subdivision',
-                                 'gps', 'collecting_lab', 'passage', 'tissue', 'ct',
-                                 'usvi_doh_sample_id'],
-                    'sequences' : ['sequence_id', 'strain_name', 'strain_sample',
-                                   'sequence_accession', 'sequence_owner', 'sequence_locus',
-                                   'sequence_type', 'sequencing_lab', 'sharing',
-                                   'sequence_url', 'attribution', 'sequence'],
-                    'attributions' : ['attribution_id', 'attribution_owner',
-                                      'attribution_source', 'publication_status',
-                                      'attribution_date', 'attribution_title',
-                                      'attribution_journal', 'attribution_url',
-                                      'authors', 'pubmed_id']}
 ##### strain_sample from https://github.com/nextstrain/sacra/blob/schema/schema/schema_zika.json#L100
 # For each sequence source, the default order of fields in the fasta header
 fasta_headers = { 'gisaid' : [ 'accession', 'strain', 'isolate_id', 'locus', 'passage', 'submitting_lab' ],
