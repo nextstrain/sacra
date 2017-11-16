@@ -5,8 +5,8 @@
   "pathogens" : [
     {
       "strain" : "A/Example/0000/2017",
-      "accessions" : [
-        "accession1",
+      "sequence_names" : [
+        "sequence_name1",
         "etc."
       ],
       "host" : "human, probably",
@@ -18,7 +18,7 @@
   ],
   "sequences" : [
     {
-      "accession" : "accession1",
+      "sequence_name" : "sequence_name1",
       "locus" : "pb1",
       "passage_category" : "cell",
       "submitting_lab" : "centers_for_disease_control_and_prevention",
@@ -36,8 +36,8 @@
         ],
         "journal" : "journal name",
         "date" : "publication date",
-        "accessions" : [
-          "accession1",
+        "sequence_names" : [
+          "sequence_name1",
           "etc."
         ],
         "publication_name" : "name"

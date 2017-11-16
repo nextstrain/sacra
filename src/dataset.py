@@ -102,7 +102,6 @@ class Dataset:
             return
 
         # Clean each doc in docs according to all functions in cleaning_functions
-        print docs
         docs = [ self.clean(doc) for doc in docs ]
 
         # Reshape docs into a set of dicts
@@ -174,15 +173,18 @@ class Dataset:
         # Use functions specified by cfg.py. Fxn defs in cleaning_functions.py
         fxns = cfg.sequence_clean
 
+        print "Doc:"
+        print doc
         for fxn in fxns:
             fxn(doc, None, self.bad_docs, self.metadata['pathogen'])
+            print str(fxn)
+            print doc
 
         return doc
 
 ##### Reshape
     def reshape(self,docs):
         import spec_mapping as m
-        print docs
         for doc in docs:
             # Make new entries for strains, samples, and sequences
             # Walk downward through hierarchy
@@ -190,21 +192,23 @@ class Dataset:
 
             if 'strain_name' in doc.keys():
                 strain_id = doc['strain_name']
-                if doc[strain_id] not in self.strains.keys():
+                if strain_id not in self.strains.keys():
                     self.strains[strain_id] = {}
                 for field in doc.keys():
                     if field in m.mapping["strains"]:
                         self.strains[strain_id][field] = doc[field]
+                doc['sample_strain_name'] = doc['strain_name']
                 if 'sample_name' in doc.keys():
                     sample_id = strain_id + '|' + doc['sample_name']
-                    if doc[sample_id] not in self.samples.keys():
+                    if sample_id not in self.samples.keys():
                         self.samples[sample_id] = {}
                     for field in doc.keys():
                         if field in m.mapping["samples"]:
                             self.samples[sample_id][field] = doc[field]
+                    doc['sequence_sample_name'] = doc['sample_name']
                     if 'sequence_name' in doc.keys():
                         sequence_id = sample_id + '|' + doc['sequence_name']
-                        if doc[sequence_id] not in self.sequences.keys():
+                        if sequence_id not in self.sequences.keys():
                             self.sequences[sequence_id] = {}
                         for field in doc.keys():
                             if field in m.mapping["sequences"]:
@@ -230,17 +234,17 @@ class Dataset:
                 # TODO: this
                 pass
 
-    def remove_bad_docs(self):
-
-        # Not working because of key errors, they should be ints
-        if self.bad_docs != []:
-            print 'Documents that need to be removed : %s ' % (self.bad_docs)
-            self.bad_docs = self.bad_docs.sort().reverse()
-            for key in self.bad_docs:
-                t = self.dataset[key]
-                self.dataset[key] = self.dataset[-1]
-                self.dataset[-1] = t
-                self.dataset.pop()
+    # def remove_bad_docs(self):
+    #
+    #     # Not working because of key errors, they should be ints
+    #     if self.bad_docs != []:
+    #         print 'Documents that need to be removed : %s ' % (self.bad_docs)
+    #         self.bad_docs = self.bad_docs.sort().reverse()
+    #         for key in self.bad_docs:
+    #             t = self.dataset[key]
+    #             self.dataset[key] = self.dataset[-1]
+    #             self.dataset[-1] = t
+    #             self.dataset.pop()
 
     def write(self, out_file):
         '''
@@ -248,27 +252,26 @@ class Dataset:
         '''
         print 'Writing dataset to %s' % (out_file)
         t = time.time()
-        out = {}
-        for key in self.metadata.keys():
-            out[key] = self.metadata[key]
-        out['data'] = self.dataset
-        out['pathogens'] = self.pathogens
-        out['references'] = self.references
+        out = {'dbinfo': [ {key: value} for key,value in self.dbinfo.iteritems() ],
+               'strains': [],
+               'samples': [],
+               'sequences': []}
+        for key, value in self.strains.iteritems():
+            strain_id = {'strain_id': key}
+            strain_data = value
+            out['strains'].append(merge_two_dicts(strain_id,strain_data))
+        for key, value in self.samples.iteritems():
+            sample_id = {'sample_id': key}
+            sample_data = value
+            out['samples'].append(merge_two_dicts(sample_id,sample_data))
+        for key, value in self.sequences.iteritems():
+            sequence_id = {'sequence_id': key}
+            sequence_data = value
+            out['sequences'].append(merge_two_dicts(sequence_id,sequence_data))
 
         with open(out_file, 'w+') as f:
             json.dump(out, f, indent=1)
 	    print '~~~~~ Wrote output in %s seconds ~~~~~' % (time.time()-t)
-
-    def seed(self, datatype):
-        '''
-        Make an empty entry in dataset that has all the necessary keys, acts as a merge filter
-        '''
-        seed = { field : None for field in cfg.optional_fields[datatype] }
-        seed['sequence'] = None
-        self.dataset['seed'] = seed
-
-    def remove_seed(self):
-        self.dataset.pop('seed',None)
 
     def set_sequence_permissions(self, permissions, **kwargs):
         for a in self.dataset:
@@ -281,10 +284,10 @@ class Dataset:
             name = self.dataset[pathogen]['strain']
             if name not in vs.keys():
                 vs[name] = {'strain' : name }
-            if 'accessions' in vs[name].keys():
-                vs[name]['accessions'].append(self.dataset[pathogen]['accession'])
+            if 'sequence_names' in vs[name].keys():
+                vs[name]['sequence_names'].append(self.dataset[pathogen]['sequence_name'])
             else:
-                vs[name]['accessions'] = [self.dataset[pathogen]['accession']]
+                vs[name]['sequence_names'] = [self.dataset[pathogen]['sequence_name']]
 
             # Scrape pathogen host
             # TODO: Resolve issues if there are different hosts
@@ -320,13 +323,13 @@ class Dataset:
         for name in vs.keys():
             # Scrape number of segments
             segments = set()
-            for a in vs[name]['accessions']:
+            for a in vs[name]['sequence_names']:
                 segments.add(self.dataset[a]['locus'])
             vs[name]['number_of_segments'] = len(segments)
 
             # # Scrape isolate ids
             # ids = set()
-            # for a in vs[name]['accessions']:
+            # for a in vs[name]['sequence_names']:
             #     ids.add(self.dataset[a]['isolate_id'])
             # vs[name]['isolate_ids'] = list(ids)
 
@@ -350,10 +353,10 @@ class Dataset:
           ],
           "journal" : "journal name",
           "date" : "publication date",
-          "accessions" : [
-            "accession1",
-            "accession2",
-            "accession3"
+          "sequence_names" : [
+            "sequence_name1",
+            "sequence_name2",
+            "sequence_name3"
           ],
           "publication_name" : "name"
         }
@@ -367,12 +370,18 @@ class Dataset:
           ],
           "journal" : "journal name",
           "date" : "publication date",
-          "accessions" : [
-            "accession1",
-            "accession2",
-            "accession3"
+          "sequence_names" : [
+            "sequence_name1",
+            "sequence_name2",
+            "sequence_name3"
           ],
           "publication_name" : "name"
         } }
 
         self.references = refs
+
+def merge_two_dicts(x, y):
+    """Given two dicts, merge them into a new dict as a shallow copy."""
+    z = x.copy()
+    z.update(y)
+    return z

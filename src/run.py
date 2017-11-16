@@ -61,7 +61,7 @@ if __name__=="__main__":
         t = time.time()
         for key in D.dataset.keys():
             D.clean(key, D.dataset[key])
-        D.remove_bad_docs()
+        # D.remove_bad_docs()
         print '~~~~~ Cleaned %s documents in %s seconds ~~~~~' % (len(D.dataset), (time.time()-t))
         D.compile_pathogen_table(**args.__dict__)
         D.build_references_table()

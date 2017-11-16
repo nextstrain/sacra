@@ -15,16 +15,16 @@ sys.path.append('')
 # Cleaning functions #
 ######################
 
-def fix_accession(doc, key, remove, *args):
+def fix_sequence_name(doc, key, remove, *args):
     '''
-    Moved to cleaning_functions/fix/accession.py
-    fix errors that can arise with accession field
+    Moved to cleaning_functions/fix/sequence_name.py
+    fix errors that can arise with sequence_name field
     '''
-    if 'accession' in doc and doc['accession'] is not None:
-        doc['accession'] = doc['accession'].encode('ascii', 'replace')
-        doc['accession'] = doc['accession'].lower()
-        if doc['accession'].startswith('epi'):
-            doc['accession'] = doc['accession'][2:]
+    if 'sequence_name' in doc and doc['sequence_name'] is not None:
+        doc['sequence_name'] = doc['sequence_name'].encode('ascii', 'replace')
+        doc['sequence_name'] = doc['sequence_name'].lower()
+        if doc['sequence_name'].startswith('epi'):
+            doc['sequence_name'] = doc['sequence_name'][2:]
 
 def fix_sequence(doc, key, remove, *args):
     '''
@@ -44,18 +44,18 @@ def fix_locus(doc, key, remove, *args):
     else:
         remove.append(key)
 
-def fix_strain(doc, key, remove, *args):
+def fix_strain_name(doc, key, remove, *args):
     '''
-    Moved to cleaning_functions/fix/strain.py
+    Moved to cleaning_functions/fix/strain_name.py
     '''
     pass
 
-def remove_isolate_id(doc, key, remove, *args):
+def remove_sample_name(doc, key, remove, *args):
     '''
-    Moved to cleaning_functions/drop/isolate_id.py
+    Moved to cleaning_functions/drop/sample_name.py
     '''
-    if 'isolate_id' in doc:
-        doc.pop('isolate_id', None)
+    if 'sample_name' in doc:
+        doc.pop('sample_name', None)
 
 def fix_passage(doc, key, remove, *args):
     '''
@@ -163,32 +163,32 @@ def camelcase_to_snakecase(name):
             return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower().replace(" ", "")
 
 ################################
-# Strain name fixing functions #
+# strain_name name fixing functions #
 ################################
 
-## Moved to cleaning_functions/fix/strain.py
+## Moved to cleaning_functions/fix/strain_name.py
 
 def format_names(docs, pathogen):
-    fix_whole_name = define_strain_fixes(cfg.strain_fix_fname[pathogen])
+    fix_whole_name = define_strain_name_fixes(cfg.strain_name_fix_fname[pathogen])
     label_to_fix = define_location_fixes(cfg.label_fix_fname[pathogen])
     for doc in docs:
         # Fix this when switching docs to dict
         for key in doc:
-            doc[key]['strain'] = fix_name(doc[key]['strain'], fix_whole_name, label_to_fix)[0]
+            doc[key]['strain_name'] = fix_name(doc[key]['strain_name'], fix_whole_name, label_to_fix)[0]
 
 def fix_name(name, fix_whole_name, label_to_fix):
     '''
-    Fix strain names
+    Fix strain_name names
     '''
     # replace all accents with ? mark
     original_name = name.encode('ascii', 'replace')
-    # Replace whole strain names
-    name = replace_strain_name(original_name, fix_whole_name)
+    # Replace whole strain_name names
+    name = replace_strain_name_name(original_name, fix_whole_name)
     name = name.replace('H1N1', '').replace('H5N6', '').replace('H3N2', '').replace('Human', '')\
         .replace('human', '').replace('//', '/').replace('.', '').replace(',', '').replace('&', '').replace(' ', '')\
         .replace('\'', '').replace('>', '').replace('-like', '').replace('+', '')
     split_name = name.split('/')
-    # check location labels in strain names for fixing
+    # check location labels in strain_name names for fixing
     for index, label in enumerate(split_name):
         if label.replace(' ', '').lower() in label_to_fix:
             split_name[index] = label_to_fix[label.replace(' ', '').lower()]
@@ -205,18 +205,18 @@ def fix_name(name, fix_whole_name, label_to_fix):
     result_name = '/'.join(split_name).strip()
     return result_name, original_name
 
-def replace_strain_name(original_name, fixes={}):
+def replace_strain_name_name(original_name, fixes={}):
     '''
-    return the new strain name that will replace the original
+    return the new strain_name name that will replace the original
     '''
     if original_name in fixes:
         return fixes[original_name]
     else:
         return original_name
 
-def define_strain_fixes(fname):
+def define_strain_name_fixes(fname):
     '''
-    Open strain name fixing files and define corresponding dictionaries
+    Open strain_name name fixing files and define corresponding dictionaries
     '''
     reader = csv.DictReader(filter(lambda row: row[0]!='#', open(fname)), delimiter='\t')
     fix_whole_name = {}
@@ -252,13 +252,13 @@ def flu_fix_patterns(name):
     if re.match(r'([A|B]/)clinicalisolate(SA[0-9]+)([^/]+)(/[0-9]{4})', name):  #B/clinicalisolateSA116Philippines/2002 -> B/Philippines/SA116/2002
         match = re.match(r'([A|B]/)clinicalisolate(SA[0-9]+)([^/]+)(/[0-9]{4})', name)
         name = match.group(1) + match.group(3) + "/" + match.group(2) + match.group(4)
-    # reformat Ireland strain names
+    # reformat Ireland strain_name names
     if re.match(r'([1-2]+)IRL([0-9]+)$', name):  # 12IRL26168 -> A/Ireland/26168/2012  (All sequences with same pattern are H3N2)
         name = "A/Ireland/" + re.match(r'([1-2]+)IRL([0-9]+)$', name).group(2) + "/20" + re.match(r'([1-2]+)IRL([0-9]+)$', name).group(1)
-    # Remove info B/Vic strain info from name
+    # Remove info B/Vic strain_name info from name
     if re.match(r'([\w\s\-/]+)(\(?)(B/Victoria/2/87|B/Victoria/2/1987)$', name):  # B/Finland/150/90 B/Victoria/2/1987 -> B/Finland/150/90
         name = re.match(r'([\w\s\-/]+)(\(?)(B/Victoria/2/87|B/Victoria/2/1987)$', name).group(1)
-    # Separate location info from ID info in strain name
+    # Separate location info from ID info in strain_name name
     if re.match(r'([A|B]/[^0-9/]+)([0-9]+[A-Za-z]*/[0-9/]*[0-9]{2,4})$', name):  #A/Iceland183/2009  A/Baylor4A/1983  A/Beijing262/41/1994
         name = re.match(r'([A|B]/[^0-9/]+)([0-9]+[A-Za-z]*/[0-9/]*[0-9]{2,4})$', name).group(1) + "/" + re.match(r'([A|B]/[^0-9/]+)([0-9]+[A-Za-z]*/[0-9/]*[0-9]{2,4})$', name).group(2)
     # Remove characters after year info, associated with passage info but can parse that from passage field later
@@ -284,19 +284,19 @@ def flu_fix_patterns(name):
 def format_country(self, v):
     # TODO
     '''
-    Label pathogens with country based on strain name
+    Label pathogens with country based on strain_name name
     '''
-    strain_name = v['strain']
-    original_name = v['gisaid_strain']
+    strain_name_name = v['strain_name']
+    original_name = v['gisaid_strain_name']
     if 'gisaid_location' not in v or v['gisaid_location'] is None:
         v['gisaid_location'] = ''
-    if '/' in strain_name:
-        name = strain_name.split('/')[1]
+    if '/' in strain_name_name:
+        name = strain_name_name.split('/')[1]
         if any(place.lower() == name.lower() for place in ['SaoPaulo', 'SantaCatarina', 'Calarasi', 'England', 'Sc']):
             name = v['gisaid_location'].split('/')[len(v['gisaid_location'].split('/'))-1].strip()
             result = self.determine_location(name)
             if result is None:
-                result = self.determine_location(strain_name.split('/')[1])
+                result = self.determine_location(strain_name_name.split('/')[1])
         else:
             result = self.determine_location(name)
     else:
@@ -305,14 +305,14 @@ def format_country(self, v):
         v['location'], v['division'], v['country'] = result
     else:
         v['location'], v['division'], v['country'] = None, None, None
-        print("couldn't parse country for ", strain_name, "gisaid location", v['gisaid_location'], original_name)
+        print("couldn't parse country for ", strain_name_name, "gisaid location", v['gisaid_location'], original_name)
 
     # Repeat location name, Use gisaid Location to assign name
     repeat_location = {'BuenosAires': ('BuenosAires', 'Pernambuco', 'Brazil'), 'SantaCruz': ('SantaCruz', 'SantaCruz', 'Bolivia'),
                        'ChristChurch': ('ChristChurch', 'ChristChurch', 'Barbados'), 'SaintPetersburg': ('SaintPetersburg', 'Florida', 'USA'),
                         'GeorgiaCountry': ('GeorgiaCountry', 'GeorgiaCountry', 'GeorgiaCountry')}
     for repeat, assignment in repeat_location.items():
-        if repeat in v['strain']:
+        if repeat in v['strain_name']:
             if 'gisaid_location' in v and assignment[0] in v['gisaid_location']:
                 v['location'] = assignment[0]
                 v['division'] = assignment[1]
