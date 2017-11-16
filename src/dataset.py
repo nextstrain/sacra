@@ -27,13 +27,13 @@ class Dataset:
 
         ex. [ {date: 2012-06-11, location: Idaho, sequence: GATTACA}, {date: 2016-06-16, location: Oregon, sequence: CAGGGCCTCCA}, {date: 1985-02-22, location: Brazil, sequence: BANANA} ]
     '''
-    def __init__(self, datatype, virus, outpath, **kwargs):
+    def __init__(self, datatype, pathogen, outpath, **kwargs):
         # Wrappers for data, described in class description
-        self.metadata = {'datatype': datatype, 'virus': virus}
+        self.metadata = {'datatype': datatype, 'pathogen': pathogen}
         self.dataset = {}
 
         # New schema TODO: make dump use these fields
-        self.dbinfo = {'pathogen' : virus}
+        self.dbinfo = {'pathogen' : pathogen}
         self.strains = {}
         self.samples = {}
         self.sequences = {}
@@ -50,7 +50,7 @@ class Dataset:
         for infile in infiles:
             filetype = self.determine_filetype(infile)
             if filetype in ['fasta', 'delimited', 'excel', 'json']:
-                self.read_clean_reshape_merge(infile,filetype, **kwargs)
+                self.read_clean_reshape(infile,filetype, **kwargs)
             else:
                 print "Could not read %s, unknown filetype"
 
@@ -86,14 +86,13 @@ class Dataset:
 ###################################################
 
 ##### Control
-    def read_clean_reshape_merge(self, infile, ftype, **kwargs):
+    def read_clean_reshape(self, infile, ftype, **kwargs):
         '''
         infile:file -> docs:list(dict) -> reshaped_docs:set(dict)
         This function performs 4 primary functions:
           1. read in a file of a known type into a list of dictionaries called docs
           2. clean each doc in docs according to all functions in cleaning_functions
-          3. reshape docs into a set of dicts
-          4. merge the dicts into self
+          3. reshape docs into a set of dicts and merge the dicts into self
         '''
         # Read in a file of a known type into a list of dictionaries
         if ftype == 'fasta':
@@ -103,15 +102,16 @@ class Dataset:
             return
 
         # Clean each doc in docs according to all functions in cleaning_functions
+        print docs
         docs = [ self.clean(doc) for doc in docs ]
 
         # Reshape docs into a set of dicts
         # TODO: write self.reshape()
         reshaped_docs = self.reshape(docs)
-
-        # merge the dicts into self
-        # TODO: write self.merge_reshaped_docs()
-        self.merge_reshaped_docs(reshaped_docs)
+        #
+        # # merge the dicts into self
+        # # TODO: write self.merge_reshaped_docs()
+        # self.merge_reshaped_docs(reshaped_docs)
 
 ##### Read
     def read_fasta(self, infile, source, path, datatype, **kwargs):
@@ -144,7 +144,7 @@ class Dataset:
         # # Merge the formatted dictionaries to self.dataset()
         # print 'Fixing names for new documents'
         # t = time.time()
-        # cf.format_names(out, self.metadata['virus'])
+        # cf.format_names(out, self.metadata['pathogen'])
         # print '~~~~~ Fixed names in %s seconds ~~~~~' % (time.time()-t)
         #
         # print 'Merging input FASTA to %s documents.' % (len(out))
@@ -175,11 +175,14 @@ class Dataset:
         fxns = cfg.sequence_clean
 
         for fxn in fxns:
-            fxn(doc, None, self.bad_docs, self.metadata['virus'])
+            fxn(doc, None, self.bad_docs, self.metadata['pathogen'])
+
+        return doc
 
 ##### Reshape
     def reshape(self,docs):
-        table_to_fields = cfg.table_to_fields
+        import spec_mapping as m
+        print docs
         for doc in docs:
             # Make new entries for strains, samples, and sequences
             # Walk downward through hierarchy
@@ -190,33 +193,26 @@ class Dataset:
                 if doc[strain_id] not in self.strains.keys():
                     self.strains[strain_id] = {}
                 for field in doc.keys():
-                    if field in table_to_fields["strains"]:
+                    if field in m.mapping["strains"]:
                         self.strains[strain_id][field] = doc[field]
                 if 'sample_name' in doc.keys():
                     sample_id = strain_id + '|' + doc['sample_name']
                     if doc[sample_id] not in self.samples.keys():
                         self.samples[sample_id] = {}
                     for field in doc.keys():
-                        if field in table_to_fields["samples"]:
+                        if field in m.mapping["samples"]:
                             self.samples[sample_id][field] = doc[field]
                     if 'sequence_name' in doc.keys():
                         sequence_id = sample_id + '|' + doc['sequence_name']
                         if doc[sequence_id] not in self.sequences.keys():
                             self.sequences[sequence_id] = {}
                         for field in doc.keys():
-                            if field in table_to_fields["sequences"]:
+                            if field in m.mapping["sequences"]:
                                 self.sequences[sequence_id][field] = doc[field]
 
-##### Merge
-    def merge(self, key, data):
-        '''
-        Make sure all new entries to the dataset have formatted names
-        '''
-        self.dataset[key] = data
-
-###################################################
-####### End of RCRM functions #####################
-###################################################
+##################################################
+####### End of RCR functions #####################
+##################################################
 
 
     def read_metadata(self, path, metafile, **kwargs):
@@ -256,7 +252,7 @@ class Dataset:
         for key in self.metadata.keys():
             out[key] = self.metadata[key]
         out['data'] = self.dataset
-        out['viruses'] = self.viruses
+        out['pathogens'] = self.pathogens
         out['references'] = self.references
 
         with open(out_file, 'w+') as f:
@@ -278,46 +274,46 @@ class Dataset:
         for a in self.dataset:
             self.dataset[a]['permissions'] = permissions
 
-    def compile_virus_table(self, subtype, **kwargs):
+    def compile_pathogen_table(self, subtype, **kwargs):
         vs = {}
-        for virus in self.dataset.keys():
-            # Initialize virus dict
-            name = self.dataset[virus]['strain']
+        for pathogen in self.dataset.keys():
+            # Initialize pathogen dict
+            name = self.dataset[pathogen]['strain']
             if name not in vs.keys():
                 vs[name] = {'strain' : name }
             if 'accessions' in vs[name].keys():
-                vs[name]['accessions'].append(self.dataset[virus]['accession'])
+                vs[name]['accessions'].append(self.dataset[pathogen]['accession'])
             else:
-                vs[name]['accessions'] = [self.dataset[virus]['accession']]
+                vs[name]['accessions'] = [self.dataset[pathogen]['accession']]
 
-            # Scrape virus host
+            # Scrape pathogen host
             # TODO: Resolve issues if there are different hosts
-            if 'host' not in self.dataset[virus].keys():
+            if 'host' not in self.dataset[pathogen].keys():
                 vs[name]['host'] = 'human'
-            elif self.dataset[virus]['host'] == None:
+            elif self.dataset[pathogen]['host'] == None:
                 vs[name]['host'] = 'human'
-                self.dataset[virus].pop('host',None)
+                self.dataset[pathogen].pop('host',None)
             else:
                 vs[name]['host'] = name['host']
-                self.dataset[virus].pop('host',None)
+                self.dataset[pathogen].pop('host',None)
 
             # Scrape host age
             # TODO: Resolve issues if there are different ages
-            if 'age' not in self.dataset[virus].keys():
+            if 'age' not in self.dataset[pathogen].keys():
                 vs[name]['host_age'] = None
-            elif self.dataset[virus]['age'] == None:
+            elif self.dataset[pathogen]['age'] == None:
                 vs[name]['host_age'] = None
-                self.dataset[virus].pop('age',None)
+                self.dataset[pathogen].pop('age',None)
             else:
                 vs[name]['host_age'] = name['age']
-                self.dataset[virus].pop('age',None)
+                self.dataset[pathogen].pop('age',None)
 
             # Scrape subtype
             if subtype != None:
                 vs[name]['subtype'] = subtype
-            elif ('subtype' in self.dataset[virus].keys()) and (self.dataset[virus]['subtype'] is not None):
-                vs[name]['subtype'] = self.dataset[virus]['subtype']
-                self.dataset[virus].pop('subtype', None)
+            elif ('subtype' in self.dataset[pathogen].keys()) and (self.dataset[pathogen]['subtype'] is not None):
+                vs[name]['subtype'] = self.dataset[pathogen]['subtype']
+                self.dataset[pathogen].pop('subtype', None)
             else:
                 vs[name]['subtype'] = None
 
@@ -339,7 +335,7 @@ class Dataset:
             # location = name.split('/')[1]
             # vs[name]['un_locode'] = lookup_locode(location) TODO: Write this fxn
 
-        self.viruses = vs
+        self.pathogens = vs
 
     def build_references_table(self):
         '''

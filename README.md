@@ -29,8 +29,8 @@ This will write a JSON to the `output` directory.
 If uploading multiple files is necessary, the call can be altered to: `python src/run.py --infiles split_file_1.fasta split_file_2.fasta --source gisaid --test`.
 
 ## Explanation of options
-- `-v`, `--virus`:
-  - Virus species that will be processed in the dataset run. To avoid errors, this should be present in `src/cfg.py`.
+- `-v`, `--pathogen`:
+  - pathogen species that will be processed in the dataset run. To avoid errors, this should be present in `src/cfg.py`.
   - _Default:_ `seasonal_flu`
 - `-d`, `--datatype`:
   - Type of data that will be processed (i.e. sequence, titer, epi). To avoid errors, this should be present in `src/cfg.py`
@@ -50,9 +50,9 @@ If uploading multiple files is necessary, the call can be altered to: `python sr
 - `--source`:
   - Source from which the data came. Used in `src/cfg.py` to specify parameters specific to a given source (i.e. order of metadata in a FASTA header)
 - `--subtype`:
-  - Subtype of a given virus, if known.
--  `--list_viruses`:
-  - Lists all supported viruses and exits.
+  - Subtype of a given pathogen, if known.
+-  `--list_pathogens`:
+  - Lists all supported pathogens and exits.
 - `--list_datatypes`:
   - Lists all supported datatypes and exits.
 

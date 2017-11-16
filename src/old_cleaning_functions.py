@@ -168,9 +168,9 @@ def camelcase_to_snakecase(name):
 
 ## Moved to cleaning_functions/fix/strain.py
 
-def format_names(docs, virus):
-    fix_whole_name = define_strain_fixes(cfg.strain_fix_fname[virus])
-    label_to_fix = define_location_fixes(cfg.label_fix_fname[virus])
+def format_names(docs, pathogen):
+    fix_whole_name = define_strain_fixes(cfg.strain_fix_fname[pathogen])
+    label_to_fix = define_location_fixes(cfg.label_fix_fname[pathogen])
     for doc in docs:
         # Fix this when switching docs to dict
         for key in doc:
@@ -233,7 +233,7 @@ def define_location_fixes(fname):
 
 def flu_fix_patterns(name):
     # various name patterns that need to be fixed
-    # capitalization of virus type
+    # capitalization of pathogen type
     if re.match(r'([a|b])([\w\s\-/]+)', name):  #b/sydney/508/2008    B/sydney/508/2008
         name = re.match(r'([a|b])([\w\s\-/]+)', name).group(1).upper() + re.match(r'([a|b])([\w\s\-/]+)', name).group(2)
     # remove inner parentheses and their contents
@@ -284,7 +284,7 @@ def flu_fix_patterns(name):
 def format_country(self, v):
     # TODO
     '''
-    Label viruses with country based on strain name
+    Label pathogens with country based on strain name
     '''
     strain_name = v['strain']
     original_name = v['gisaid_strain']

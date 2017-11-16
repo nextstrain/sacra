@@ -1,6 +1,6 @@
 # When running reshape, figure out which fields belong in which table
 # Lifted from schema/schema_zika.json
-table_to_fields = { 'dbinfo' : ['pathogen'],
+mapping  = { 'dbinfo' : ['pathogen'],
                     'strains' : ['strain_id', 'strain_name', 'strain_owner',
                                  'host_species', 'host_age', 'host_sex',
                                  'symptom_onset_date', 'symptoms',

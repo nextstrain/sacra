@@ -1,8 +1,8 @@
 {
   "dbinfo" : {
-    "virus" : "seasonal_flu, dengue, ebola, etc."
+    "pathogen" : "seasonal_flu, dengue, ebola, etc."
   },
-  "viruses" : [
+  "pathogens" : [
     {
       "strain" : "A/Example/0000/2017",
       "accessions" : [
