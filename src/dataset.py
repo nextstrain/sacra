@@ -173,13 +173,8 @@ class Dataset:
 
         # Use functions specified by cfg.py. Fxn defs in cleaning_functions.py
         fxns = cfg.sequence_clean
-
-        print "Doc:"
-        print doc
         for fxn in fxns:
             fxn(doc, None, self.bad_docs, self.metadata['pathogen'])
-            print str(fxn)
-            print doc
 
         return doc
 
@@ -218,6 +213,10 @@ class Dataset:
 ##################################################
 ####### End of RCR functions #####################
 ##################################################
+
+
+# Everything south of here should be considered depracated until
+# it has been looked over and updated relative to the new JSON spec.
 
 
     def read_metadata(self, path, metafile, **kwargs):
@@ -277,69 +276,6 @@ class Dataset:
     def set_sequence_permissions(self, permissions, **kwargs):
         for a in self.dataset:
             self.dataset[a]['permissions'] = permissions
-
-    def compile_pathogen_table(self, subtype, **kwargs):
-        vs = {}
-        for pathogen in self.dataset.keys():
-            # Initialize pathogen dict
-            name = self.dataset[pathogen]['strain']
-            if name not in vs.keys():
-                vs[name] = {'strain' : name }
-            if 'sequence_names' in vs[name].keys():
-                vs[name]['sequence_names'].append(self.dataset[pathogen]['sequence_name'])
-            else:
-                vs[name]['sequence_names'] = [self.dataset[pathogen]['sequence_name']]
-
-            # Scrape pathogen host
-            # TODO: Resolve issues if there are different hosts
-            if 'host' not in self.dataset[pathogen].keys():
-                vs[name]['host'] = 'human'
-            elif self.dataset[pathogen]['host'] == None:
-                vs[name]['host'] = 'human'
-                self.dataset[pathogen].pop('host',None)
-            else:
-                vs[name]['host'] = name['host']
-                self.dataset[pathogen].pop('host',None)
-
-            # Scrape host age
-            # TODO: Resolve issues if there are different ages
-            if 'age' not in self.dataset[pathogen].keys():
-                vs[name]['host_age'] = None
-            elif self.dataset[pathogen]['age'] == None:
-                vs[name]['host_age'] = None
-                self.dataset[pathogen].pop('age',None)
-            else:
-                vs[name]['host_age'] = name['age']
-                self.dataset[pathogen].pop('age',None)
-
-            # Scrape subtype
-            if subtype != None:
-                vs[name]['subtype'] = subtype
-            elif ('subtype' in self.dataset[pathogen].keys()) and (self.dataset[pathogen]['subtype'] is not None):
-                vs[name]['subtype'] = self.dataset[pathogen]['subtype']
-                self.dataset[pathogen].pop('subtype', None)
-            else:
-                vs[name]['subtype'] = None
-
-        for name in vs.keys():
-            # Scrape number of segments
-            segments = set()
-            for a in vs[name]['sequence_names']:
-                segments.add(self.dataset[a]['locus'])
-            vs[name]['number_of_segments'] = len(segments)
-
-            # # Scrape isolate ids
-            # ids = set()
-            # for a in vs[name]['sequence_names']:
-            #     ids.add(self.dataset[a]['isolate_id'])
-            # vs[name]['isolate_ids'] = list(ids)
-
-            # Placeholder for un_locode
-            vs[name]['un_locode'] = 'placehoder'
-            # location = name.split('/')[1]
-            # vs[name]['un_locode'] = lookup_locode(location) TODO: Write this fxn
-
-        self.pathogens = vs
 
     def build_references_table(self):
         '''
