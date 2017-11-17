@@ -180,36 +180,37 @@ def format_names(docs, pathogen):
     for doc in docs:
         # Fix this when switching docs to dict
         for key in doc:
-            doc[key]['strain_name'] = fix_name(doc[key]['strain_name'], fix_whole_name, label_to_fix)[0]
+            doc[key]['strain_name'] = fix_name(doc[key]['strain_name'], fix_whole_name, label_to_fix, pathogen)[0]
 
-def fix_name(name, fix_whole_name, label_to_fix):
+def fix_name(name, fix_whole_name, label_to_fix, pathogen):
     '''
     Fix strain_name names
     '''
     # replace all accents with ? mark
     original_name = name.encode('ascii', 'replace')
     # Replace whole strain_name names
-    name = replace_strain_name_name(original_name, fix_whole_name)
-    name = name.replace('H1N1', '').replace('H5N6', '').replace('H3N2', '').replace('Human', '')\
-        .replace('human', '').replace('//', '/').replace('.', '').replace(',', '').replace('&', '').replace(' ', '')\
-        .replace('\'', '').replace('>', '').replace('-like', '').replace('+', '')
-    split_name = name.split('/')
-    # check location labels in strain_name names for fixing
-    for index, label in enumerate(split_name):
-        if label.replace(' ', '').lower() in label_to_fix:
-            split_name[index] = label_to_fix[label.replace(' ', '').lower()]
-    name = '/'.join(split_name)
-    name = flu_fix_patterns(name)
+    if pathogen == "seasonal_flu":
+        name = replace_strain_name_name(original_name, fix_whole_name)
+        name = name.replace('H1N1', '').replace('H5N6', '').replace('H3N2', '').replace('Human', '')\
+            .replace('human', '').replace('//', '/').replace('.', '').replace(',', '').replace('&', '').replace(' ', '')\
+            .replace('\'', '').replace('>', '').replace('-like', '').replace('+', '')
+        split_name = name.split('/')
+        # check location labels in strain_name names for fixing
+        for index, label in enumerate(split_name):
+            if label.replace(' ', '').lower() in label_to_fix:
+                split_name[index] = label_to_fix[label.replace(' ', '').lower()]
+        name = '/'.join(split_name)
+        name = flu_fix_patterns(name)
 
-    # Strip leading zeroes, change all capitalization location field to title case
-    split_name = name.split('/')
-    if len(split_name) == 4:
-        if split_name[1].isupper() or split_name[1].islower():
-            split_name[1] = split_name[1].title()  # B/WAKAYAMA-C/2/2016 becomes B/Wakayama-C/2/2016
-        split_name[2] = split_name[2].lstrip('0')  # A/Mali/013MOP/2015 becomes A/Mali/13MOP/2015
-        split_name[3] = split_name[3].lstrip('0')  # A/Cologne/Germany/01/2009 becomes A/Cologne/Germany/1/2009
-    result_name = '/'.join(split_name).strip()
-    return result_name, original_name
+        # Strip leading zeroes, change all capitalization location field to title case
+        split_name = name.split('/')
+        if len(split_name) == 4:
+            if split_name[1].isupper() or split_name[1].islower():
+                split_name[1] = split_name[1].title()  # B/WAKAYAMA-C/2/2016 becomes B/Wakayama-C/2/2016
+            split_name[2] = split_name[2].lstrip('0')  # A/Mali/013MOP/2015 becomes A/Mali/13MOP/2015
+            split_name[3] = split_name[3].lstrip('0')  # A/Cologne/Germany/01/2009 becomes A/Cologne/Germany/1/2009
+        result_name = '/'.join(split_name).strip()
+        return result_name, original_name
 
 def replace_strain_name_name(original_name, fixes={}):
     '''
