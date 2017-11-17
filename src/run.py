@@ -63,7 +63,6 @@ if __name__=="__main__":
             D.clean(key, D.dataset[key])
         # D.remove_bad_docs()
         print '~~~~~ Cleaned %s documents in %s seconds ~~~~~' % (len(D.dataset), (time.time()-t))
-        D.compile_pathogen_table(**args.__dict__)
         D.build_references_table()
         D.set_sequence_permissions(args.permissions)
         D.write('%s%s_%s.json' % (args.outpath, args.pathogen, args.datatype))
