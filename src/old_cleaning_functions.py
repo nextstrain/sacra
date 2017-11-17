@@ -1,6 +1,8 @@
 import re, sys
 import cfg
 import csv
+import logging
+
 sys.path.append('')
 # Cleaning functions that will clean the data in a dataset object.
 # These are kept separate from class functions to make it easier for the user to
@@ -41,8 +43,9 @@ def fix_locus(doc, key, remove, *args):
     '''
     if 'locus' in doc and doc['locus'] is not None:
         doc['locus'] = doc['locus'].lower()
-    else:
-        remove.append(key)
+    # commented out as if the header didn't have this it would remove all documents!
+    # else:
+        # remove.append(key)
 
 def fix_strain_name(doc, key, remove, *args):
     '''
@@ -69,12 +72,15 @@ def fix_submitting_lab(doc, key, remove, *args):
     '''
     Moved to cleaning_functions/fix/submitting_lab.py
     '''
+    logger = logging.getLogger(__name__)
     if 'submitting_lab' in doc and doc['submitting_lab'] is not None:
         if doc['submitting_lab'] == 'CentersforDiseaseControlandPrevention':
             doc['submitting_lab'] = 'CentersForDiseaseControlAndPrevention'
         doc['submitting_lab'] = camelcase_to_snakecase(doc['submitting_lab'])
-    else:
-        remove.append(key)
+    # commented out as if the header didn't have this it would remove all documents!
+    # else:
+        # logger.warn("Dropping {} - bad submitting lab".format(doc['strain']))
+        # remove.append(key)
 
 def fix_age(doc, *args):
     '''
