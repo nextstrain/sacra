@@ -2,7 +2,7 @@
 from old_cleaning_functions import *
 
 ### Acceptable parameters ###
-viruses = [ 'seasonal_flu', 'piglets' ]
+pathogens = [ 'seasonal_flu', 'piglets' ]
 subtypes = { 'seasonal_flu': [ 'h3n2', 'h1n1pdm', 'vic', 'yam' ] }
 datatypes = [ 'titer', 'sequence', 'pathogen' ]
 filetypes = [ 'fasta' ]

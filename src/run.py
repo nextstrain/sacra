@@ -3,6 +3,7 @@ from genbank_API import query_genbank
 from genbank_parsers import extract_attributions
 import cfg as cfg
 import argparse
+import logging
 import os, sys, time
 sys.path.append('')
 
