@@ -70,11 +70,6 @@ if __name__=="__main__":
         # for read_and_clean_file()
         D.read_metadata(**args.__dict__)
         D.read_data_files(**args.__dict__)
-        t = time.time()
-        for key in D.dataset.keys():
-            D.clean(key, D.dataset[key])
-        # D.remove_bad_docs()
-        print '~~~~~ Cleaned %s documents in %s seconds ~~~~~' % (len(D.dataset), (time.time()-t))
         D.build_references_table()
         D.set_sequence_permissions(args.permissions)
         D.write('%s%s_%s.json' % (args.outpath, args.pathogen, args.datatype))
