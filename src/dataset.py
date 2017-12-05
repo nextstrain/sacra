@@ -3,6 +3,8 @@ import cfg
 from Bio import SeqIO
 from pdb import set_trace
 sys.path.append('')
+import schema
+
 # sys.path.append('src/')
 # import cleaning_functions as c
 
@@ -38,6 +40,7 @@ class Dataset:
         self.strains = {}
         self.samples = {}
         self.sequences = {}
+        self.attributions = {}
         # Track which documents should be removed
         self.bad_docs = []
 
@@ -107,11 +110,10 @@ class Dataset:
 
         # Reshape docs into a set of dicts
         # TODO: write self.reshape()
-        reshaped_docs = self.reshape(docs)
+        reshaped = self.reshape(docs)
         #
         # # merge the dicts into self
-        # # TODO: write self.merge_reshaped_docs()
-        # self.merge_reshaped_docs(reshaped_docs)
+        self.merge(reshaped)
 
 ##### Read
     def read_fasta(self, infile, source, path, datatype, **kwargs):
@@ -170,45 +172,85 @@ class Dataset:
         except:
             print 'Documents must be of type dict, this one is of type %s:\n%s' % (type(doc), doc)
             return
-
+        print("=====")
+        print(doc)
+        print("****")
         # Use functions specified by cfg.py. Fxn defs in cleaning_functions.py
         fxns = cfg.sequence_clean
         for fxn in fxns:
             fxn(doc, None, self.bad_docs, self.metadata['pathogen'])
-
+        print(doc)
+        print("=====")
         return doc
 
 ##### Reshape
     def reshape(self,docs):
-        import spec_mapping as m
-        for doc in docs:
-            # Make new entries for strains, samples, and sequences
-            # Walk downward through hierarchy
-            # TODO: Think about what to do if only "sequence_name" is available for some reason
+        """ notes:
+        * this function is really reshape + merge
+        * a document can populate (up to) 4 tables - strain, sample, seq & attribution
+        each table has it's "crucial" fields, required to create the primary key:
+            - strain: "strain_name"
+            - sample: "strain_name & sample_name"
+            - sequence: "strain_name", "sample_name" & "sequence_name"
+            - attribution: first author surname, year & first word of title
+        * sometimes samples may be present without strain data (other than strain_name)
+        and in this case, the strain_name shouldn't nuke any pre-existing strain data...
+        """
 
-            if 'strain_name' in doc.keys():
-                strain_id = doc['strain_name']
-                if strain_id not in self.strains.keys():
-                    self.strains[strain_id] = {}
-                for field in doc.keys():
-                    if field in m.mapping["strains"]:
-                        self.strains[strain_id][field] = doc[field]
-                doc['sample_strain_name'] = doc['strain_name']
-                if 'sample_name' in doc.keys():
-                    sample_id = strain_id + '|' + doc['sample_name']
-                    if sample_id not in self.samples.keys():
-                        self.samples[sample_id] = {}
-                    for field in doc.keys():
-                        if field in m.mapping["samples"]:
-                            self.samples[sample_id][field] = doc[field]
-                    doc['sequence_sample_name'] = doc['sample_name']
-                    if 'sequence_name' in doc.keys():
-                        sequence_id = sample_id + '|' + doc['sequence_name']
-                        if sequence_id not in self.sequences.keys():
-                            self.sequences[sequence_id] = {}
-                        for field in doc.keys():
-                            if field in m.mapping["sequences"]:
-                                self.sequences[sequence_id][field] = doc[field]
+        # import spec_mapping as m
+        # for doc in docs:
+        #     # Make new entries for strains, samples, and sequences
+        #     # Walk downward through hierarchy
+        #     # TODO: Think about what to do if only "sequence_name" is available for some reason
+        #
+        #     if 'strain_name' in doc.keys():
+        #         strain_id = doc['strain_name']
+        #         if strain_id not in self.strains.keys():
+        #             self.strains[strain_id] = {}
+        #         for field in doc.keys():
+        #             if field in m.mapping["strains"]:
+        #                 self.strains[strain_id][field] = doc[field]
+        #         doc['sample_strain_name'] = doc['strain_name']
+        #         if 'sample_name' in doc.keys():
+        #             sample_id = strain_id + '|' + doc['sample_name']
+        #             if sample_id not in self.samples.keys():
+        #                 self.samples[sample_id] = {}
+        #             for field in doc.keys():
+        #                 if field in m.mapping["samples"]:
+        #                     self.samples[sample_id][field] = doc[field]
+        #             doc['sequence_sample_name'] = doc['sample_name']
+        #             if 'sequence_name' in doc.keys():
+        #                 sequence_id = sample_id + '|' + doc['sequence_name']
+        #                 if sequence_id not in self.sequences.keys():
+        #                     self.sequences[sequence_id] = {}
+        #                 for field in doc.keys():
+        #                     if field in m.mapping["sequences"]:
+        #                         self.sequences[sequence_id][field] = doc[field]
+        reshaped = {x:{} for x in schema.tables}
+        for doc in docs:
+            for t_name, p_key in schema.tables_primary_keys.iteritems():
+                try:
+                    p_key_val = schema.make_primary_key[p_key](doc)
+                except KeyError:
+                    print "doc couldn't make primary key {}. skipping.".format(schema.tables_primary_keys[t_name])
+                    continue
+                reshaped[t_name][p_key_val] = {field: doc[field] for field in schema.fields[t_name] if field in doc}
+                # note that we're going to nuke previous values here. This should be improved. See the note in schema.py
+        return reshaped
+
+    def merge(self, tables):
+        for name, table in tables.iteritems():
+            store = getattr(self, name)
+            for key, row in table.iteritems():
+                if key not in store:
+                    store[key] = row
+                else:
+                    # can do a cleaver-er merge here
+                    for field, value in row.iteritems():
+                        if field not in store[key]:
+                            store[key][field] = value
+                        elif store[key][field] is not value:
+                            print("warning! table {} key {} field {} values don't match ({} != {})".format(name, key, field, value, store[key][field]))
 
 ##################################################
 ####### End of RCR functions #####################
@@ -252,22 +294,27 @@ class Dataset:
         '''
         print 'Writing dataset to %s' % (out_file)
         t = time.time()
-        out = {'dbinfo': [ {key: value} for key,value in self.dbinfo.iteritems() ],
-               'strains': [],
-               'samples': [],
-               'sequences': []}
-        for key, value in self.strains.iteritems():
-            strain_id = {'strain_id': key}
-            strain_data = value
-            out['strains'].append(merge_two_dicts(strain_id,strain_data))
-        for key, value in self.samples.iteritems():
-            sample_id = {'sample_id': key}
-            sample_data = value
-            out['samples'].append(merge_two_dicts(sample_id,sample_data))
-        for key, value in self.sequences.iteritems():
-            sequence_id = {'sequence_id': key}
-            sequence_data = value
-            out['sequences'].append(merge_two_dicts(sequence_id,sequence_data))
+        out = {x:[] for x in schema.tables}
+
+        for t_name in out:
+            for key, value in getattr(self, t_name).iteritems():
+                out[t_name].append(value)
+                out[t_name][-1][schema.tables_primary_keys[t_name]] = key
+
+        out['dbinfo'] = [ {key: value} for key,value in self.dbinfo.iteritems() ]
+
+        # for key, value in self.strains.iteritems():
+        #     strain_id = {'strain_id': key}
+        #     strain_data = value
+        #     out['strains'].append(merge_two_dicts(strain_id,strain_data))
+        # for key, value in self.samples.iteritems():
+        #     sample_id = {'sample_id': key}
+        #     sample_data = value
+        #     out['samples'].append(merge_two_dicts(sample_id,sample_data))
+        # for key, value in self.sequences.iteritems():
+        #     sequence_id = {'sequence_id': key}
+        #     sequence_data = value
+        #     out['sequences'].append(merge_two_dicts(sequence_id,sequence_data))
 
         with open(out_file, 'w+') as f:
             json.dump(out, f, indent=1)
@@ -277,45 +324,45 @@ class Dataset:
         for a in self.dataset:
             self.dataset[a]['permissions'] = permissions
 
-    def build_references_table(self):
-        '''
-        This is a placeholder function right now, it will build a reference
-        table for each upload according to the spec:
-        {
-        "pubmed_id" : {
-          "authors" : [
-            "author1",
-            "author2",
-            "author3"
-          ],
-          "journal" : "journal name",
-          "date" : "publication date",
-          "sequence_names" : [
-            "sequence_name1",
-            "sequence_name2",
-            "sequence_name3"
-          ],
-          "publication_name" : "name"
-        }
-        '''
-        refs = {
-        "pubmed_id" : {
-          "authors" : [
-            "author1",
-            "author2",
-            "author3"
-          ],
-          "journal" : "journal name",
-          "date" : "publication date",
-          "sequence_names" : [
-            "sequence_name1",
-            "sequence_name2",
-            "sequence_name3"
-          ],
-          "publication_name" : "name"
-        } }
-
-        self.references = refs
+    # def build_references_table(self):
+    #     '''
+    #     This is a placeholder function right now, it will build a reference
+    #     table for each upload according to the spec:
+    #     {
+    #     "pubmed_id" : {
+    #       "authors" : [
+    #         "author1",
+    #         "author2",
+    #         "author3"
+    #       ],
+    #       "journal" : "journal name",
+    #       "date" : "publication date",
+    #       "sequence_names" : [
+    #         "sequence_name1",
+    #         "sequence_name2",
+    #         "sequence_name3"
+    #       ],
+    #       "publication_name" : "name"
+    #     }
+    #     '''
+    #     refs = {
+    #     "pubmed_id" : {
+    #       "authors" : [
+    #         "author1",
+    #         "author2",
+    #         "author3"
+    #       ],
+    #       "journal" : "journal name",
+    #       "date" : "publication date",
+    #       "sequence_names" : [
+    #         "sequence_name1",
+    #         "sequence_name2",
+    #         "sequence_name3"
+    #       ],
+    #       "publication_name" : "name"
+    #     } }
+    #
+    #     self.references = refs
 
 def merge_two_dicts(x, y):
     """Given two dicts, merge them into a new dict as a shallow copy."""

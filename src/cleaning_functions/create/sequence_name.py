@@ -13,4 +13,4 @@ def create_sequence_name(doc, *args):
     '''
     count = 0
     if 'sequence_name' not in doc:
-        doc['sequence_name'] = "seq_.{}".format(counter.next())
+        doc['sequence_name'] = "seq_{}".format(counter.next())
