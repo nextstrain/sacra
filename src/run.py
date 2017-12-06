@@ -70,6 +70,5 @@ if __name__=="__main__":
         # for read_and_clean_file()
         D.read_metadata(**args.__dict__)
         D.read_data_files(**args.__dict__)
-        D.build_references_table()
         D.set_sequence_permissions(args.permissions)
         D.write('%s%s_%s.json' % (args.outpath, args.pathogen, args.datatype))
