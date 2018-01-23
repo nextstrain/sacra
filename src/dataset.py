@@ -1,12 +1,15 @@
 from __future__ import division, print_function
 import logging
 import json
+import os, sys
 from cluster import Cluster
 logger = logging.getLogger(__name__)
 from entrez import query_genbank
+from utils.genbank_parsers import GenbankParser
+
+flatten = lambda l: [item for sublist in l for item in sublist]
 
 class Dataset:
-
 
     # Initializer
     def __init__(self, pathogen, config):
@@ -17,12 +20,21 @@ class Dataset:
     # File handling
     def read_to_clusters(self, f):
         logger.info("Initializing sacra parse of files ---")
-        #ftype = self.determine_filetype(f)
-        ftype = "fasta"
-        if ftype == "fasta":
-            # TODO: should this be saved to a variable for readability?
+        ftype = self.infer_ftype(f)
+        if ftype == "accessions":
+            accessions = self.get_accessions_from_file(f)
+            genbank_data = query_genbank(accessions)
+            parsed_objects = [GenbankParser(record) for record in genbank_data]
+            data_dicts = [x.get_data() for x in parsed_objects]
+            unmerged_clusters = flatten(
+                [[Cluster(d), Cluster(d, cluster_type="attribution")] for d in data_dicts]
+            )
+        elif ftype == "fasta":
             unmerged_clusters = self.read_fasta_to_clusters(f)
-            self.merge_clusters_into_state(unmerged_clusters)
+        else:
+            logger.error("Unknown input filetype for {}. Fatal.".format(f))
+            sys.exit(2)
+        self.merge_clusters_into_state(unmerged_clusters)
 
 
     def read_fasta_to_clusters(self, infile):
@@ -54,6 +66,25 @@ class Dataset:
                 else:
                     clusters.append(C)
         return clusters
+
+    def get_accessions_from_file(self, fname):
+        accessions = []
+        try:
+            with open(fname, "r") as f:
+                for line in f:
+                    accessions.append(line.strip())
+        except IOError:
+            logger.error("File {} could not be read. Skipping.".format(fname))
+        return accessions
+
+    # Random utils
+    def infer_ftype(self, fname):
+        if fname.endswith(".fasta"):
+            return "fasta"
+        if fname.endswith(".txt"):
+            return "accessions"
+        # elif (fname.endswith(".json")):
+        #     return "json"
 
     # Entrez handling
     def accessions_to_clusters(self, accession_list):

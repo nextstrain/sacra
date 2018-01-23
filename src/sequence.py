@@ -12,7 +12,7 @@ class Sequence:
         self.save_sequence_data_to_state(data_dictionary, sm["sequence"])
         self.clean_id(sample_obj)
 
-        logger.debug("Sequence data: {}".format(self.__dict__))
+        logger.debug("Sequence data (sans the actual sequence): {}".format({k:v for k, v in self.__dict__.iteritems() if k != "sequence"}))
 
     def save_sequence_data_to_state(self, data_dictionary, spec):
         for field in spec:
