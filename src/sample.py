@@ -31,7 +31,7 @@ class Sample:
         if not hasattr(self, "sample_name"):
             logger.warn("No sample name. Making it up...")
             self.sample_name = "unknown_sample"
-        setattr(self, "sample_name", "{}|{}".format(self.strain_id, self.sample_name))
+        setattr(self, "sample_id", "{}|{}".format(self.strain_id, self.sample_name))
 
     def get_data(self):
         return self.__dict__ # todo
