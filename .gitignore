@@ -4,6 +4,7 @@
 
 # Data
 data/*
+input/*
 output/*
 log/*
 

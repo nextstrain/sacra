@@ -1,3 +1,4 @@
+from __future__ import division, print_function
 from dataset import Dataset
 import logging
 import argparse
@@ -11,7 +12,7 @@ parser.add_argument("--debug", action="store_const", dest="loglevel", const=logg
 parser.add_argument("--files", default=[], type=str, nargs='*')
 parser.add_argument("--pathogen", default="mumps", type=str)
 parser.add_argument("--accession_list", default=[], type=str, nargs='*')
-parser.add_argument("--entrez")
+parser.add_argument("--entrez", default=True, type=bool)
 parser.add_argument("--outfile", default="output/test_output.json")
 
 
@@ -26,7 +27,7 @@ if __name__=="__main__":
 
     # Initialize
     CONFIG = config.produce_config_dictionary(args.pathogen)
-    dataset = Dataset(CONFIG)
+    dataset = Dataset(args.pathogen, CONFIG)
     # Read data from files
     for f in args.files:
         dataset.read_to_clusters(f)
@@ -36,7 +37,8 @@ if __name__=="__main__":
             # "read" accession list for building cluster from entrez
             dataset.accessions_to_clusters(args.accession_list)
         # Update existing from entrez
-        dataset.download_entrez_data()
+        accessions = dataset.get_all_accessions()
+        dataset.download_entrez_data(accessions)
     # Clean clusters
     dataset.clean_clusters()
     # Write to JSON

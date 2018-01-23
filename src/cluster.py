@@ -1,3 +1,4 @@
+from __future__ import division, print_function
 import logging
 from strain import Strain
 from sample import Sample
@@ -9,7 +10,7 @@ logger = logging.getLogger(__name__)
 class Cluster:
 
     def __init__(self, data_dictionary, cluster_type="genic"):
-        logger.info("Cluster class initializing")
+        logger.info("Cluster class initializing. Type={}".format(cluster_type))
         self.strains = set()
         self.samples = set()
         self.sequences = set()
@@ -26,15 +27,8 @@ class Cluster:
         #     self.titers.add(w)
         else:
             a = Strain(data_dictionary)
-            b = Sample(data_dictionary)
-            y = Sequence(data_dictionary)
-            if not hasattr(b, "strain_id") and hasattr(a, "strain_id"):
-                b.strain_id = a.strain_id
-            if not hasattr(y, "sample_id") and hasattr(b, "sample_id"):
-                y.sample_id = b.sample_id
-            # Operations x3
-
-
+            b = Sample(data_dictionary, a)
+            y = Sequence(data_dictionary, b)
             # Add to self
             if a.is_valid():
                 self.strains.add(a)
@@ -42,3 +36,9 @@ class Cluster:
             self.sequences.add(y)
 
         pass
+
+    def get_all_accessions(self):
+        return [s.accession for s in self.sequences if hasattr(s, "accession")]
+
+    def clean(self):
+        logger.warn("unimplemented cluster.clean method")

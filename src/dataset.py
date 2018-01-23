@@ -1,5 +1,6 @@
 from __future__ import division, print_function
 import logging
+import json
 from cluster import Cluster
 logger = logging.getLogger(__name__)
 
@@ -7,9 +8,10 @@ class Dataset:
 
 
     # Initializer
-    def __init__(self, config):
+    def __init__(self, pathogen, config):
+        self.pathogen = pathogen
         self.config = config
-        pass
+        self.clusters = []
 
     # File handling
     def read_to_clusters(self, f):
@@ -43,15 +45,14 @@ class Dataset:
                 for i in range(len(self.config["fasta_headers"])):
                     data[self.config["fasta_headers"][i]] = head[i]
                     data['sequence'] = str(record.seq)
-                print(data)
+                logger.debug("Processing this header: {}".format(data))
                 C = Cluster(data)
                 Delta = Cluster(data, cluster_type="attribution")
                 if Delta:
                     clusters.extend([C,Delta])
                 else:
                     clusters.append(C)
-
-        sys.exit()
+        return clusters
 
     # Entrez handling
     def accessions_to_clusters(self, accession_list):
@@ -59,7 +60,6 @@ class Dataset:
 
     def download_entrez_data(self, accession_list):
         logger.info("Entrez call on accessions ---")
-        self.get_all_accessions()
         pass
 
     def get_all_accessions(self):
@@ -67,15 +67,27 @@ class Dataset:
         Read through all clusters to generate accession list for
         batch submission to entrez
         '''
-        logger.info("Compiling accession list")
+        flatten = lambda l: [item for sublist in l for item in sublist]
+        accs = flatten([c.get_all_accessions() for c in self.clusters])
+        logger.debug("These are the accessions: {}".format(accs))
 
     # Merging and cleaning
-    def merge_clusters_into_state(self):
-        pass
+    def merge_clusters_into_state(self, clusters):
+        logger.debug("simply setting state to clusters!")
+        self.clusters.extend(clusters)
 
     def clean_clusters(self):
-        pass
+        [c.clean() for c in self.clusters]
 
     # Output
     def write_to_json(self, filename):
-        pass
+        logger.info("writing to JSON: {}".format(filename))
+        data = {}
+        data["dbinfo"] = {"pathogen": self.pathogen}
+        data["strains"] = [y.get_data() for x in self.clusters for y in x.strains]
+        data["samples"] = [y.get_data() for x in self.clusters for y in x.samples]
+        data["sequences"] = [y.get_data() for x in self.clusters for y in x.sequences]
+        data["attributions"] = [y.get_data() for x in self.clusters for y in x.attributions]
+
+        with open(filename, 'w') as outfile:
+            json.dump(data, outfile, sort_keys=True, indent=2, ensure_ascii=False)
