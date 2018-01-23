@@ -15,7 +15,7 @@ parser.add_argument("--accession_list", default=[], type=str, nargs='*')
 parser.add_argument("--outfile", default="output/test_output.json")
 
 group = parser.add_argument_group('entrez')
-group.add_argument("--entrez", default=True, type=bool)
+group.add_argument("--skip_entrez", action="store_true")
 
 
 if __name__=="__main__":
@@ -34,7 +34,7 @@ if __name__=="__main__":
     for f in args.files:
         dataset.read_to_clusters(f)
     # Update clusters with data from entrez
-    if args.entrez:
+    if not args.skip_entrez:
         if args.accession_list:
             # "read" accession list for building cluster from entrez
             dataset.accessions_to_clusters(args.accession_list)
