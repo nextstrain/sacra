@@ -7,13 +7,15 @@ sys.path.append('')
 import config
 from utils.colorLogging import ColorizingStreamHandler
 
-parser = argparse.ArgumentParser(description="placeholder")
+parser = argparse.ArgumentParser(description="Cleaning & combining of genomic & titer data")
 parser.add_argument("--debug", action="store_const", dest="loglevel", const=logging.DEBUG, help="Enable debugging logging")
 parser.add_argument("--files", default=[], type=str, nargs='*')
 parser.add_argument("--pathogen", default="mumps", type=str)
 parser.add_argument("--accession_list", default=[], type=str, nargs='*')
-parser.add_argument("--entrez", default=True, type=bool)
 parser.add_argument("--outfile", default="output/test_output.json")
+
+group = parser.add_argument_group('entrez')
+group.add_argument("--entrez", default=True, type=bool)
 
 
 if __name__=="__main__":

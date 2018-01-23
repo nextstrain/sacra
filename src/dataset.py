@@ -3,6 +3,7 @@ import logging
 import json
 from cluster import Cluster
 logger = logging.getLogger(__name__)
+from entrez import query_genbank
 
 class Dataset:
 
@@ -58,9 +59,8 @@ class Dataset:
     def accessions_to_clusters(self, accession_list):
         logger.info("Initializing construction of clusters from ---")
 
-    def download_entrez_data(self, accession_list):
-        logger.info("Entrez call on accessions ---")
-        pass
+    def download_entrez_data(self, accessions):
+        self.genbank_data = query_genbank(accessions)
 
     def get_all_accessions(self):
         '''
@@ -70,6 +70,7 @@ class Dataset:
         flatten = lambda l: [item for sublist in l for item in sublist]
         accs = flatten([c.get_all_accessions() for c in self.clusters])
         logger.debug("These are the accessions: {}".format(accs))
+        return accs
 
     # Merging and cleaning
     def merge_clusters_into_state(self, clusters):
