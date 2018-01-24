@@ -31,7 +31,10 @@ class Cluster:
             a = Strain(self.CONFIG, data_dictionary)
             b = Sample(data_dictionary, a)
             y = Sequence(data_dictionary, b)
-            # Add to self
+
+            ## set links between a, b, c - only if the object is valid
+
+            ## add to state (self) if the object is valid
             if a.is_valid():
                 self.strains.add(a)
             self.samples.add(b)

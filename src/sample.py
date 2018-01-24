@@ -4,10 +4,12 @@ logger = logging.getLogger(__name__)
 import sys
 sys.path.append('')
 from spec_mapping import mapping as sm
+from unit import Unit
 
-class Sample:
+class Sample(Unit):
 
     def __init__(self, data_dictionary, strain_obj):
+        super(Sample, self).__init__()
         # logger.info("Sample class initializing")
         # save data to state
         for field in sm["sample"]:
@@ -32,6 +34,3 @@ class Sample:
             logger.warn("No sample name. Making it up...")
             self.sample_name = "unknown_sample"
         setattr(self, "sample_id", "{}|{}".format(self.strain_id, self.sample_name))
-
-    def get_data(self):
-        return self.__dict__ # todo

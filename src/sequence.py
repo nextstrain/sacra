@@ -4,10 +4,13 @@ import sys
 sys.path.append('')
 from spec_mapping import mapping as sm
 logger = logging.getLogger(__name__)
+from unit import Unit
 
-class Sequence:
+
+class Sequence(Unit):
 
     def __init__(self, data_dictionary, sample_obj):
+        super(Sequence, self).__init__()
         # logger.info("Sequence class initializing")
         self.save_sequence_data_to_state(data_dictionary, sm["sequence"])
         self.clean_id(sample_obj)
@@ -43,6 +46,3 @@ class Sequence:
 
     def is_valid(self):
         return hasattr(self, "sequence_id") and hasattr(self, "sequence")
-
-    def get_data(self):
-        return self.__dict__ # todo

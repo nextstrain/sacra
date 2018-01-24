@@ -54,12 +54,14 @@ class Dataset:
                     data[self.CONFIG["fasta_headers"][i]] = head[i]
                     data['sequence'] = str(record.seq)
                 logger.debug("Processing this header: {}".format(data))
-                C = Cluster(self.CONFIG, data)
-                Delta = Cluster(self.CONFIG, data, cluster_type="attribution")
-                if Delta:
-                    clusters.extend([C,Delta])
-                else:
-                    clusters.append(C)
+                clus = Cluster(self.CONFIG, data)
+                att = Cluster(self.CONFIG, data, cluster_type="attribution")
+                ## link the attribute_id to the sequence, if applicable!
+
+
+
+                clusters.append(clus)
+                clusters.append(att)
         return clusters
 
     def get_accessions_from_file(self, fname):
