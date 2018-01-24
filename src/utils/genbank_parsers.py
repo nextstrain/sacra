@@ -9,164 +9,133 @@ def merge_into(a, b):
     for k, v in b.iteritems():
         a[k] = v
 
-# this is a class so that one can replace a function by subclassing
-class GenbankParser(object):
-    """docstring for GenbankParser."""
+def process_genbank_record(record, config):
+    source = [x for x in record.features if x.type == "source"][0].qualifiers
+    reference = choose_best_reference(record)
+    data = {}
+    logger.info("Processing entrez seqrecord for: " + record.description)
+    # some methods are universal!
+    data["accession"] = re.match(r'^([^.]*)', record.id).group(0).upper()
+    # other set methods are defined in the config
+    for name, fn in config["genbank_setters"].iteritems():
+        fn(data, record, source, reference, logger)
+    logger.debug("\tDATA: {}".format({k:v for k, v in data.iteritems() if k != "sequence"}))
+    return data
 
-    def __init__(self, record):
-        """this does the parsing...."""
-        super(GenbankParser, self).__init__()
-        self.record = record
-        self.source = [x for x in record.features if x.type == "source"][0].qualifiers
-        self.reference = self.choose_best_reference()
-        self.data = {}
-        logger.debug("Processing entrez seqrecord for: " + record.description)
-
-        ## SET DATA
-        self.set_accession()
-        self.set_strain_name()
-        self.set_sample_name()
-        self.set_sequence()
-        self.set_host_species()
-        self.set_collection_date()
-        self.set_country()
-        self.set_division()
-        self.set_collecting_lab()
-        self.set_genotype()
-        self.set_tissue()
-        self.set_sequence_url()
-
-        ## SET ATTRIBUTIONS ##
-        if self.reference:
-            self.set_authors()
-            self.set_attribution_journal()
-            self.set_attribution_url()
-            self.set_attribution_title()
-
-        logger.debug("\tDATA: {}".format({k:v for k, v in self.data.iteritems() if k != "sequence"}))
-
-    ### CHOOSE REFERENCE FOR ATTRIBUTION ###
-    def choose_best_reference(self):
-        data = {}
-        if len(self.record.annotations["references"]):
-            # is there a reference which is not a "Direct Submission"?
-            titles = [reference.title for reference in self.record.annotations["references"]]
-            try:
-                idx = [i for i, j in enumerate(titles) if j is not None and j != "Direct Submission"][0]
-            except IndexError: # fall back to direct submission
-                idx = [i for i, j in enumerate(titles) if j is not None][0]
-            return self.record.annotations["references"][idx] # <class 'Bio.SeqFeature.Reference'>
-        logger.debug("\tskipping attribution as no suitable reference found")
-        return False
-
-    ### GET METHODS ###
-    def get_data(self):
-        return self.data
-
-    ### SET METHODS
-    def set_accession(self):
-        self.data["accession"] = re.match(r'^([^.]*)', self.record.id).group(0).upper()
-
-    def set_sequence_url(self):
-        self.data["sequence_url"] = "https://www.ncbi.nlm.nih.gov/nuccore/{}".format(self.data["accession"])
-
-    def set_collection_date(self):
+def choose_best_reference(record):
+    if len(record.annotations["references"]):
+        # is there a reference which is not a "Direct Submission"?
+        titles = [reference.title for reference in record.annotations["references"]]
         try:
-            self.data["collection_date"] = self.source["collection_date"][0]
-        except:
-            logger.debug("\tError setting collection date")
+            idx = [i for i, j in enumerate(titles) if j is not None and j != "Direct Submission"][0]
+        except IndexError: # fall back to direct submission
+            idx = [i for i, j in enumerate(titles) if j is not None][0]
+        return record.annotations["references"][idx] # <class 'Bio.SeqFeature.Reference'>
+    logger.debug("\tskipping attribution as no suitable reference found")
+    return False
 
-    def set_host_species(self):
-        try:
-            self.data["host_species"] = self.source["host"][0]
-        except:
-            logger.debug("\tError setting host")
+### SET METHODS (these become part of the config, and are then passed to process_genbank_record)
+###             all methods have the same arguments passed to them
+def set_strain_name(data, record, source, reference, logger):
+    try:
+        data["strain_name"] = source["strain"][0]
+    except:
+        logger.warn("\tError setting strain_name")
 
-    def set_country(self):
-        try:
-            self.data["country"] = self.source["country"][0].split(':')[0].strip()
-        except:
-            logger.debug("\tError setting country")
+def set_sample_name(data, record, source, reference, logger):
+    try:
+        data["sample_name"] = source["sample"][0]
+    except:
+        logger.debug("\tError setting sample_name")
 
-    def set_division(self):
-        try:
-            if "division" in self.source:
-                self.source["division"] = self.source["division"][0]
-            elif "country" in self.source and ":" in self.source["country"][0]:
-                self.data["country"] = self.source["country"][0].split(':')[1].strip()
-            else:
-                raise(KeyError)
-        except:
-            logger.debug("\tError setting division")
+def set_sequence(data, record, source, reference, logger):
+    try:
+        data["sequence"] = str(record.seq)
+    except:
+        logger.warn("\tError setting sequence")
 
-    def set_collecting_lab(self):
-        try:
-            self.data["collecting_lab"] = self.source["collected_by"][0]
-        except:
-            logger.debug("\tError setting collecting lab")
+def set_sequence_url(data, record, source, reference, logger):
+    data["sequence_url"] = "https://www.ncbi.nlm.nih.gov/nuccore/{}".format(data["accession"])
 
-    def set_genotype(self):
-        try:
-            if "genotype" in self.source:
-                self.data["genotype"] = self.source["genotype"][0]
-            else:
-                for note in self.source['note']:
-                    if "genotype" in note:
-                        if ":" in note:
-                            self.data["genotype"] = note.split(':')[1].strip()
-                        else:
-                            self.data["genotype"] = note.split('=')[1].strip()
-        except:
-            logger.debug("\tError setting genotype")
+def set_collection_date(data, record, source, reference, logger):
+    try:
+        data["collection_date"] = source["collection_date"][0]
+    except:
+        logger.debug("\tError setting collection date")
 
-    def set_tissue(self):
-        try:
-            self.data["tissue"] = self.source["isolation_source"][0]
-        except:
-            logger.debug("\tError setting tissue")
+def set_host_species(data, record, source, reference, logger):
+    try:
+        data["host_species"] = source["host"][0]
+    except:
+        logger.debug("\tError setting host")
 
-    def set_strain_name(self):
-        try:
-            self.data["strain_name"] = self.source["strain"][0]
-        except:
-            logger.warn("\tError setting strain_name")
+def set_country(data, record, source, reference, logger):
+    try:
+        data["country"] = source["country"][0].split(':')[0].strip()
+    except:
+        logger.debug("\tError setting country")
 
-    def set_sample_name(self):
-        try:
-            self.data["sample_name"] = self.source["sample"][0]
-        except:
-            logger.debug("\tError setting sample_name")
+def set_division(data, record, source, reference, logger):
+    try:
+        if "division" in source:
+            source["division"] = source["division"][0]
+        elif "country" in source and ":" in source["country"][0]:
+            data["country"] = source["country"][0].split(':')[1].strip()
+        else:
+            raise(KeyError)
+    except:
+        logger.debug("\tError setting division")
 
-    def set_sequence(self):
-        try:
-            self.data["sequence"] = str(self.record.seq)
-        except:
-            logger.warn("\tError setting sequence")
+def set_collecting_lab(data, record, source, reference, logger):
+    try:
+        data["collecting_lab"] = source["collected_by"][0]
+    except:
+        logger.debug("\tError setting collecting lab")
 
-    def set_attribution_title(self):
-        try:
-            self.data["attribution_title"] = self.reference.title
-        except:
-            logger.debug("\tError setting attribution_title")
+def set_genotype(data, record, source, reference, logger):
+    try:
+        if "genotype" in source:
+            data["genotype"] = source["genotype"][0]
+        else:
+            for note in source['note']:
+                if "genotype" in note:
+                    if ":" in note:
+                        data["genotype"] = note.split(':')[1].strip()
+                    else:
+                        data["genotype"] = note.split('=')[1].strip()
+    except:
+        logger.debug("\tError setting genotype")
 
-    def set_authors(self):
-        try:
-            if self.reference.authors is None: raise ValueError
-            first_author = re.match(r'^([^,]*)', self.reference.authors).group(0)
-            self.data['authors'] = first_author + " et al"
-        except:
-            logger.debug("\tError setting authors")
+def set_tissue(data, record, source, reference, logger):
+    try:
+        data["tissue"] = source["isolation_source"][0]
+    except:
+        logger.debug("\tError setting tissue")
 
-    def set_attribution_journal(self):
-        try:
-            if self.reference.journal is None: raise ValueError
-            self.data["attribution_journal"] = self.reference.journal
-        except:
-            logger.debug("\tError setting attribution_journal")
+def set_attribution_title(data, record, source, reference, logger):
+    try:
+        data["attribution_title"] = reference.title
+    except:
+        logger.debug("\tError setting attribution_title")
 
-    def set_attribution_url(self):
-        try:
-            if self.reference.pubmed_id is None: raise ValueError
-            self.data["attribution_url"] = "https://www.ncbi.nlm.nih.gov/pubmed/" + self.reference.pubmed_id
-        except:
-            logger.debug("\tError setting attribution_url")
+def set_authors(data, record, source, reference, logger):
+    try:
+        if reference.authors is None: raise ValueError
+        first_author = re.match(r'^([^,]*)', reference.authors).group(0)
+        data['authors'] = first_author + " et al"
+    except:
+        logger.debug("\tError setting authors")
+
+def set_attribution_journal(data, record, source, reference, logger):
+    try:
+        if reference.journal is None: raise ValueError
+        data["attribution_journal"] = reference.journal
+    except:
+        logger.debug("\tError setting attribution_journal")
+
+def set_attribution_url(data, record, source, reference, logger):
+    try:
+        if reference.pubmed_id is None: raise ValueError
+        data["attribution_url"] = "https://www.ncbi.nlm.nih.gov/pubmed/" + reference.pubmed_id
+    except:
+        logger.debug("\tError setting attribution_url")

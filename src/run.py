@@ -10,7 +10,7 @@ from utils.colorLogging import ColorizingStreamHandler
 parser = argparse.ArgumentParser(description="Cleaning & combining of genomic & titer data")
 parser.add_argument("--debug", action="store_const", dest="loglevel", const=logging.DEBUG, help="Enable debugging logging")
 parser.add_argument("--files", default=[], type=str, nargs='*', help="file types: text (list of accessions), FASTA, (to do) FASTA + CSV, (to do) JSON")
-parser.add_argument("--pathogen", default="mumps", type=str)
+parser.add_argument("--pathogen", required=True, type=str, help="This sets the config file")
 parser.add_argument("--accession_list", default=[], type=str, nargs='*', help="list of strings to query genbank with")
 parser.add_argument("--outfile", default="output/test_output.json")
 
@@ -26,9 +26,15 @@ if __name__=="__main__":
     root_logger = logging.getLogger('')
     root_logger.setLevel(args.loglevel if args.loglevel else logging.INFO)
     root_logger.addHandler(ColorizingStreamHandler())
+    logger = logging.getLogger(__name__)
 
-    # Initialize
-    CONFIG = config.produce_config_dictionary(args.pathogen)
+    try:
+        CONFIG = __import__("configs.{}".format(args.pathogen), fromlist=['']).config
+    except ImportError:
+        logger.critical("Could not load config! File configs/{}.py must exist!".format(args.pathogen)); sys.exit(2)
+    except AttributeError:
+        logger.critical("Config file configs/{}.py must define a \"config\" dictionary.".format(args.pathogen)); sys.exit(2)
+    # Initialize Dataset class
     dataset = Dataset(args.pathogen, CONFIG)
     # Read data from files
     for f in args.files:

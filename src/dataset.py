@@ -5,7 +5,7 @@ import os, sys
 from cluster import Cluster
 logger = logging.getLogger(__name__)
 from entrez import query_genbank
-from utils.genbank_parsers import GenbankParser
+from utils.genbank_parsers import process_genbank_record
 
 flatten = lambda l: [item for sublist in l for item in sublist]
 
@@ -24,8 +24,7 @@ class Dataset:
         if ftype == "accessions":
             accessions = self.get_accessions_from_file(f)
             genbank_data = query_genbank(accessions)
-            parsed_objects = [GenbankParser(record) for record in genbank_data]
-            data_dicts = [x.get_data() for x in parsed_objects]
+            data_dicts = [process_genbank_record(record, self.config) for record in genbank_data]
             unmerged_clusters = flatten(
                 [[Cluster(d), Cluster(d, cluster_type="attribution")] for d in data_dicts]
             )
