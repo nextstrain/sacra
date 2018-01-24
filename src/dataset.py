@@ -56,11 +56,8 @@ class Dataset:
                 logger.debug("Processing this header: {}".format(data))
                 clus = Cluster(self.CONFIG, data)
                 att = Cluster(self.CONFIG, data, cluster_type="attribution")
-
                 # link the attribute id to each sequence in the cluster
-                if att.is_valid() and clus.is_valid():
-                    for s in clus.sequences:
-                        s.attribution_id = att.get_all_units()[0].attribution_id
+                self.link_attribution_id(clus, att)
                 if clus.is_valid(): clusters.append(clus)
                 if att.is_valid(): clusters.append(att)
         return clusters
@@ -96,10 +93,21 @@ class Dataset:
         if make_clusters:
             data_dicts = [process_genbank_record(accession, record, self.CONFIG) for \
                 accession, record in self.genbank_data.iteritems() if accession in accessions]
-            unmerged_clusters = flatten(
-                [[Cluster(self.CONFIG, d), Cluster(self.CONFIG, d, cluster_type="attribution")] for d in data_dicts]
-            )
+            unmerged_clusters = []
+            for d in data_dicts:
+                clus = Cluster(self.CONFIG, d)
+                att = Cluster(self.CONFIG, d, cluster_type="attribution")
+                # link the attribute id to each sequence in the cluster
+                self.link_attribution_id(clus, att)
+                if clus.is_valid(): unmerged_clusters.append(clus)
+                if att.is_valid(): unmerged_clusters.append(att)
             self.merge_clusters_into_state(unmerged_clusters)
+
+
+    def link_attribution_id(self, genomic_cluster, attribution_cluster):
+        if attribution_cluster.is_valid() and genomic_cluster.is_valid():
+            for s in genomic_cluster.sequences:
+                s.attribution_id = attribution_cluster.get_all_units()[0].attribution_id
 
     def get_all_accessions(self):
         '''
