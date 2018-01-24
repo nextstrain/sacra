@@ -35,7 +35,7 @@ if __name__=="__main__":
     except AttributeError:
         logger.critical("Config file configs/{}.py must define a \"config\" dictionary.".format(args.pathogen)); sys.exit(2)
     # Initialize Dataset class
-    dataset = Dataset(args.pathogen, CONFIG)
+    dataset = Dataset(CONFIG)
     # Read data from files
     for f in args.files:
         dataset.read_to_clusters(f)

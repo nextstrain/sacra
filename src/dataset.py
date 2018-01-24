@@ -12,9 +12,8 @@ flatten = lambda l: [item for sublist in l for item in sublist]
 class Dataset:
 
     # Initializer
-    def __init__(self, pathogen, config):
-        self.pathogen = pathogen
-        self.config = config
+    def __init__(self, CONFIG):
+        self.CONFIG = CONFIG
         self.clusters = []
         self.genbank_data = {}
 
@@ -51,12 +50,12 @@ class Dataset:
             for record in SeqIO.parse(f, "fasta"):
                 data = {}
                 head = record.description.replace(" ","").split('|')
-                for i in range(len(self.config["fasta_headers"])):
-                    data[self.config["fasta_headers"][i]] = head[i]
+                for i in range(len(self.CONFIG["fasta_headers"])):
+                    data[self.CONFIG["fasta_headers"][i]] = head[i]
                     data['sequence'] = str(record.seq)
                 logger.debug("Processing this header: {}".format(data))
-                C = Cluster(data)
-                Delta = Cluster(data, cluster_type="attribution")
+                C = Cluster(self.CONFIG, data)
+                Delta = Cluster(self.CONFIG, data, cluster_type="attribution")
                 if Delta:
                     clusters.extend([C,Delta])
                 else:
@@ -92,10 +91,10 @@ class Dataset:
                 self.genbank_data[k] = v
 
         if make_clusters:
-            data_dicts = [process_genbank_record(accession, record, self.config) for \
+            data_dicts = [process_genbank_record(accession, record, self.CONFIG) for \
                 accession, record in self.genbank_data.iteritems() if accession in accessions]
             unmerged_clusters = flatten(
-                [[Cluster(d), Cluster(d, cluster_type="attribution")] for d in data_dicts]
+                [[Cluster(self.CONFIG, d), Cluster(self.CONFIG, d, cluster_type="attribution")] for d in data_dicts]
             )
             self.merge_clusters_into_state(unmerged_clusters)
 
@@ -115,13 +114,14 @@ class Dataset:
         self.clusters.extend(clusters)
 
     def clean_clusters(self):
+        logger.info("Cleaning clusters (move / fix / create / drop)")
         [c.clean() for c in self.clusters]
 
     # Output
     def write_to_json(self, filename):
         logger.info("writing to JSON: {}".format(filename))
         data = {}
-        data["dbinfo"] = {"pathogen": self.pathogen}
+        data["dbinfo"] = {"pathogen": self.CONFIG["pathogen"]}
         data["strains"] = [y.get_data() for x in self.clusters for y in x.strains]
         data["samples"] = [y.get_data() for x in self.clusters for y in x.samples]
         data["sequences"] = [y.get_data() for x in self.clusters for y in x.sequences]

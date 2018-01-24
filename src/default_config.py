@@ -1,5 +1,6 @@
 from __future__ import division, print_function
 import utils.genbank_parsers as gbp
+import utils.fix_functions as fix
 
 """
 This file sets up the default config
@@ -27,6 +28,9 @@ default_config = {
         "set_authors": gbp.set_authors,
         "set_attribution_journal": gbp.set_attribution_journal,
         "set_attribution_url": gbp.set_attribution_url
+    },
+    "fix_functions": {
+        "strain_name": fix.strain_name
     }
 }
 
