@@ -35,6 +35,60 @@ default_config = {
     },
     "create_functions": {
         "attribution_id": create.attribution_id
+    },
+    # TODO: Make this a real minimal default config
+    "mapping" : {
+        'dbinfo' : ['pathogen'],
+        'strain' : [
+            'strain_id',
+            'strain_name',
+            'host_species',
+            'host_age',
+            'host_sex',
+            'genotype'
+        ],
+        'sample' : [
+            'sample_id',
+            'sample_name',
+            'sample_owner',
+            'collection_date',
+            'country',
+            'division',
+            'subdivision',
+            'gps',
+            'collecting_lab',
+            'passage',
+            'tissue',
+            'ct',
+            'usvi_doh_sample_id',
+            'sample_strain_name'
+        ],
+        'sequence' : [
+            'sequence_id',
+            'accession',
+            'sequence_sample_name',
+            'sequence_owner',
+            'locus',
+            'sequence_type',
+            'sequencing_lab',
+            'sharing',
+            'sequence_url',
+            'attribution',
+            'sequence',
+            'sample_id'
+        ],
+        'attribution' : [
+            'attribution_id',
+            'attribution_owner',
+            'attribution_source',
+            'publication_status',
+            'attribution_date',
+            'attribution_title',
+            'attribution_journal',
+            'attribution_url',
+            'authors',
+            'pubmed_id'
+        ]
     }
 }
 

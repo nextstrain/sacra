@@ -4,7 +4,7 @@ logger = logging.getLogger(__name__)
 class Unit(object):
     """The parent class for Strain, Sample, Sequence, Attribution, """
     def __init__(self):
-        self.ignore = ["ignore", "CONFIG", "parent", "children"]
+        self.unit_type = "dbinfo"
         self.parent = None
         self.children = []
 
@@ -22,9 +22,9 @@ class Unit(object):
             logger.warn("Tried to fix {} but it didn't exist".format(name))
 
     def fix(self):
-        """ apply the fix method to all pieces of state, except those which are in the ignore list """
+        """ apply the fix method to all pieces of state, that are also in the spec mapping list """
         for name in vars(self):
-            if name not in self.ignore:
+            if name in self.CONFIG["mapping"][self.unit_type]:
                 self.fix_single(name)
 
     def create_single(self, name):
@@ -44,4 +44,4 @@ class Unit(object):
         pass
 
     def get_data(self):
-        return {k:v for k, v in self.__dict__.iteritems() if k not in self.ignore}
+        return {k:v for k, v in self.__dict__.iteritems() if k in self.CONFIG["mapping"][self.unit_type]}

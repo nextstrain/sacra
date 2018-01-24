@@ -9,6 +9,7 @@ from unit import Unit
 class Strain(Unit):
     def __init__(self, CONFIG, data_dictionary):
         super(Strain, self).__init__()
+        self.unit_type = "strain"
         # logger.info("Strain class initializing")
         self.CONFIG = CONFIG
         # save data to state

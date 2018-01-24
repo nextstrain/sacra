@@ -19,8 +19,8 @@ class Cluster:
             self.samples = set()
             self.sequences = set()
             a = Strain(self.CONFIG, data_dictionary)
-            b = Sample(data_dictionary, a)
-            y = Sequence(data_dictionary, b)
+            b = Sample(self.CONFIG, data_dictionary, a)
+            y = Sequence(self.CONFIG, data_dictionary, b)
 
             ## set links between a, b, c - only if the object is valid
 

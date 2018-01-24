@@ -3,15 +3,17 @@ import logging
 logger = logging.getLogger(__name__)
 import sys
 sys.path.append('')
-from spec_mapping import mapping as sm
 from unit import Unit
 
 class Sample(Unit):
 
-    def __init__(self, data_dictionary, strain_obj):
+    def __init__(self, CONFIG, data_dictionary, strain_obj):
         super(Sample, self).__init__()
+        self.unit_type = "sample"
         # logger.info("Sample class initializing")
+        self.CONFIG = CONFIG
         # save data to state
+        sm = CONFIG["mapping"]
         for field in sm["sample"]:
             if field in data_dictionary.keys():
                 setattr(self, field, data_dictionary[field])

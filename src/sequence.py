@@ -9,9 +9,11 @@ from unit import Unit
 
 class Sequence(Unit):
 
-    def __init__(self, data_dictionary, sample_obj):
+    def __init__(self, CONFIG, data_dictionary, sample_obj):
         super(Sequence, self).__init__()
+        self.unit_type = "sequence"
         # logger.info("Sequence class initializing")
+        self.CONFIG = CONFIG
         self.save_sequence_data_to_state(data_dictionary, sm["sequence"])
         self.clean_id(sample_obj)
 
