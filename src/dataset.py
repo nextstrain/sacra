@@ -16,6 +16,7 @@ class Dataset:
         self.pathogen = pathogen
         self.config = config
         self.clusters = []
+        self.genbank_data = {}
 
     # File handling
     def read_to_clusters(self, f):
@@ -23,17 +24,13 @@ class Dataset:
         ftype = self.infer_ftype(f)
         if ftype == "accessions":
             accessions = self.get_accessions_from_file(f)
-            genbank_data = query_genbank(accessions)
-            data_dicts = [process_genbank_record(record, self.config) for record in genbank_data]
-            unmerged_clusters = flatten(
-                [[Cluster(d), Cluster(d, cluster_type="attribution")] for d in data_dicts]
-            )
+            self.download_entrez_data(accessions, make_clusters=True)
         elif ftype == "fasta":
             unmerged_clusters = self.read_fasta_to_clusters(f)
+            self.merge_clusters_into_state(unmerged_clusters)
         else:
             logger.error("Unknown input filetype for {}. Fatal.".format(f))
             sys.exit(2)
-        self.merge_clusters_into_state(unmerged_clusters)
 
 
     def read_fasta_to_clusters(self, infile):
@@ -85,12 +82,22 @@ class Dataset:
         # elif (fname.endswith(".json")):
         #     return "json"
 
-    # Entrez handling
-    def accessions_to_clusters(self, accession_list):
-        logger.info("Initializing construction of clusters from ---")
+    def download_entrez_data(self, accessions, make_clusters = False):
+        ## don't fetch data that's already fetched!
+        new_accs = [x for x in accessions if x not in self.genbank_data.keys()]
+        logger.info("Fetching {} additional genbank entries".format(len(new_accs)))
+        if len(new_accs):
+            new_data = query_genbank(new_accs)
+            for k, v in new_data.iteritems():
+                self.genbank_data[k] = v
 
-    def download_entrez_data(self, accessions):
-        self.genbank_data = query_genbank(accessions)
+        if make_clusters:
+            data_dicts = [process_genbank_record(accession, record, self.config) for \
+                accession, record in self.genbank_data.iteritems() if accession in accessions]
+            unmerged_clusters = flatten(
+                [[Cluster(d), Cluster(d, cluster_type="attribution")] for d in data_dicts]
+            )
+            self.merge_clusters_into_state(unmerged_clusters)
 
     def get_all_accessions(self):
         '''

@@ -41,11 +41,11 @@ if __name__=="__main__":
         dataset.read_to_clusters(f)
     # ditto for accessions if provided as strings on the command line
     if args.accession_list:
-        dataset.accessions_to_clusters(args.accession_list)
-    # Update clusters with data from entrez
+        dataset.download_entrez_data(args.accession_list, make_clusters = True)
+    # Download additional entrez data which the cleaning functions make make use of
     if not args.skip_entrez:
-        accessions = dataset.get_all_accessions()
-        dataset.download_entrez_data(accessions)
+        logger.info("Fetching entrez data for all available accessions to aid in cleaning the data")
+        dataset.download_entrez_data(dataset.get_all_accessions(), make_clusters = False)
     # Clean clusters
     dataset.clean_clusters()
     # Write to JSON

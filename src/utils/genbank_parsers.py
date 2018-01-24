@@ -9,13 +9,12 @@ def merge_into(a, b):
     for k, v in b.iteritems():
         a[k] = v
 
-def process_genbank_record(record, config):
+def process_genbank_record(accession, record, config):
     source = [x for x in record.features if x.type == "source"][0].qualifiers
     reference = choose_best_reference(record)
     data = {}
-    logger.info("Processing entrez seqrecord for: " + record.description)
-    # some methods are universal!
-    data["accession"] = re.match(r'^([^.]*)', record.id).group(0).upper()
+    data["accession"] = accession
+    logger.info("Processing entrez seqrecord for {} ({})".format(accession, record.description))
     # other set methods are defined in the config
     for name, fn in config["genbank_setters"].iteritems():
         fn(data, record, source, reference, logger)
