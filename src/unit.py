@@ -4,7 +4,7 @@ logger = logging.getLogger(__name__)
 class Unit(object):
     """The parent class for Strain, Sample, Sequence, Attribution, """
     def __init__(self):
-        self.ignore = ["ignore", "CONFIG"]
+        self.ignore = ["ignore", "CONFIG", "parent", "children"]
         self.parent = None
         self.children = []
 
