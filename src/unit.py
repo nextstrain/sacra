@@ -5,6 +5,8 @@ class Unit(object):
     """The parent class for Strain, Sample, Sequence, Attribution, """
     def __init__(self):
         self.ignore = ["ignore", "CONFIG"]
+        self.parent = None
+        self.children = []
 
     def move(self):
         ## move names. I'm guessing this will need to use self.parent & self.child methods

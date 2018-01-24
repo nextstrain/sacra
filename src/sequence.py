@@ -17,6 +17,15 @@ class Sequence(Unit):
 
         logger.debug("Sequence data (sans the actual sequence): {}".format({k:v for k, v in self.__dict__.iteritems() if k != "sequence"}))
 
+        if hasattr(sample_obj, "sample_id"):
+            # Add parent/child connections with sample_obj if sample_obj is something
+            try:
+                self.parent = sample_obj
+                self.parent.children.append(self)
+                logger.debug("Set parent/child connections between {} (self) and {} (parent).".format(self.sequence_id, self.parent.sample_id))
+            except:
+                logger.error("Could not set parent for sequence {}.".format(self.sequence_id))
+
     def save_sequence_data_to_state(self, data_dictionary, spec):
         for field in spec:
             if field in data_dictionary.keys():

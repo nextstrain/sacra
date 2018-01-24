@@ -19,6 +19,15 @@ class Sample(Unit):
         self.clean_id(strain_obj)
         logger.debug("Sample data: {}".format(self.__dict__))
 
+        if hasattr(strain_obj, "strain_id"):
+            # Add parent/child connections with strain_obj if strain_obj is something
+            try:
+                self.parent = strain_obj
+                self.parent.children.append(self)
+                logger.debug("Set parent/child connections between {} (self) and {} (parent).".format(self.sample_id, self.parent.strain_id))
+            except:
+                logger.error("Could not set parent for sample {}.".format(self.sample_id))
+
     def is_valid(self):
         return hasattr("sample_id") and hasattr("strain_id")
 
