@@ -25,6 +25,15 @@ class Unit(object):
             if name not in self.ignore:
                 self.fix_single(name)
 
+    def create_single(self, name):
+        """ try to apply the create function (as defined in the config) to a single piece of state (name) """
+        try:
+            v = self.CONFIG["create_functions"][name](self, logger)
+            if v:
+                setattr(self, name, v)
+        except KeyError: ## the cleaning function wasn't set
+            pass
+
     def create(self):
         pass;
 

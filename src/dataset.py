@@ -56,12 +56,13 @@ class Dataset:
                 logger.debug("Processing this header: {}".format(data))
                 clus = Cluster(self.CONFIG, data)
                 att = Cluster(self.CONFIG, data, cluster_type="attribution")
-                ## link the attribute_id to the sequence, if applicable!
 
-
-
-                clusters.append(clus)
-                clusters.append(att)
+                # link the attribute id to each sequence in the cluster
+                if att.is_valid() and clus.is_valid():
+                    for s in clus.sequences:
+                        s.attribution_id = att.get_all_units()[0].attribution_id
+                if clus.is_valid(): clusters.append(clus)
+                if att.is_valid(): clusters.append(att)
         return clusters
 
     def get_accessions_from_file(self, fname):
@@ -122,12 +123,10 @@ class Dataset:
     # Output
     def write_to_json(self, filename):
         logger.info("writing to JSON: {}".format(filename))
-        data = {}
+        data = {"strains": [], "samples": [], "sequences": [], "attributions": []}
         data["dbinfo"] = {"pathogen": self.CONFIG["pathogen"]}
-        data["strains"] = [y.get_data() for x in self.clusters for y in x.strains]
-        data["samples"] = [y.get_data() for x in self.clusters for y in x.samples]
-        data["sequences"] = [y.get_data() for x in self.clusters for y in x.sequences]
-        data["attributions"] = [y.get_data() for x in self.clusters for y in x.attributions]
-
+        for c in self.clusters:
+            for n in ["strains", "samples", "sequences", "attributions"]:
+                if hasattr(c, n): data[n].extend([x.get_data() for x in getattr(c, n)])
         with open(filename, 'w') as outfile:
             json.dump(data, outfile, sort_keys=True, indent=2, ensure_ascii=False)

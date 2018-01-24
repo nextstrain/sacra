@@ -9,12 +9,25 @@ from unit import Unit
 
 class Attribution(Unit):
 
-    def __init__(self, data_dictionary):
+    def __init__(self, CONFIG, data_dictionary):
+        """saves data provided and sets attribution_id"""
         super(Attribution, self).__init__()
+        self.CONFIG = CONFIG
         # logger.info("Attribution class initializing")
         # save data to state
         for field in sm["attribution"]:
             if field in data_dictionary.keys():
                 setattr(self, field, data_dictionary[field])
-        # self.clean_id()
+
+        ## init must set attribution_id
+        if not hasattr(self, "attribution_id"):
+            self.fix_single("authors")
+            self.fix_single("attribution_date")
+            self.create_single("attribution_id")
+
+
         logger.debug("Attribution data: {}".format(self.__dict__))
+
+
+    def is_valid(self):
+        return hasattr(self, "attribution_id")

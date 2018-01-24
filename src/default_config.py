@@ -1,6 +1,7 @@
 from __future__ import division, print_function
 import utils.genbank_parsers as gbp
 import utils.fix_functions as fix
+import utils.create_functions as create
 
 """
 This file sets up the default config
@@ -31,6 +32,9 @@ default_config = {
     },
     "fix_functions": {
         "strain_name": fix.strain_name
+    },
+    "create_functions": {
+        "attribution_id": create.attribution_id
     }
 }
 
