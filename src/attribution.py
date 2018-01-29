@@ -27,7 +27,7 @@ class Attribution(Unit):
             self.create_single("attribution_id")
 
 
-        logger.debug("Attribution data: {}".format(self.__dict__))
+        # logger.debug("Attribution data: {}".format(self.__dict__))
 
 
     def is_valid(self):

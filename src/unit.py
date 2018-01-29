@@ -15,7 +15,7 @@ class Unit(object):
     def fix_single(self, name):
         """ try to apply the fix function (as defined in the config) to a single piece of state (name) """
         try:
-            setattr(self, name, self.CONFIG["fix_functions"][name](getattr(self, name), logger))
+            setattr(self, name, self.CONFIG["fix_functions"][name](self, getattr(self, name), logger))
         except KeyError: ## the cleaning function wasn't set
             pass
         except AttributeError: ## the piece of state doesn't exist

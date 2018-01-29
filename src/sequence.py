@@ -17,7 +17,7 @@ class Sequence(Unit):
         self.save_sequence_data_to_state(data_dictionary, sm["sequence"])
         self.clean_id(sample_obj)
 
-        logger.debug("Sequence data (sans the actual sequence): {}".format({k:v for k, v in self.__dict__.iteritems() if k != "sequence"}))
+        # logger.debug("Sequence data (sans the actual sequence): {}".format({k:v for k, v in self.__dict__.iteritems() if k != "sequence"}))
 
         if hasattr(sample_obj, "sample_id"):
             # Add parent/child connections with sample_obj if sample_obj is something

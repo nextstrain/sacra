@@ -19,7 +19,7 @@ class Sample(Unit):
                 setattr(self, field, data_dictionary[field])
 
         self.clean_id(strain_obj)
-        logger.debug("Sample data: {}".format(self.__dict__))
+        # logger.debug("Sample data: {}".format(self.__dict__))
 
         if hasattr(strain_obj, "strain_id"):
             # Add parent/child connections with strain_obj if strain_obj is something

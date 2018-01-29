@@ -31,7 +31,8 @@ default_config = {
         "set_attribution_url": gbp.set_attribution_url
     },
     "fix_functions": {
-        "strain_name": fix.strain_name
+        "strain_name": fix.strain_name,
+        "collection_date": fix.collection_date,
     },
     "create_functions": {
         "attribution_id": create.attribution_id

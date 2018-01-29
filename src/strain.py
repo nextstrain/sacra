@@ -18,7 +18,7 @@ class Strain(Unit):
                 setattr(self, field, data_dictionary[field])
 
         self.ensure_id()
-        logger.debug("Strain data: {}".format(self.__dict__))
+        # logger.debug("Strain data: {}".format(self.__dict__))
 
     def ensure_id(self):
         """Ensure strain_id exists. So if there's strain_name, fix it, else create it. Then set strain_id as strain_name"""
