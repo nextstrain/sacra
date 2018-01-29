@@ -33,9 +33,7 @@ default_config = {
     "fix_functions": {
         "strain_name": fix.strain_name,
         "collection_date": fix.collection_date,
-    },
-    "create_functions": {
-        "attribution_id": create.attribution_id
+        "attribution_id": fix.attribution_id
     },
     # TODO: Make this a real minimal default config
     "mapping" : {

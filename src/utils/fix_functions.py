@@ -1,5 +1,18 @@
 import re
 
+
+def attribution_id(obj, existing_id, logger):
+    if hasattr(obj, "authors") and hasattr(obj, "attribution_date"):
+        value = obj.authors + '|' + obj.attribution_date.split('-')[0]
+    elif hasattr(obj, "authors"):
+        value = obj.authors
+    else:
+        value = None
+    if existing_id and existing_id is not value:
+        logger.warn("Attribution ID somehow provided and does not equal fixed ID ({} vs {})".format(existing_id, value))
+    return value
+
+
 def strain_name(strain, original_name, logger):
     """ copied from "fix_name" fn in fauna """
     name = original_name.replace(' ', '').replace('\'', '').replace('(', '').replace(')', '').replace('H3N2', '').replace('Human', '').replace('human', '').replace('//', '/').replace('.', '').replace(',', '').replace('duck', '').replace('environment', '')

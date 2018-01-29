@@ -18,14 +18,13 @@ class Unit(object):
             setattr(self, name, self.CONFIG["fix_functions"][name](self, getattr(self, name), logger))
         except KeyError: ## the cleaning function wasn't set
             pass
-        except AttributeError: ## the piece of state doesn't exist
-            logger.warn("Tried to fix {} but it didn't exist".format(name))
+        except AttributeError: ## the piece of state doesn't exist - run the fix fn with "None" as the value
+            setattr(self, name, self.CONFIG["fix_functions"][name](self, None, logger))
 
     def fix(self):
         """ apply the fix method to all pieces of state, that are also in the spec mapping list """
-        for name in vars(self):
-            if name in self.CONFIG["mapping"][self.unit_type]:
-                self.fix_single(name)
+        for name in self.CONFIG["mapping"][self.unit_type]:
+            self.fix_single(name)
 
     def create_single(self, name):
         """ try to apply the create function (as defined in the config) to a single piece of state (name) """

@@ -24,7 +24,7 @@ class Attribution(Unit):
         if not hasattr(self, "attribution_id"):
             self.fix_single("authors")
             self.fix_single("attribution_date")
-            self.create_single("attribution_id")
+            self.fix_single("attribution_id")
 
 
         # logger.debug("Attribution data: {}".format(self.__dict__))
