@@ -55,7 +55,6 @@ def collection_date(sample, original_date, logger):
     # the first time this function runs the database needs to be loaded into memory
     if lookups["strain_name_to_date"] is None and sample.CONFIG["fix_lookups"]["strain_name_to_date"] is not None:
         lookups["strain_name_to_date"] = make_dict_from_file(sample.CONFIG["fix_lookups"]["strain_name_to_date"])
-
     if lookups["strain_name_to_date"] is not None and sample.parent.strain_name in lookups["strain_name_to_date"]:
         date = lookups["strain_name_to_date"][sample.parent.strain_name]
     else:
@@ -84,8 +83,19 @@ def collection_date(sample, original_date, logger):
             date = date[0:7] + "-XX"
         elif re.match(r'\d\d\d\d', date):
             date = date[0:4] + "-XX-XX"
+        # 15-Sep-2015
+        elif re.match(r'^\d+-\w+-\d\d\d\d', date):
+            groups = re.match(r'^(\d+)-(\w+)-(\d\d\d\d)', date).groups()
+            month_str_to_num = {"jan": "01", "feb": "02", "mar": "03", "apr": "04", "may": "05", "jun": "06", "jul": "07", "aug": "08", "sep": "09", "oct": "10", "nov": "11", "dec": "12", "january": "01", "february": "02", "march": "03", "april": "04", "june": "06", "july": "07", "august": "08", "sepember": "09", "october": "10", "november": "11", "december": "12"}
+            day = groups[0]
+            if len(day) == 1:
+                day = '0' + day
+            try:
+                date = groups[2] + "-" + month_str_to_num[groups[1].lower()] + "-" + day
+            except KeyError:
+                date = groups[2] + "-XX-XX"
         else:
-            print("Couldn't reformat this date: " + date + ", setting to None")
+            logger.warn("Couldn't reformat this date: " + date + ", setting to None")
             date = None
     else:
         date = None
