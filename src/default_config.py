@@ -34,6 +34,7 @@ default_config = {
         "strain_name_to_strain_name": None,
         "strain_name_to_location": None,
         "strain_name_to_date": None,
+        "country_to_region": "source-data/geo_regions.tsv",
         "geo_synonyms": "source-data/geo_synonyms.tsv"
     },
     "fix_functions": {
@@ -42,7 +43,8 @@ default_config = {
         "attribution_id": fix.attribution_id,
         "country": fix.country,
         "division": fix.division,
-        "location": fix.location
+        "location": fix.location,
+        "region": fix.region,
     },
     # TODO: Make this a real minimal default config
     "mapping" : {
@@ -63,6 +65,7 @@ default_config = {
             'country',
             'division',
             'subdivision',
+            'region',
             'gps',
             'collecting_lab',
             'passage',

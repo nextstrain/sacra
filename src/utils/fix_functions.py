@@ -7,6 +7,7 @@ lookups = {
     "strain_name_to_strain_name": None,
     "strain_name_to_location": None,
     "strain_name_to_date": None,
+    "country_to_region": None,
     "geo_synonyms": None
 }
 
@@ -95,20 +96,20 @@ def collection_date(sample, original_date, logger):
     return date
 
 def country(sample, value, logger):
-    general_location_fix(sample, "country", value, logger)
+    return general_location_fix(sample, "country", value, logger)
 
 def division(sample, value, logger):
-    general_location_fix(sample, "division", value, logger)
+    return general_location_fix(sample, "division", value, logger)
 
 def location(sample, value, logger):
-    general_location_fix(sample, "location", value, logger)
+    return general_location_fix(sample, "location", value, logger)
 
 def general_location_fix(sample, category, original_value, logger):
     # the first time this function runs the databases needs to be loaded into memory
     if lookups["geo_synonyms"] is None and sample.CONFIG["fix_lookups"]["geo_synonyms"] is not None:
         lookups["geo_synonyms"] = parse_geo_synonyms(sample.CONFIG["fix_lookups"]["geo_synonyms"])
     if lookups["strain_name_to_date"] is None and sample.CONFIG["fix_lookups"]["strain_name_to_date"] is not None:
-        lookups["strain_name_to_date"] = parse_geo_synonyms(sample.CONFIG["fix_lookups"]["strain_name_to_date"])
+        lookups["strain_name_to_date"] = make_dict_from_file(sample.CONFIG["fix_lookups"]["strain_name_to_date"])
 
     value = original_value
     if lookups["strain_name_to_date"] is not None and sample.parent.strain_id in lookups["strain_name_to_date"]:
@@ -152,3 +153,29 @@ def general_location_fix(sample, category, original_value, logger):
     if value is not original_value:
         logger.debug("Changed {} from {} to {}".format(category, original_value, value))
     return value;
+
+def region(strain, original_region, logger):
+    '''
+    Label viruses with region based on country
+    Due to the ordering in CONFIG, this runs _after_ country, division etc have been fixed
+    '''
+
+    if lookups["country_to_region"] is None and strain.CONFIG["fix_lookups"]["country_to_region"] is not None:
+        lookups["country_to_region"] = make_dict_from_file(strain.CONFIG["fix_lookups"]["country_to_region"], "country", "region")
+
+    if lookups["country_to_region"] is None:
+        return original_region
+
+    region = None
+
+    if hasattr(strain, "country"):
+        if strain.country in lookups["country_to_region"]:
+            region = lookups["country_to_region"][strain.country]
+        elif camelcase_to_snakecase(strain.country) in lookups["country_to_region"]:
+            region = lookups["country_to_region"][camelcase_to_snakecase(strain.country)]
+        else:
+            logger.warn("Country -> Region mapping missing for {}".format(strain.country))
+
+    if original_region and original_region is not region:
+        logger.warn("Region incompatability!?! Provided: {} Setting to: {}".format(original_region, region))
+    return region

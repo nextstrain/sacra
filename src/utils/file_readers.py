@@ -1,18 +1,18 @@
 import csv
 from misc import camelcase_to_snakecase
 
-def make_dict_from_file(fname):
+def make_dict_from_file(fname, key="label", value="fix"):
     '''
     Open strain name fixing files and define corresponding dictionaries
     '''
     reader = csv.DictReader(filter(lambda row: row[0]!='#', open(fname)), delimiter='\t')
     fix_whole_name = {}
     for line in reader:
-        if not line["fix"]:
-            x = re.split(" +", line["label"])
-            line["label"] = x[0]
-            line["fix"] = x[1]
-        fix_whole_name[line['label'].decode('unicode-escape')] = line['fix']
+        if not line[value]:
+            x = re.split(" +", line[key])
+            line[key] = x[0]
+            line[value] = x[1]
+        fix_whole_name[line[key].decode('unicode-escape')] = line[value]
     return fix_whole_name
 
 
