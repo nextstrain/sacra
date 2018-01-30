@@ -1,3 +1,4 @@
+from __future__ import division, print_function
 import sys, re
 sys.path.append("")
 from src.default_config import default_config, common_fasta_headers
@@ -31,24 +32,42 @@ def division(sample, value, logger):
     general_location_fix(sample, "division", geo_synonyms, value, logger)
 
 
+def make_config(args, logger):
+    """ make the function - you can use the args to customise it. Try to minimise the customisation! """
 ## initialise with default config
-config = default_config
-config["pathogen"] = "mumps"
-config["fasta_headers"] = [
-    'strain_name',
-    'virus',
-    'accession',
-    'collection_date',
-    'country',
-    'division',
-    'muv_genotype',
-    'host',
-    'authors',
-    'publication_name',
-    'journal',
-    'attribution_url',
-    'accession_url'
-]
-config["fix_functions"]["strain_name"] = fix_strain_name
-config["fix_lookups"]["strain_name_to_location"] = "source-data/mumps_location_fix.tsv"
-config["fix_lookups"]["strain_name_to_date"] = "source-data/mumps_date_fix.tsv"
+    config = default_config
+    config["pathogen"] = "mumps"
+    if args.overwrite_fasta_header:
+        if args.overwrite_fasta_header == "alt1":
+            # ['BCCDC75', 'MuVs/No_designation_vaccine_related/A', '2017-02-28', 'human', 'canada', 'british_columbia', 'A']
+            config["fasta_headers"] = [
+                "accession",
+                'strain_name',
+                'collection_date',
+                'host',
+                'country',
+                'division',
+                'muv_genotype'
+            ]
+        else:
+            logger.critical("Unknown FASTA header format demanded: \"{}\"".format(args.overwrite_fasta_header)); sys.exit(2)
+    else:
+        config["fasta_headers"] = [
+            'strain_name',
+            'virus',
+            'accession',
+            'collection_date',
+            'country',
+            'division',
+            'muv_genotype',
+            'host',
+            'authors',
+            'publication_name',
+            'journal',
+            'attribution_url',
+            'accession_url'
+        ]
+    config["fix_functions"]["strain_name"] = fix_strain_name
+    config["fix_lookups"]["strain_name_to_location"] = "source-data/mumps_location_fix.tsv"
+    config["fix_lookups"]["strain_name_to_date"] = "source-data/mumps_date_fix.tsv"
+    return config

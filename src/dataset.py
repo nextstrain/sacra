@@ -51,9 +51,12 @@ class Dataset:
                 data = {}
                 head = record.description.replace(" ","").split('|')
                 for i in range(len(self.CONFIG["fasta_headers"])):
-                    data[self.CONFIG["fasta_headers"][i]] = head[i]
-                    data['sequence'] = str(record.seq)
-                logger.debug("Processing this header: {}".format(data))
+                    try:
+                        data[self.CONFIG["fasta_headers"][i]] = head[i]
+                        data['sequence'] = str(record.seq)
+                    except KeyError:
+                        logger.critical("Error parsing FASTA header. Header: {}. CONFIG specifies: {}".format(head, self.CONFIG["fasta_headers"])); sys.exit(2)
+                # logger.debug("Processing this header: {}".format(data))
                 clus = Cluster(self.CONFIG, data)
                 att = Cluster(self.CONFIG, data, cluster_type="attribution")
                 # link the attribute id to each sequence in the cluster
