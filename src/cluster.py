@@ -11,7 +11,7 @@ flatten = lambda l: [item for sublist in l for item in sublist]
 class Cluster:
 
     def __init__(self, CONFIG, data_dictionary, cluster_type="genic"):
-        logger.info("Cluster class initializing. Type={}".format(cluster_type))
+        # logger.info("Cluster class initializing. Type={}".format(cluster_type))
         self.CONFIG = CONFIG
         self.cluster_type = cluster_type
         if self.cluster_type == "genic":

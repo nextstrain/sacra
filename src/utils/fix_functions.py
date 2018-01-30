@@ -105,16 +105,18 @@ def location(sample, value, logger):
     return general_location_fix(sample, "location", value, logger)
 
 def general_location_fix(sample, category, original_value, logger):
+    """ takes a value, uses a lookup (via sample.CONFIG & using "category") and some regex rules to try and fix it.
+    If the value is None, then we try to use sample.location to infer the correct value
+    May use unicode strings
+    """
+
     # the first time this function runs the databases needs to be loaded into memory
     if lookups["geo_synonyms"] is None and sample.CONFIG["fix_lookups"]["geo_synonyms"] is not None:
         lookups["geo_synonyms"] = parse_geo_synonyms(sample.CONFIG["fix_lookups"]["geo_synonyms"])
-    if lookups["strain_name_to_date"] is None and sample.CONFIG["fix_lookups"]["strain_name_to_date"] is not None:
-        lookups["strain_name_to_date"] = make_dict_from_file(sample.CONFIG["fix_lookups"]["strain_name_to_date"])
+    if lookups["strain_name_to_location"] is not None and sample.parent.strain_id in lookups["strain_name_to_location"]:
+        value = lookups["strain_name_to_location"][sample.parent.strain_id]
 
     value = original_value
-    if lookups["strain_name_to_date"] is not None and sample.parent.strain_id in lookups["strain_name_to_date"]:
-        value = lookups["strain_name_to_date"][sample.parent.strain_id]
-
     if value is None:
         # fallback to the "location" if it exists
         if category is not "location" and hasattr(sample, "location") and getattr(sample, "location") is not None:
@@ -127,32 +129,33 @@ def general_location_fix(sample, category, original_value, logger):
         if category not in lookups["geo_synonyms"]:
             logger.warn("Cannot lookup {} in geo_synonyms!".format(category))
         else:
-            # 1. Straight lookup of value
-            label = value
-            if label in lookups["geo_synonyms"][category]:
-                value = lookups["geo_synonyms"][category][label]
-            else:
-                label = re.match(r'^([^/]+)', value).group(1).lower()
-            # 2. Lookup the first ".../XXX" (whole geo match)
-            if label in lookups["geo_synonyms"][category]:
-                value = lookups["geo_synonyms"][category][label]
-            else:
-                label = re.match(r'^([^\-^\/]+)', value).group(1).lower()
-            # 3. check for partial geo match A/CHIBA-C/61/2014
-            if label in lookups["geo_synonyms"][category]:
-                value = lookups["geo_synonyms"][category][label]
-            else:
-                label = re.match(r'^([A-Z][a-z]+)[A-Z0-9]', value).group(1).lower()
-            # 4. check for partial geo match
-            if label in lookups["geo_synonyms"][category]:
-                value = lookups["geo_synonyms"][category][label]
-            else:
-                value = "_".join(value.split("_")).lower() # only run if the lookup fails
+            try:
+                value = lookups["geo_synonyms"][category][value]
+            except KeyError:
+                # 2. Lookup the first ".../XXX" (whole geo match)
+                try:
+                    label = re.match(r'^([^/]+)', value).group(1).lower()
+                    value = lookups["geo_synonyms"][category][label]
+                except (AttributeError, KeyError): # attribute error if the regex finds no groups. KeyError if it's not in the DB
+                    # 3. check for partial geo match A/CHIBA-C/61/2014
+                    try:
+                        label = re.match(r'^([^\-^\/]+)', value).group(1).lower()
+                        value = lookups["geo_synonyms"][category][label]
+                    except (AttributeError, KeyError): # attribute error if the regex finds no groups. KeyError if it's not in the DB
+                        # 4. check for partial geo match
+                        try:
+                            label = re.match(r'^([A-Z][a-z]+)[A-Z0-9]', value).group(1).lower()
+                            value = lookups["geo_synonyms"][category][label]
+                        except (AttributeError, KeyError): # attribute error if the regex finds no groups. KeyError if it's not in the DB
+                            value = "_".join(value.split("_")).lower() # only run if the lookup fails
     else:
         value = "_".join(value.split("_")).lower() # only run if the lookup fails
-    if value is not original_value:
+
+    if value != original_value:
         logger.debug("Changed {} from {} to {}".format(category, original_value, value))
+
     return value;
+
 
 def region(strain, original_region, logger):
     '''

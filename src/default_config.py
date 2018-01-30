@@ -68,11 +68,7 @@ default_config = {
             'region',
             'gps',
             'collecting_lab',
-            'passage',
-            'tissue',
-            'ct',
-            'usvi_doh_sample_id',
-            'sample_strain_name'
+            'strain_id'
         ],
         'sequence' : [
             'sequence_id',
@@ -87,7 +83,8 @@ default_config = {
             'attribution',
             'sequence',
             'sample_id',
-            'location'
+            'location',
+            'attribution_id'
         ],
         'attribution' : [
             'attribution_id',
