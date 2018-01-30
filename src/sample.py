@@ -47,4 +47,4 @@ class Sample(Unit):
             logger.error("Could not set parent for sample {}.".format(self.sample_id))
 
     def is_valid(self):
-        return hasattr("sample_id") and hasattr("strain_id")
+        return hasattr(self, "sample_id") and hasattr(self, "strain_id")

@@ -31,4 +31,4 @@ class Attribution(Unit):
 
 
     def is_valid(self):
-        return hasattr(self, "attribution_id")
+        return hasattr(self, "attribution_id") and self.attribution_id is not None

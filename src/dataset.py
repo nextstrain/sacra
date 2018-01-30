@@ -135,7 +135,8 @@ class Dataset:
         data["dbinfo"] = {"pathogen": self.CONFIG["pathogen"]}
         for c in self.clusters:
             for n in ["strains", "samples", "sequences", "attributions"]:
-                if hasattr(c, n): data[n].extend([x.get_data() for x in getattr(c, n)])
+                if hasattr(c, n): # if, e.g., "sequences" (n) is in the cluster (c)
+                    data[n].extend([x.get_data() for x in getattr(c, n) if x.is_valid()])
         # remove empty values
         for table in data:
             if table == "dbinfo": continue
