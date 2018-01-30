@@ -136,5 +136,12 @@ class Dataset:
         for c in self.clusters:
             for n in ["strains", "samples", "sequences", "attributions"]:
                 if hasattr(c, n): data[n].extend([x.get_data() for x in getattr(c, n)])
+        # remove empty values
+        for table in data:
+            if table == "dbinfo": continue
+            for block in data[table]:
+                for key in block.keys():
+                    if block[key] in [None, '', '?', 'unknown', "Unknown"]:
+                        del block[key]
         with open(filename, 'w') as outfile:
             json.dump(data, outfile, sort_keys=True, indent=2, ensure_ascii=False)
