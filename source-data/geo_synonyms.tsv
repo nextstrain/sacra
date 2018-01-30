@@ -1,0 +1,2601 @@
+label	country	division	location
+
+# Afghanistan
+Afghanistan	Afghanistan	Afghanistan	Afghanistan
+
+# Albania
+Albania	Albania	Albania	Albania
+Shkoder	Albania	Shkoder	Shkoder
+Tirane	Albania	Tirane	Tirane
+
+# Algeria
+Algeria	Algeria	Algeria	Algeria
+Algiers	Algeria	Algiers	Algiers
+Annaba	Algeria	Annaba	Annaba
+Blida	Algeria	Blida	Blida
+Boumerdes	Algeria	Boumerdes	Boumerdes
+Setif	Algeria	Setif	Setif
+
+# AmericanSamoa
+AmericanSamoa	AmericanSamoa	AmericanSamoa	AmericanSamoa
+
+# Angola
+Angola	Angola	Angola	Angola
+
+# Anguilla
+Anguilla	Anguilla	Anguilla	Anguilla
+
+# Antarctica
+Antarctica	Antarctica	Antarctica	Antarctica
+
+# Antigua
+antigua_and_barbuda	antigua_and_barbuda	antigua_and_barbuda	antigua_and_barbuda
+AntiguaAndBarbuda	antigua_and_barbuda	antigua_and_barbuda	antigua_and_barbuda
+
+# Argentina
+Argentina	Argentina	Argentina	Argentina
+Balcarce	Argentina	Balcarce	Balcarce
+BuenosAires	Argentina	BuenosAires	BuenosAires
+Catamarca	Argentina	Catamarca	Catamarca
+Chaco	Argentina	Chaco	Chaco
+Chubut	Argentina	Chubut	Chubut
+Cordoba	Argentina	Cordoba	Cordoba
+Corrientes	Argentina	Corrientes	Corrientes
+EntreRios	Argentina	EntreRios	EntreRios
+Formosa	Argentina	Formosa	Formosa
+Jujuy	Argentina	Jujuy	Jujuy
+LaPampa	Argentina	LaPampa	LaPampa
+LaPlata	Argentina	BuenosAires	LaPlata
+Maipu	Argentina	Mendoza	Maipu
+MarDelPlata	Argentina	BuenosAires	MarDelPlata
+Mendoza	Argentina	Mendoza	Mendoza
+Misiones	Argentina	Misiones	Misiones
+Neuquen	Argentina	Neuquen	Neuquen
+Pinamar	Argentina	BuenosAires	Pinamar
+RioNegro	Argentina	RioNegro	RioNegro
+Salta	Argentina	Salta	Salta
+SanLuis	Argentina	SanLuis	SanLuis
+SantaCruz	Argentina	SantaCruz	SantaCruz
+SantiagoDelEstero	Argentina	SantiagoDelEstero	SantiagoDelEstero
+TierraDelFuego	Argentina	TierraDelFuego	TierraDelFuego
+Tucuman	Argentina	Tucuman	Tucuman
+Ushuaia	Argentina	TierraDelFuego	Ushuaia
+
+# Armenia
+Armenia	Armenia	Armenia	Armenia
+
+# Aruba
+Aruba	Aruba	Aruba	Aruba
+
+# Australia
+Australia	Australia	Australia	Australia
+AliceSprings	Australia	NorthernTerritory	AliceSprings
+Brisbane	Australia	Queensland	Brisbane
+Cairns	Australia	Queensland	Cairns
+Canberra	Australia	Canberra	Canberra
+Darwin	Australia	NorthernTerritory	Darwin
+Grafton	Australia	NewSouthWales	Grafton
+Newcastle	Australia	NewSouthWales	Newcastle
+NewSouthWales	Australia	NewSouthWales	NewSouthWales
+NorthFitzroy	Australia	Victoria	NorthFitzroy
+NorthernTerritory	Australia	NorthernTerritory	NorthernTerritory
+Perth	Australia	WesternAustralia	Perth
+Queensland	Australia	Queensland	Queensland
+SouthAustralia	Australia	SouthAustralia	SouthAustralia
+Sydney	Australia	NewSouthWales	Sydney
+Tasmania	Australia	Tasmania	Tasmania
+Townsville	Australia	Queensland	Townsville
+Victoria	Australia	Victoria	Victoria
+WesternAustralia	Australia	WesternAustralia	WesternAustralia
+Melbourne	Australia	Victoria	Melbourne
+Westmead	Australia	NewSouthWales	Westmead
+Darlinghurst	Australia	NewSouthWales	Darlinghurst
+
+# Austria
+Austria	Austria	Austria	Austria
+Vienna	Austria	Vienna	Vienna
+
+# Azerbaijan
+Azerbaijan	Azerbaijan	Azerbaijan	Azerbaijan
+
+# Bahamas
+Bahamas	Bahamas	Bahamas	Bahamas
+
+# Bahrain
+Bahrain	Bahrain	Bahrain	Bahrain
+
+# Bangladesh
+Bangladesh	Bangladesh	Bangladesh	Bangladesh
+Dnipro	Bangladesh	Bangladesh	Bangladesh
+Dhaka	Bangladesh	Bangladesh	Dhaka
+
+# Barbados
+Barbados	Barbados	Barbados	Barbados
+
+# Belarus
+Belarus	Belarus	Belarus	Belarus
+Borisov	Belarus	Minsk	Barysaw
+Brest	Belarus	Brest	Brest
+Gomel	Belarus	Gomel	Gomel
+Ivacevichi	Belarus	Brest	Ivacevichi
+Minsk	Belarus	Minsk	Minsk
+Mogilev	Belarus	Mogilev	Mogilev
+Molodechno	Belarus	Minsk	Molodechno
+Soligorsk	Belarus	Minsk	Soligorsk
+Vitebsk	Belarus	Vitebsk	Vitebsk
+
+# Belgium
+Belgium	Belgium	Belgium	Belgium
+Antwerp	Belgium	Antwerp	Antwerp
+Brussels	Belgium	Brussels	Brussels
+Flanders	Belgium	Flanders	Flanders
+Tessenderlo	Belgium	Limburg	Tessenderlo
+Wallonia	Belgium	Wallonia	Wallonia
+
+# Belize
+Belize	Belize	Belize	Belize
+
+# Bermuda
+Bermuda	Bermuda	Bermuda	Bermuda
+
+# Bhutan
+Bhutan	Bhutan	Bhutan	Bhutan
+
+# Bolivia
+Bolivia	Bolivia	Bolivia	Bolivia
+Cochabamba	Bolivia	Cochabamba	Cochabamba
+LaPaz	Bolivia	LaPaz	LaPaz
+
+# Borneo
+Borneo	Indonesia	Borneo	Borneo
+Kalimantan	Indonesia	Borneo	Borneo
+Sarawak	Indonesia	Borneo	Sarawak
+
+# BosniaHerzegovina
+BosniaHerzegovina	BosniaHerzegovina	BosniaHerzegovina	BosniaHerzegovina
+Sarajevo	BosniaHerzegovina	FederationOfBosniaAndHerzegovina	Sarajevo
+
+# Botswana
+Botswana	Botswana	Botswana	Botswana
+
+# Brazil
+Brazil	Brazil	Brazil	Brazil
+Acre	Brazil	Acre	Acre
+Alagoas	Brazil	Alagoas	Alagoas
+Amazonas	Brazil	Amazonas	Amazonas
+Amapa	Brazil	Amapa	Amapa
+Arapiraca	Brazil	Alagoas	Arapiraca
+Bahia	Brazil	Bahia	Bahia
+Bahiaba	Brazil	Bahia	Bahia
+Belem	Brazil	Para	Belem
+Belempa	Brazil	Para	Belem
+Boavistaroraima	Brazil	Roraima	BoaVista
+Boavistarr	Brazil	Roraima	BoaVista
+Roraimarr	Brazil	Roraima	Roraima
+Boavistaroraimastate	Brazil	Roraima	BoaVista
+Bragancapara	Brazil	Para	Braganca
+BrasiliaDf	Brazil	Brasilia	Brasilia
+Caetes	Brazil	Pernambuco	Caetes
+CambaradoSul	Brazil	RioGrandeDoSul	CambaradoSul
+Cambepr	Brazil	Parana	Cambe
+Canoas	Brazil	RioGrandeDoSul	Canoas
+Ceara	Brazil	Ceara	Ceara
+Cuiabamatogrosso	Brazil	MatoGrosso	Cuiaba
+Cuiabamt	Brazil	MatoGrosso	Cuiaba
+DistritoFederal	Brazil	DistritoFederal	DistritoFederal
+EspiritoSanto	Brazil	EspiritoSanto	EspiritoSanto
+FeiraDeSantana	Brazil	Bahia	FeiraDeSantana
+Garanhuns	Brazil	Pernambuco	Garanhuns
+Goias	Brazil	Goias	Goias
+JoaoCamara	Brazil	RioGrandeDoNorte	JoaoCamara
+Manausam	Brazil	Amazonas	Manaus
+Manausamazonasstate	Brazil	Amazonas	Manaus
+Maranhao	Brazil	Maranhao	Maranhao
+Maritubapara	Brazil	Para	Marituba
+MinasGerais	Brazil	MinasGerais	MinasGerais
+Macapa	Brazil	Amapa	Macapa
+Maceio	Brazil	Alagoas	Maceio
+MatoGrossoDoSul	Brazil	MatoGrossoDoSul	MatoGrossoDoSul
+MatoGrosso	Brazil	MatoGrosso	MatoGrosso
+Murici	Brazil	Alagoas	Murici
+Natal	Brazil	RioGrandeDoNorte	Natal
+Nossasenhoradolivramentomt	Brazil	MatoGrosso	NossaSenhoraDoLivramento
+Olinda	Brazil	Pernambuco	Olinda
+Para	Brazil	Para	Para
+Paraiba	Brazil	Paraiba	Paraiba
+Paulista	Brazil	Pernambuco	Paulista
+Pelotas	Brazil	RioGrandeDoSul	Pelotas
+Pernambuco	Brazil	Pernambuco	Pernambuco
+Pernambucocamaragib	Brazil	Pernambuco	Camaragibe
+PernambucorecifePernambuco	Brazil	Pernambuco	Recife
+Piaui	Brazil	Piaui	Piaui
+Parana	Brazil	Parana	Parana
+Poconemt	Brazil	MatoGrosso	Pocone
+Portovelhorondonia	Brazil	Rondonia	PortoVelho
+Portovelhopv	Brazil	Rondonia	PortoVelho
+Recife	Brazil	Pernambuco	Recife
+RibeiraoPreto	Brazil	SaoPaulo	RibeiraoPreto
+Ribeiraopretosaopaulo	Brazil	SaoPaulo	RibeiraoPreto
+RioDeJaneiro	Brazil	RioDeJaneiro	RioDeJaneiro
+RioGrandeDoNorte	Brazil	RioGrandeDoNorte	RioGrandeDoNorte
+Rondonia	Brazil	Rondonia	Rondonia
+Roraima	Brazil	Roraima	Roraima
+RioDoSul	Brazil	SantaCatarina	RioDoSul
+RioGrandeDoSul	Brazil	RioGrandeDoSul	RioGrandeDoSul
+SantaCatarina	Brazil	SantaCatarina	SantaCatarina
+Santarempa	Brazil	Para	Santarem
+SantaRosa	Brazil	RioGrandeDoSul	SantaRosa
+SaoGabriel	Brazil	RioGrandeDoSul	SaoGabriel
+Saoluismaranhao	Brazil	Maranhao	SaoLuis
+Santossaopaulo	Brazil	SaoPaulo	Santos
+Sanharo	Brazil	Pernambuco	Sanharo
+Spsaojosedoriopreto	Brazil	SaoJoseDoRioPreto	SaoJoseDoRioPreto
+Sergipe	Brazil	Brazil	Sergipe
+Salvador	Brazil	Bahia	Salvador
+Tocantins	Brazil	Brazil	Tocantins
+Uberlandia	Brazil	MinasGerais	Uberlandia
+Vacaria	Brazil	RioGrandeDoSul	Vacaria
+Varzeagrandemt	Brazil	MatoGrosso	VarzeaGrande
+VitoriaDeSantoAntao	Brazil	Pernambuco	VitoriaDeSantoAntao
+
+EstadoDeSaoPaulo	Brazil	SaoPaulo	SaoPaulo
+AltoAlegre	Brazil	SaoPaulo	AltoAlegre
+Andradina	Brazil	SaoPaulo	Andradina
+Aracatuba	Brazil	SaoPaulo	Aracatuba
+Araras	Brazil	SaoPaulo	Araras
+ArturNogueira	Brazil	SaoPaulo	ArturNogueira
+Assis	Brazil	SaoPaulo	Assis
+Avare	Brazil	SaoPaulo	Avare
+Barueri	Brazil	SaoPaulo	Barueri
+Bauru	Brazil	SaoPaulo	Bauru
+Boituva	Brazil	SaoPaulo	Boituva
+Caieiras	Brazil	SaoPaulo	Caieiras
+Campinas	Brazil	SaoPaulo	Campinas
+Pregnant	Brazil	SaoPaulo	Campinas
+Capivari	Brazil	SaoPaulo	Capivari
+Carapicuiba	Brazil	SaoPaulo	Carapicuiba
+Catanduva	Brazil	SaoPaulo	Catanduva
+Cotia	Brazil	SaoPaulo	Cotia
+EstadoDeGoias	Brazil	SaoPaulo	EstadoDeGoias
+Guararema	Brazil	SaoPaulo	Guararema
+Guariba	Brazil	SaoPaulo	Guariba
+Guaruja	Brazil	SaoPaulo	Guaruja
+Guarulhos	Brazil	SaoPaulo	Guarulhos
+Ibiuna	Brazil	SaoPaulo	Ibiuna
+Itapira	Brazil	SaoPaulo	Itapira
+Ituverava	Brazil	SaoPaulo	Ituverava
+Jaboticabal	Brazil	SaoPaulo	Jaboticabal
+Jau	Brazil	SaoPaulo	Jau
+Leme	Brazil	SaoPaulo	Leme
+Limeira	Brazil	SaoPaulo	Limeira
+Lins	Brazil	SaoPaulo	Lins
+Louveira	Brazil	SaoPaulo	Louveira
+Marilia	Brazil	SaoPaulo	Marilia
+Matao	Brazil	SaoPaulo	Matao
+Maua	Brazil	SaoPaulo	Maua
+MojiDasCruzes	Brazil	SaoPaulo	MojiDas
+Moji-Guacu	Brazil	SaoPaulo	MojiGuacu
+Moji-Mirim	Brazil	SaoPaulo	MojiMirim
+MonteAlto	Brazil	SaoPaulo	MonteAlto
+Osasco	Brazil	SaoPaulo	Osasco
+Paulinia	Brazil	SaoPaulo	Paulinia
+Piracicaba	Brazil	SaoPaulo	Piracicaba
+PresidentePrudente	Brazil	SaoPaulo	PresidentePrudente
+RibeiraoPreto	Brazil	SaoPaulo	Ribeirao
+RioClaro	Brazil	SaoPaulo	RioClaro
+Salto	Brazil	SaoPaulo	Salto
+SantanaDeParnaiba	Brazil	SaoPaulo	Santana
+Santo	Brazil	SaoPaulo	Santo
+SantoAndre	Brazil	SaoPaulo	SantoAndre
+SaoBernardoDoCampo	Brazil	SaoPaulo	SaoBernardoDoCampo
+SaoCarlos	Brazil	SaoPaulo	SaoCarlos
+SaoJoseDoRioPreto	Brazil	SaoPaulo	SaoJoseDoRioPreto
+SaoJoseDosCampos	Brazil	SaoPaulo	SaoJoseDosCampos
+SaoPaulo	Brazil	SaoPaulo	SaoPaulo
+SaoPaulo	Brazil	SaoPaulo	SaoPaulo
+SaoVicente	Brazil	SaoPaulo	SaoVicente
+Sorocaba	Brazil	SaoPaulo	Sorocaba
+Sumare	Brazil	SaoPaulo	Sumare
+Taubate	Brazil	SaoPaulo	Taubate
+Valinhos	Brazil	SaoPaulo	Valinhos
+Votuporanga	Brazil	SaoPaulo	Votuporanga
+
+# BritishVirginIslands
+BritishVirginIslands	BritishVirginIslands	BritishVirginIslands	BritishVirginIslands
+Virginislandsbritish	BritishVirginIslands	BritishVirginIslands	BritishVirginIslands
+
+# Brunei
+Brunei	Brunei	Brunei	Brunei
+BruneiDarussalam	Brunei	Brunei	Brunei
+
+# Bulgaria
+Bulgaria	Bulgaria	Bulgaria	Bulgaria
+Sofia	Bulgaria	Sofia	Sofia
+
+# BurkinaFaso
+BurkinaFaso	BurkinaFaso	BurkinaFaso	BurkinaFaso
+
+# Cambodia
+Cambodia	Cambodia	Cambodia	Cambodia
+Kampongchamhospital	Cambodia	KampongCham	KampongCham
+
+# Cameroon
+Cameroon	Cameroon	Cameroon	Cameroon
+AbongMbang	Cameroon	East	AbongMbang
+Douala	Cameroon		Littoral	Douala
+Hevecam	Cameroon	South	South
+Yaounde	Cameroon	Mfoundi	Yaounde
+
+# Canada
+Canada	Canada	Canada	Canada
+Alberta	Canada	Alberta	Alberta
+BritishColumbia	Canada	BritishColumbia	BritishColumbia
+Labrador	Canada	Labrador	Labrador
+Manitoba	Canada	Manitoba	Manitoba
+NewBrunswick	Canada	NewBrunswick	NewBrunswick
+Newfoundland	Canada	Newfoundland	Newfoundland
+NorthWestTerritories	Canada	NorthWestTerritories	NorthWestTerritories
+NovaScotia	Canada	NovaScotia	NovaScotia
+Nunavut	Canada	Nunavut	Nunavut
+Ontario	Canada	Ontario	Ontario
+PrinceEdwardIsland	Canada	PrinceEdwardIsland	PrinceEdwardIsland
+Quebec	Canada	Quebec	Quebec
+Saskatchewan	Canada	Saskatchewan	Saskatchewan
+Toronto	Canada	Ontario	Toronto
+Montreal	Canada	Quebec	Montreal
+Vancouver	Canada	BritishColumbia	Vancouver
+
+# CaymanIslands
+CaymanIslands	CaymanIslands	CaymanIslands	CaymanIslands
+
+# CentralAfricanRepublic
+CentralAfricanRepublic	CentralAfricanRepublic	CentralAfricanRepublic	CentralAfricanRepublic
+
+# Chile
+Chile	Chile	Chile	Chile
+AltoHospicio	Chile	Tarapaca	AltoHospicio
+Antofagasta	Chile	Antofagasta	Antofagasta
+Arauco	Chile	Arauco	Arauco
+Arica	Chile	Arica	Arica
+Calama	Chile	Antofagasta	Calama
+Castro	Chile	LosLagos	Castro
+CerroNavia	Chile	Santiago	CerroNavia
+Chillan	Chile	BioBio	Chillan
+Concepcion	Chile	BioBio	Concepcion
+Copiapo	Chile	Atacama	Copiapo
+Coquimbo	Chile	Coquimbo	Coquimbo
+Coronel	Chile	Biobio	Coronel
+Coyhaique	Chile	Aisen	Coyhaique
+Cunco	Chile	Araucania	Cunco
+Curico	Chile	Maule	Curico
+Gorbea	Chile	Araucania	Gorbea
+Easterisland	Chile	EasterIsland	EasterIsland
+Iquique	Chile	Tarapaca	Iquique
+IslaDePascua	Chile	Valparaiso	IslaDePascua
+LaSerena	Chile	Coquimbo	LaSerena
+Lautaro	Chile	Araucania	Lautaro
+Lebu	Chile	BioBio	Lebu
+Linares	Chile	Maule	Linares
+Lota	Chile	BioBio	Lota
+Melipilla	Chile	Santiago	Melipilla
+NuevaImperial	Chile	Araucania	NuevaImperial
+Osorno	Chile	LosLagos	Osorno
+Panguipulli	Chile	LosRios	Panguipulli
+Paillaco	Chile	LosRios	Paillaco
+Pucon	Chile	Araucania	Pucon
+PuertoMontt	Chile	LosLagos	PuertoMontt
+PuntaArenas	Chile	Magallanes	PuntaArenas
+Quillota	Chile	Valparaiso	Quillota
+Rancagua	Chile	OHiggins	Rancagua
+Rengo	Chile	OHiggins	Rengo
+Santiago	Chile	Santiago	Santiago
+Talca	Chile	Maule	Talca
+Talcahuano	Chile	BioBio	Talcahuano
+Temuco	Chile	Araucania	Temuco
+Valdivia	Chile	LosRios	Valdivia
+Valparaiso	Chile	Valparaiso	Valparaiso
+VinaDelMar	Chile	Valparaiso	VinaDelMar
+Villarrica	Chile	Araucania	Villarrica
+VinaDelMar	Chile	Valparaiso	VinaDelMar
+Vina	Chile	Valparaiso	VinaDelMar
+
+# China
+China	China	China	China
+Anhui	China	Anhui	Anhui
+AnhuiDangtu	China	Anhui	Dangtu
+Anshan	China	Liaoning	Anshan
+Cixi	China	China	Cixi
+Baofeng	China	Henan	Baofeng
+Beijing	China	Beijing	Beijing
+BeijingShijingshan	China	Beijing	Shijingshan
+BeijingChaoyang	China	Beijing	Chaoyang
+BeijingChongwen	China	Beijing	Dongcheng
+BeijingDaxing	China	Beijing	Daxing
+BeijingDongcheng	China	Beijing	Dongcheng
+BeijingFangshan	China	Beijing	Fangshan
+BeijingHaidian	China	Beijing	Haidian
+BeijingHuairou	China	Beijing	Huairou
+BeijingMentougou	China	Beijing	Mentougou
+BeijingMiyun	China	Beijing	Miyun
+BeijingXicheng	China	Beijing	Xicheng
+BeijingXuanwu	China	Beijing	Xicheng
+Changchun	China	Jilin	Changchun
+Changzhou	China	Jiangsu	Changzhou
+Chaoyang	China	Liaoning	Chaoyang
+Changsha	China	Hunan	Changsha
+Chengdu	China	Sichuan	Chengdu
+ChengMei	China	Fujian	ChengMei
+ChongqingYuzhong	China	Chongqing	Yuzhong
+Chongqing	China	Chongqing	Chongqing
+Chongwen	China	Beijing	Chongwen
+Cnic	China	China	Cnic
+Dalian	China	Liaoning	Dalian
+Dandong	China	Liaoning	Dandong
+Dianxin	China	Neimenggu	Dianxin
+Dongcheng	China	Beijing	Dongcheng
+Dongguan	China	Guangdong	Dongguan
+Donghu	China	Jiangxi	Donghu
+Du	China	China	Du
+Eryansuo	China	China	China
+Foshanguangdong	China	Guangdong	Foshan
+Fujian	China	Fujian	Fujian
+Fujian	China	Fujian	Fujian
+FujianGulou	China	Fujian	Gulou
+Fuzhou	China	Fujian	Fuzhou
+Gansu	China	Gansu	Gansu
+GansuChengguan	China	Gansu	Chengguan
+Guangdong	China	Guangdong	Guangdong
+Guangdong	China	Guangdong	Guangdong
+Guangzhouguangdong	China	Guangdong	Guangzhou
+GuangdongFutian	China	Guangdong	Futian
+GuangdongHaizhu	China	Guangdong	Haizhu
+GuangdongLuohu	China	Guangdong	Luohu
+Guanger	China	China	China
+Guangxi	China	Guangxi	Guangxi
+Guangxi	China	Guangxi	Guangxi
+GuangxiLongzhou	China	Guangxi	Longzhou
+GuangxiQingxiu	China	Guangxi	Qingxiu
+GuangxiXixiangtang	China	Guangxi	Xixiangtang
+Guangzhou	China	Guangdong	Guangzhou
+Gansu	China	Gansu	Gansu
+Ganzhou	China	Jiangxi	Ganzhou
+Guizhou	China	Guizhou	Guizhou
+Hainan	China	Hainan	Hainan
+Hainan	China	Hainan	Hainan
+Haishu	China	Zhejiang	Haishu
+Hanfang	China	China	Hanfang
+Hangzhou	China	Zhejiang	Hangzhou
+Harbin	China	Heilongjiang	Harbin
+Hebei	China	Hebei	Hebei
+Heilongjiang	China	Heilongjiang	Heilongjiang
+HeilongjiangXiAn	China	Heilongjiang	XiAn
+HeilongjiangJianhua	China	Heilongjiang	Jianhua
+Henan	China	Henan	Henan
+HenanJinshui	China	Henan	Jinshui
+HenanShenqiu	China	Henan	Shenqiu
+HenanXigong	China	Henan	Xigong
+Huaian	China	Jiangsu	Huaian
+Huai'an	China	Jiangsu	Huaian
+HuaianQingpu	China	Jiangsu	Qingpu
+Hualong	China	Henan	Hualong
+Huairou	China	Beijing	Huairou
+Hubei	China	Hubei	Hubei
+HubeiJiangan	China	Hubei	Jiangan
+HubeiMaojian	China	Hubei	Maojian
+HubeiQiaokou	China	Hubei	Qiaokou
+HubeiWuchang	China	Hubei	Wuchang
+HubeiWujiagang	China	Hubei	Wujiagang
+Huizhou	China	Guangdong	Huizhou
+HuZhou	China	Zhejiang	HuZhou
+Hunan	China	Hunan	Hunan
+HunanWuling	China	Hunan	Wuling
+HunanYuhua	China	Hunan	Yuhua
+InnerMongolia	China	Neimenggu	Neimenggu
+Jinlinnanguan	China	China	China
+Jiangan	China	Hubei	Jiangan
+Jiangmenguangdong	China	Guangdong	Jiangmen
+Jiangsu	China	Jiangsu	Jiangsu
+JiangsuBeitang	China	Jiangsu	Beitang
+JiangsuDanyang	China	Jiangsu	Danyang
+JiangsuGaoyou	China	Jiangsu	Gaoyou
+JiangsuGusu	China	Jiangsu	Gusu
+JiangsuHailing	China	Jiangsu	Hailing
+JiangsuNanchang	China	Jiangsu	Nanchang
+JiangsuNanjing	China	Jiangsu	Nanjing
+JiangsuNanjinGulou	China	Jiangsu	Nanjing
+JiangsuPizhou	China	Jiangsu	Pizhou
+JiangsuQingpu	China	Jiangsu	Qingpu
+JiangsuQinhuai	China	Jiangsu	Qinhuai
+JiangsuQuanshan	China	Jiangsu	Quanshan
+JiangsuSucheng	China	Jiangsu	Sucheng
+JiangsuTinghu	China	Jiangsu	Tinghu
+Jiangxi	China	Jiangxi	Jiangxi
+JiangxiDonghu	China	Jiangxi	Donghu
+JiangxiGuix	China	Jiangxi	Guix
+Jiangyin	China	Jiangsu	Jiangyin
+Jiaxing	China	Zhejiang	Jiaxing
+Jilin	China	Jilin	Jilin
+JilinChaoyang	China	Jilin	Chaoyang
+JilinNanguan	China	Jilin	Nanguan
+JinagsuQuanshan	China	Jinagsu	Quanshan
+Jinfang	China	Yunnan	Anning
+Jinhua	China	Zhejiang	Jinhua
+Jinshui	China	Henan	Jinshui
+Jitie	China	China	China
+Kunke	China	Shanghai	Shanghai
+Kunming	China	Yunnan	Kunming
+Kuntie	China	China	Kuntie
+Liaoning	China	Liaoning	Liaoning
+LiaoningHuanggu	China	Liaoning	Huanggu
+LiaoShen	China	China	LiaoShen
+Lishui	China	Zhejiang	Lishui
+Longquan	China	Zhejiang	Longquan
+LongYan	China	Fujian	Longyan
+Macau	China	Macau	Macau
+Nanchang	China	Jiangxi	Nanchang
+Nanhaiguangdong	China	Guangdong	Nanhai
+Nanjing	China	Jiangsu	Nanjing
+Nanping	China	Fujian	Nanping
+NeiMongolHohhotHuimin	China	Neimenggu	Hohhot
+NeiMongol	China	Neimenggu	Neimenggu
+Neimenggu	China	Neimenggu	Neimenggu
+Ningbo	China	Zhejiang	Ningbo
+Ningfang	China	China	China
+Ningde	China	Fujian	Ningde
+Ningxia	China	Ningxia	Ningxia
+Pudong	China	Shanghai	Pudong
+Putian	China	Fujian	Putian
+Qingdao	China	Shandong	Qingdao
+Qingfeng	China	Henan	Qingfeng
+Qinghai	China	Qinghai	Qinghai
+Qingyuan	China	Guangdong	Qingyuan
+Qitie	China	Heilongjiang	Heilongjiang
+Quanzhou	China	Fujian	Quanzhou
+Quzhou	China	Zhejiang	Quzhou
+Sanming	China	Fujian	Sanming
+Rizhao	China	Shandong	Rizhao
+Ruzhou	China	Henan	Ruzhou
+Ruyang	China	Henan	Ruyang
+Shaanxi	China	Shaanxi	Shaanxi
+Shandong	China	Shandong	Shandong
+Shanghai	China	Shanghai	Shanghai
+ShanghaiNanhui	China	Shanghai	Nanhui
+ShanghaiPudongxin	China	Shanghai	Pudong
+Shantou	China	Guangdong	Shantou
+Shanxi	China	Shanxi	Shanxi
+ShanxiWeicheng	China	Shanxi	Weicheng
+Shaanxi	China	Shaanxi	Shaanxi
+ShaanxiBeilin	China	Shaanxi	Beilin
+Shaoguan	China	Guangdong	Shaoguan
+Shaoxing	China	Zhejiang	Shaoxing
+Shenfang	China	China	China
+Shenzhen	China	Guangdong	Shenzhen
+Shijiazhuang	China	Hebei	Shijiazhuang
+Shitie	China	China	Shitie
+Sichuan	China	Sichuan	Sichuan
+SichuanWenjiang	China	Sichuan	Wenjiang
+Sunan	China	Gansu	Sunan
+Suzhou	China	Jiangsu	Suzhou
+Taizhou	China	Zhejiang	Taizhou
+Tianjin	China	Tianjin	Tianjin
+TianjinHedong	China	Tianjin	Hedong
+TianjinHeping	China	Tianjin	Heping
+TianjinHongqiao	China	Tianjin	Hongqiao
+TianjinJinnan	China	Tianjin	Jinnan
+TianjinNankai	China	Tianjin	Nankai
+TianjinNinghe	China	Tianjin	Ninghe
+TianjinTanggu	China	Tianjin	Tanggu
+Tientsin	China	Tianjin	Tianjin
+Tumen	China	Jilin	Tumen
+Weidu	China	Henan	Weidu
+Weidong	China	Henan	Weidong
+Wenzhou	China	Zhejiang	Wenzhou
+Wujiagang	China	Hubei	Wujiagang
+Wulumuqi	China	Xinjiang	Urumqi
+Wuhan	China	Hubei	Wuhan
+Wuxi	China	Jiangsu	Wuxi
+Wuzhou	China	Guangxi	Wuzhou
+Xiamen	China	Fujian	Xiamen
+Xian	China	Shaanxi	Xian
+Xianfeng	China	Hubei	Xianfeng
+Xigong	China	Henan	Xigong
+Xining	China	Qinghai	Xining
+XinjiangTulufan	China	Xinjiang	Tulufan
+XinjiangTianshan	China	Xinjiang	Tianshan
+Xinjiang	China	Xinjiang	Xinjiang
+Xizang	China	Xizang	Xizang
+Xuanwu	China	Beijing	Xuanwu
+Xuchang	China	Henan	Xuchang
+Xutie	China	Jiangxia	Xutie
+Xuzhou	China	Jiangsu	Xuzhou
+Yantai	China	Shandong	Yantai
+Yunan	China	Guangdong	Yunan
+YunnanAnning	China	Yunnan	Anning
+Yuelu	China	Hunan	Yuelu
+Yunnan	China	Yunnan	Yunnan
+Zhangzhou	China	Fujian	Zhangzhou
+ZhejiangHaishu	China	Zhejiang	Haishu
+Zhejiangyiwu	China	Zhejiang	Yiwu
+Zhenjiang	China	Jiangsu	Zhenjiang
+Zhongshan	China	Guangdong	Zhongshan
+Zhejiang	China	Zhejiang	Zhejiang
+Zhoushan	China	Zhejiang	Zhoushan
+Zhuhai	China	Guangdong	Zhuhai
+Zhongyuan	China	Henan	Zhongyuan
+
+# Colombia
+Colombia	Colombia	Colombia	Colombia
+Antioquia	Colombia	Antioquia	Antioquia
+Guaviare	Colombia	Guaviare	Guaviare
+Bogota	Colombia	CapitalDistrict	Bogota
+Medellin	Colombia	Antioquia	Medellin
+Nortedesantander	Colombia	Nortedesantander	NorteDeSantander
+
+# Comoros
+Comoros	Comoros	Comoros	Comoros
+
+# CookIslands
+CookIslands	CookIslands	CookIslands	CookIslands
+
+# CostaRica
+CostaRica	CostaRica	CostaRica	CostaRica
+
+# CoteDIvoire
+CoteDIvoire	CoteDIvoire	CoteDIvoire	CoteDIvoire
+Ctedivoire	CoteDIvoire	CoteDIvoire	CoteDIvoire
+Abidjan	CoteDIvoire	Abidjan	Abidjan
+Attecoube	CoteDIvoire	Abidjan	Attecoube	Agnibilekrou
+Adjame	CoteDIvoire	Abidjan	Adjame
+Korhogo	CoteDIvoire	Savanes	Korhogo
+Yopougon	CoteDIvoire	Abidjan	Yopougon
+Abobo	CoteDIvoire	Abidjan	Abobo
+Bouafle	CoteDIvoire	SassandraMarahoue	Bouafle
+Agnibilekrou	CoteDIvoire		Comoe
+Cocody	CoteDIvoire	Abidjan	Cocody
+Plateau	CoteDIvoire	Abidjan	Plateau
+
+# Croatia
+Croatia	Croatia	Croatia	Croatia
+Zagreb	Croatia	Zagreb	Zagreb
+
+# Cuba
+Cuba	Cuba	Cuba	Cuba
+Habana	Cuba	Habana	Habana
+Camaguey	Cuba	Camaguey	Camaguey
+Holguin	Cuba	Holguin	Holguin
+Guantanamo	Cuba	Guantanamo	Guantanamo
+Matanzas	Cuba	Matanzas	Matanzas
+Cienfuegos	Cuba	Cienfuegos	Cienfuegos
+
+# Cyprus
+Cyprus	Cyprus	Cyprus	Cyprus
+
+# CzechRepublic
+CzechRepublic	CzechRepublic	CzechRepublic	CzechRepublic
+Brno	CzechRepublic	SouthMoravian	Brno
+CeskaLipa	CzechRepublic	Liberecky	CeskaLipa
+Cercany	CzechRepublic	CentralBohemia	Cercany
+Cheb	CzechRepublic	KarlovyVary	Cheb
+Czechoslovakia	CzechRepublic	CzechRepublic	CzechRepublic
+Decin	CzechRepublic	UstiNadLabem	Decin
+HradecKralove	CzechRepublic	HradecKralove	HradecKralove
+Jihlava	CzechRepublic	Vysocina	Jihlava
+KarlovyVary	CzechRepublic	KarlovyVary	KarlovyVary
+Pardubice	CzechRepublic	Pardubice	Pardubice
+Praha	CzechRepublic	Bohemia	Prague
+Prague	CzechRepublic	Bohemia	Prague
+Prerov	CzechRepublic	Olomouc	Prerov
+Plzen	CzechRepublic	Plzen	Plzen
+Ostrava	CzechRepublic	MoravianSilesian	Ostrava
+Usti	CzechRepublic	Usti	Usti
+Vsetin	CzechRepublic	Zlin	Vsetin
+
+# Congo
+Congo	Congo	Congo	Congo
+
+# Denmark
+Denmark	Denmark	Denmark	Denmark
+Hvidovre	Denmark	Hovedstaden	Hvidovre
+Copenhagen	Denmark	Hovedstaden	Copenhagen
+Aarhus	Denmark	Midtjylland	Aarhus
+Aalborg	Denmark	Nordjylland	Aalborg
+Odense	Denmark	Syddanmark	Odense
+
+# Djibouti
+Djibouti	Djibouti	Djibouti	Djibouti
+
+# Dominica
+Dominica	Dominica	Dominica	Dominica
+
+# DominicanRepublic
+DominicanRepublic	DominicanRepublic	DominicanRepublic	DominicanRepublic
+Riosanjuan	DominicanRepublic	RioSanJuan	RioSanJuan
+Townofmoca	DomicanRepublic	Espaillat	Moca
+
+# EastTimor
+east_timor	EastTimor	EastTimor	EastTimor
+timor-_leste	EastTimor	EastTimor	EastTimor
+Timorleste	EastTimor	EastTimor	EastTimor
+EastTimor	EastTimor	EastTimor	EastTimor
+
+# Ecuador
+Ecuador	Ecuador	Ecuador	Ecuador
+Esmereldas	Ecuador	Esmereldas	Esmereldas
+Guayas	Ecuador	Guayas	Guayas
+Guayaquil	Ecuador	Guayas	Guayaquil
+Quito	Ecuador	Pichincha	Quito
+
+# Egypt
+Egypt	Egypt	Egypt	Egypt
+Cairo	Egypt	Cairo	Cairo
+Menya	Egypt	Minya	Minya
+Sohag	Egypt	Sohag	Sohag
+Faiyum	Egypt	Faiyum	Faiyum
+Suez	Egypt	Suez	Suez
+Asyut	Egypt	Asyut	Asyut
+Alexandria	Egypt	Alexandria	Alexandria
+Damietta	Egypt	Damietta	Damietta
+Dakahlia	Egypt	Dakahlia	Dakahlia
+Aswan	Egypt	Aswan	Aswan
+Helwan	Egypt	Cairo	Helwan
+
+# ElSalvador
+ElSalvador	ElSalvador	ElSalvador	ElSalvador
+Metapan	ElSalvador	SantaAna	Metapan
+SanSalvador	ElSalvador	SanSalvador	SanSalvador
+
+# Eritrea
+Eritrea	Eritrea	Eritrea	Eritrea
+
+# Estonia
+Estonia	Estonia	Estonia	Estonia
+Tallinn	Estonia	Harju	Tallinn
+
+# Ethiopia
+Ethiopia	Ethiopia	Ethiopia	Ethiopia
+AddisAbaba	Ethiopia	AddisAbaba	AddisAbaba
+
+# Fiji
+Fiji	Fiji	Fiji	Fiji
+Valelevu	Fiji	CentralDivision	Valelevu
+Samabula	Fiji	CentralDivision	Samabula
+Lautoka	Fiji	WesternDivisionLautoka
+Nadi	Fiji	WesternDivision	Nadi
+
+# Finland
+Finland	Finland	Finland	Finland
+Helsinki	Finland	Uusimaa	Helsinki
+
+# France
+France	France	France	France
+AixEnProvence	France	ProvenceAlpesCoteDAzur	AixEnProvence
+Alsace	France	AlsaceChampagneArdenneLorraine	Alsace
+Annecy	France	AuvergneRhoneAlpes	Annecy
+Annonay	France	AuvergneRhoneAlpes	Annonay
+BasseNormandie	France	Normandy	BasseNormandie
+Bordeaux	France	AquitaineLimousinPoitouCharentes	Bordeaux
+Bourgogne	France	BourgogneFrancheComte	Bourgogne
+Bourgoin	France	AuvergneRhoneAlpes	BourgoinJallieu
+BourgoinJallieu	France	AuvergneRhoneAlpes	BourgoinJallieu
+Bretagne	France	Bretagne	Bretagne
+Caen	France	Normandy	Caen
+Centre	France	Centre	Centre
+ChampagneArdenne	France	AlsaceChampagneArdenneLorraine	ChampagneArdenne
+ClermontFerrand	France	AuvergneRhoneAlpes	ClermontFerrand
+Corsica	France	Corsica	Corsica
+Corte	France	Corsica	Corte
+Chambery	France	AuvergneRhoneAlpes	Chambery
+Desgenettes	France	AuvergneRhoneAlpes	Lyon
+Dijon	France	BourgogneFrancheComte	Dijon
+FrancheComte	France	FrancheComte	FrancheComte
+Grenoble	France	AuvergneRhoneAlpes	Grenoble
+HauteNormandie	France	Normandy	HauteNormandie
+LaReunion	France	SaintDenis	LaReunion
+LanguedocRoussillon	France	LanguedocRoussillonMidiPyrenees	LanguedocRoussillon
+Lille	France	NordPasDeCalais	Lille
+Limoges	France	AquitaineLimousinPoitouCharentes	Limoges
+Lorraine	France	AlsaceChampagneArdenneLorraine	Lorraine
+Lyon	France	AuvergneRhoneAlpes	Lyon
+Macon	France	BourgogneFrancheComte	Macon
+Marignier	France	AuvergneRhoneAlpes	Marignier
+Marseille	France	ProvenceAlpesCoteDAzur	Marseille
+Montpellier	France	LanguedocRoussillonMidiPyrenees	Montpellier
+Nantes	France	PaysDeLaLoire	Nantes
+Nice	France	ProvenceAlpesCoteDAzur	Nice
+Nimes	France	LanguedocRoussillonMidiPyrenees	Nimes
+NordPasDeCalais	France	NordPasdeCalaisPicardie	NordPasDeCalais
+Oms	France	LanguedocRoussillonMidiPyrenees	Oms
+Paris	France	IleDeFrance	Paris
+PaysDeLoire	France	PaysDeLaLoire	PaysDeLaLoire
+PaysDeLaLoire	France	PaysDeLaLoire	PaysDeLaLoire
+Picardie	France	NordPasdeCalaisPicardie	Picardie
+Poitiers	France	AquitaineLimousinPoitouCharentes	Poitiers
+PoitouCharentes	France	AquitaineLimousinPoitouCharentes	PoitouCharentes
+ProvenceAlpesCoteDAzur	France	ProvenceAlpesCoteDAzur	ProvenceAlpesCoteDAzur
+Puymirol	France	NouvelleAquitaine	Puymirol
+Reims	France	AlsaceChampagneArdenneLorraine	Reims
+Rennes	France	Bretagne	Rennes
+Reunion	France	SaintDenis	Reunion
+Rouen	France	Normandy	Rouen
+StEtienne	France	AuvergneRhoneAlpes	SaintEtienne
+SaintEtienne	France	AuvergneRhoneAlpes	SaintEtienne
+Strasbourg	France	AlsaceChampagneArdenneLorraine	Strasbourg
+Toulon	France	ProvenceAlpesCoteDAzur	Toulon
+Toulouse	France	LanguedocRoussillonMidiPyrenees	Toulouse
+Tours	France	CentreValDeLoire	Tours
+
+# FrenchGuiana
+FrenchGuiana	FrenchGuiana	FrenchGuiana	FrenchGuiana
+Guiana	FrenchGuiana	FrenchGuiana	FrenchGuiana
+Guyane	FrenchGuiana	FrenchGuiana	FrenchGuiana
+Gyeonggi	FrenchGuiana	FrenchGuiana	Gyeonggi
+
+# FrenchPolynesia
+FrenchPolynesia	FrenchPolynesia	FrenchPolynesia	FrenchPolynesia
+Borabora	FrenchPolynesia	FrenchPolynesia	BoraBora
+Boraboraislv	FrenchPolynesia	FrenchPolynesia	BoraBora
+Hivaoamarquesas	FrenchPolynesia	Marquesas	HivaOa
+Northmarquesas	FrenchPolynesia	Marquesas	Marquesas
+Uapou	FrenchPolynesia	Marquesas	Uapou
+Nukuhivamarquesa	FrenchPolynesia	Marquesas	NukuHiva
+Papeete	FrenchPolynesia	FrenchPolynesia	Papeete
+Raiatea	FrenchPolynesia	FrenchPolynesia	Raiatea
+Raiateaislv	FrenchPolynesia	FrenchPolynesia	Raiatea
+Tahaa	FrenchPolynesia	FrenchPolynesia	Tahaa
+Tahiti	FrenchPolynesia	FrenchPolynesia	Tahiti
+Tahitiidv	FrenchPolynesia	FrenchPolynesia	Tahiti
+Tubuai	FrenchPolynesia	FrenchPolynesia	Tubuai
+Tubuaiaustral	FrenchPolynesia	FrenchPolynesia	Tubuai
+Moorea	FrenchPolynesia	FrenchPolynesia	Moorea
+
+# Gabon
+Gabon	Gabon	Gabon	Gabon
+
+# Gambia
+Gambia	Gambia	Gambia	Gambia
+
+# GeorgiaCountry
+Akhaltsikhe	GeorgiaCountry	SamtskheJavakheti	Akhaltsikhe
+Batumi	GeorgiaCountry	Adjara	Batumi
+Chiatura	GeorgiaCountry	Imereti	Chiatura
+Dmanisi	GeorgiaCountry	KvemoKartli	Dmanisi
+Gardabani	GeorgiaCountry	KvemoKartli	Gardabani
+Keda	GeorgiaCountry	Adjara	Keda
+Khobi	GeorgiaCountry	SamegreloZemoSvaneti	Khobi
+Kobuleti	GeorgiaCountry	Adjara	Kobuleti
+Kutaisi	GeorgiaCountry	Imereti	Kutaisi
+Ozurgeti	GeorgiaCountry	Guria	Ozurgeti
+Tbilisi	GeorgiaCountry	Tbilisi	Tbilisi
+Tskaltubo	GeorgiaCountry	Imereti	Tskaltubo
+Zugdidi	GeorgiaCountry	SamegreloZemoSvaneti	Zugdidi
+
+# Germany
+Germany	Germany	Germany	Germany
+BadenWurttemberg	Germany	BadenWurttemberg	BadenWurttemberg
+Bayern	Germany	Bayern	Bayern
+Berlin	Germany	Berlin	Berlin
+Bochum	Germany	NordrheinWestfalen	Bochum
+Bonn	Germany	NordrheinWestfalen	Bonn
+Brandenburg	Germany	Brandenburg	Brandenburg
+Bremen	Germany	Bremen	Bremen
+Cologne	Germany	NordrheinWestfalen	Cologne
+Cottbus	Germany	Brandenburg	Cottbus
+Frankfurt	Germany	Hessen	Frankfurt
+Freiburg	Germany	BadenWurttemberg	Freiburg
+Giessen	Germany	Hessen	Giessen
+Hamburg	Germany	Hamburg	Hamburg
+Hannover	Germany	Niedersachsen	Hannover
+Hessen	Germany	Hessen	Hessen
+Jena	Germany	Thuringia	Jena
+Marburg	Germany	Hesse	Marburg
+MecklenburgVorpommern	Germany	MecklenburgVorpommern	MecklenburgVorpommern
+Munich	Germany	Bayern	Munich
+Niedersachsen	Germany	Niedersachsen	Niedersachsen
+NordrheinWestfalen	Germany	NordrheinWestfalen	NordrheinWestfalen
+Nord-West Germany NordrheinWestfalen  NordrheinWestfalen
+Regensburg	Germany	Bavaria	Regensburg
+RheinlandPfalz	Germany	RheinlandPfalz	RheinlandPfalz
+Thuringen	Germany	Thuringen	Thuringen
+Saarland	Germany	Saarland	Saarland
+SachsenAnhalt	Germany	SachsenAnhalt	SachsenAnhalt
+Sachsen	Germany	Sachsen	Sachsen
+SchleswigHolstein	Germany	SchleswigHolstein	SchleswigHolstein
+Wurzburg	Germany	Bayern	Wurzburg
+
+# Ghana
+Ghana	Ghana	Ghana	Ghana
+Manhean	Ghana	Accra	Manhean
+Korlebu	Ghana	Accra	Accra
+
+# Greece
+Greece	Greece	Greece	Greece
+Alexandroupolis	Greece	Greece	Alexandroupolis
+Argolida	Greece	Peloponnese	Argolida
+Argos	Greece	Peloponnese	Argos
+Arkadia	Greece	Peloponnese	Arkadia
+Arta	Greece	Epirus	Arta
+Astros	Greece	Peloponnese	Astros
+Athens	Greece	CentralGreece	Athens
+Chalkida	Greece	CentralGreece	Chalkida
+Chalkidiki	Greece	CentralMacedonia	Chalkidiki
+Chania	Greece	Crete	Chania
+Chios	Greece	NorthAegean	Chios
+Crete	Greece	Crete	Crete
+Drama	Greece	EasternMacedoniaAndThrace	Drama
+Edessa	Greece	CentralMacedonia	Edessa
+Evros	Greece	EasternMacedoniaAndThrace	Evros
+Evrytania	Greece	CentralGreece	Evrytania
+Florina	Greece	WesternMacedonia	Florina
+Giannitsa	Greece	CentralMacedonia	Giannitsa
+Grevena	Greece	WesternMacedonia	Grevena
+Heraklion	Greece	Crete	Heraklion
+Ilia	Greece	WesternGreece	Ilia
+Irakleio	Greece	Crete	Irakleio
+Ioannina	Greece	Epirus	Ioannina
+Kalamata	Greece	Peloponnese	Kalamata
+Kastoria	Greece	WesternMacedonia	Kastoria
+Katerini	Greece	CentralMacedonia	Katerini
+Kavala	Greece	EasternMacedoniaAndThrace	Kavala
+Kerkira	Greece	IonianIslands	Kerkira
+Kilkis	Greece	CentralMacedonia	Kilkis
+Komotini	Greece	EasternMacedoniaAndThrace	Komotini
+Korinthos	Greece	Peloponnese	Korinthos
+Kozani	Greece	WesternMacedonia	Kozani
+Lamia	Greece	CentralGreece	Lamia
+Larissa	Greece	Thessaly	Larissa
+Lasithi	Greece	Crete	Lasithi
+Lefkada	Greece	IonianIslands	Lefkada
+Lesvos	Greece	NorthAegean	Lesvos
+Livadia	Greece	CentralGreece	Livadia
+Naousa	Greece	CentralMacedonia	Naousa
+Patra	Greece	CentralGreece	Patra
+Pella	Greece	CentralMacedonia	Pella
+Peloponnese	Greece	Peloponnese	Peloponnese
+Preveza	Greece	Epirus	Preveza
+Ptolemaida	Greece	WesternMacedonia	Ptolemaida
+Pyrgos	Greece	WesternGreece	Pyrgos
+Rethymno	Greece	Crete	Rethymno
+Rhodes	Greece	SouthAegean	Rhodes
+Samos	Greece	NorthAegean	Samos
+Serres	Greece	CentralMacedonia	Serres
+Sparti	Greece	Peloponnese	Sparti
+Syros	Greece	SouthAegean	Syros
+Thessaloniki	Greece	CentralMacedonia	Thessaloniki
+Tinos	Greece	SouthAegean	Tinos
+Trikala	Greece	Thessaly	Trikala
+Veria	Greece	CentralMacedonia	Veria
+Viotia	Greece	CentralGreece	Viotia
+Volos	Greece	Thessaly	Volos
+Vonitsa	Greece	WesternGreece	Vonitsa
+Xanthi	Greece	EasternMacedoniaAndThrace	Xanthi
+Zakynthos	Greece	IonianIslands	Zakynthos
+
+# Grenada
+Grenada	Grenada	Grenada	Grenada
+Granada	Grenada	Grenada	Grenada
+
+# Guadeloupe
+Guadeloupe	Guadeloupe	Guadeloupe	Guadeloupe
+
+# Guam
+Guam	Guam	Guam	Guam
+Barrigada	Guam	Barrigada	Barrigada
+Mangilao	Guam	Mangilao	Mangilao
+
+# Guatemala
+Guatemala	Guatemala	Guatemala	Guatemala
+Guatemalacity	Guatemala	Guatemala	GuatemalaCity
+
+# Guinea
+Guinea	Guinea	Guinea	Guinea
+Beyla	Guinea	Beyla	Beyla
+Boke	Guinea	Boke	Boke
+Conakry	Guinea	Conakry	Conakry
+Coyah	Guinea	Coyah	Coyah
+Dalaba	Guinea	Dalaba	Dalaba
+Dubreka	Guinea	Dubreka	Dubreka
+Faranah	Guinea	Faranah	Faranah
+Forecariah	Guinea	Forecariah	Forecariah
+Fria	Guinea	Fria	Fria
+Gueckedou	Guinea	Gueckedou	Gueckedou
+Kankan	Guinea	Kankan	Kankan
+Kerouane	Guinea	Kerouane	Kerouane
+Kindia	Guinea	Kindia	Kindia
+Kissidougou	Guinea	Kissidougou	Kissidougou
+Kouroussa	Guinea	Kouroussa	Kouroussa
+Lola	Guinea	Lola	Lola
+Macenta	Guinea	Macenta	Macenta
+Nzerekore	Guinea	Nzerekore	Nzerekore
+Siguiri	Guinea	Siguiri	Siguiri
+
+# Guyana
+Guyana	Guyana	Guyana	Guyana
+
+# Haiti
+Haiti	Haiti	Haiti	Haiti
+PortAuPrince	Haiti	Ouest	PortAuPrince
+
+# Honduras
+Honduras	Honduras	Honduras	Honduras
+Tegucigalpa	Honduras	FranciscoMorazan	Tegucigalpa
+
+# HongKong
+HongKong	HongKong	HongKong	HongKong
+Kowloon	HongKong	HongKong	Kowloon
+
+# Hungary
+Hungary	Hungary	Hungary	Hungary
+Nyiregyhaza	Hungary	NorthernHungary	Nyiregyhaza
+Budapest	Hungary	CentralHungary	Budapest
+
+# Iceland
+Iceland	Iceland	Iceland	Iceland
+
+# India
+India	India	India	India
+Alirajpur	India	MadhyaPradesh	Alirajpur
+Andaman	India	AndamanAndNicobarIslands	Andaman
+Assam	India	Assam	Assam
+Aurangabad	India	Maharashtra	Aurangabad
+Bangalore	India	Karnataka	Bangalore
+Barmer	India	Rajasthan	Barmer
+Barwani	India	MadhyaPradesh	Barwani
+Betul	India	MadhyaPradesh	Betul
+Bhopal	India	MadhyaPradesh	Bhopal
+Bihar	India	Bihar	Bihar
+Chattisgarh	India	Chattisgarh	Chattisgarh
+Chennai	India	TamilNadu	Chennai
+Delhi	India	Delhi	Delhi
+Dewas	India	MadhyaPradesh	Dewas
+Dhar	India	MadhyaPradesh	Dhar
+Dhule	India	Maharashtra	Dhule
+Dhulemaharashtra	India	Maharashtra	Dhule
+Dibrugarh	India	Assam	Dibrugarh
+EasternIndia	India	EasternIndia	EasternIndia
+Goa	India	Goa	Goa
+Gujarat	India	Gujarat	Gujarat
+Gwalior	India	MadhyaPradesh	Gwalior
+Harda	India	MadhyaPradesh	Harda
+Haryana	India	Haryana	Haryana
+Hnl	India	India	India
+Hyderaad	India	Telangana	Hyderabad
+Hyderabad	India	Telangana	Hyderabad
+Indore	India	MadhyaPradesh	Indore
+Itarsi	India	MadhyaPradesh	Itarsi
+Jabalpur	India	MadhyaPradesh	Jabalpur
+Jaipurrajasthan	India	Rajasthan	Jaipur
+Jodhpur	India	Rajasthan	Jodhpur
+Jalna	India	Maharashtra	Jalna
+JammuKashmir	India	JammuKashmir	JammuKashmir
+Jhabua	India	MadhyaPradesh	Jhabua
+Karnataka	India	Karnataka	Karnataka
+Kasauli	India	HimachalPradesh	Kasauli
+Kerala	India	Kerala	Kerala
+Khandwa	India	MadhyaPradesh	Khandwa
+Khargone	India	MadhyaPradesh	Khargone
+Kol	India	India	Kol
+Kolkata	India	WestBengal	Kolkata
+Kolkatawestbengol	India	WestBengal	Kolkata
+Latur	India	Maharashtra	Latur
+MadhyaPradesh	India	MadhyaPradesh	MadhyaPradesh
+Manipur	India	Manipur	Manipur
+Meghalaya	India	Meghalaya	Meghalaya
+Mumbai	India	Maharashtra	Mumbai
+Nagda	India	MadhyaPradesh	Nagda
+Nagpur	India	Maharashtra	Nagpur
+Nanded	India	Maharashtra	Nanded
+Nashik	India	Maharashtra	Nashik
+Odisha	India	Odisha	Odisha
+Pachpadra	India	Rajasthan	Pachpadra
+Panchgani	India	Maharashtra	Panchgani
+Pandharpur	India	Maharashtra	Pandharpur
+Patna	India	Bihar	Patna
+Pondicherry	India	Pondicherry	Pondicherry
+Pune	India	Maharashtra	Pune
+Punemaharashtra	India	Maharashtra	Pune
+Punjab	India	Punjab	Punjab
+Raisen	India	MadhyaPradesh	Raisen
+Rajasthan	India	Rajasthan	Rajasthan
+Ratlam	India	MadhyaPradesh	Ratlam
+Ratnagiri	India	Maharashtra	Ratnagiri
+Rewa	India	MadhyaPradesh	Rewa
+Rtng	India	India	India
+Satna	India	MadhyaPradesh	Satna
+Shajapur	India	MadhyaPradesh	Shajapur
+Srinigar	India	JammuAndKashmir	Srinagar
+TamilNaidu	India	TamilNaidu	TamilNaidu
+Ujjain	India	MadhyaPradesh	Ujjain
+UttarPradesh	India	UttarPradesh	UttarPradesh
+Uttarakhand	India	Uttarakhand	Uttarakhand
+Vadodara	India	Gujarat	Vadodara
+Vadu	India	Maharashtra	Vadu
+Vellore	India	TamilNadu	Vellore
+Velloretamilnadu	India	TamilNadu	Vellore
+WestBengal	India	WestBengal	WestBengal
+Yavatmal	India	Maharashtra	Yavatmal
+
+# Indonesia
+Indonesia	Indonesia	Indonesia	Indonesia
+Bali	Indonesia	Bali	Bali
+Banten	Indonesia	Banten	Banten
+Bengkulu	Indonesia	Bengkulu	Bengkulu
+Bogorwestjava	Indonesia	WestJava	Bogor
+Jakarta	Indonesia	Jakarta	Jakarta
+Java	Indonesia	Java	Java
+Bandungjava	Indonesia	Java	Bandung
+Makassar	Indonesia	Makassar	Makassar
+Palembangsumatra	Indonesia	Sumatra	Palembang
+Raas	Indonesia	EastJava	Raas
+Sumatra	Indonesia	Sumatra	Sumatra
+Surabaya	Indonesia	JawaTimur	Surabaya
+Serpong	Indonesia	Banten	Serpong
+Surakarta	Indonesia	Jateng	Surakarta
+Sulawesi	Indonesia	Sulawesi	Sulawesi
+
+# Iran
+Iran	Iran	Iran	Iran
+Alborz	Iran	Alborz	Alborz
+Ardebil	Iran	Ardebil	Ardebil
+AzarbayejanSharghi	Iran	AzarbayejanSharghi	AzarbayejanSharghi
+Babol	Iran	Mazandaran	Babol
+BandarAbbas	Iran	Hormozgan	BandarAbbas
+Birjand	Iran	SouthKhorasan	Birjand
+Boshehr	Iran	Boshehr	Boshehr
+Bushehr	Iran	Bushehr	Bushehr
+Esfahan	Iran	Esfahan	Esfahan
+Golestan	Iran	Golestan	Golestan
+Hamedan	Iran	Hamedan	Hamedan
+Hormozgan	Iran	Hormozgan	Hormozgan
+Ilam	Iran	Ilam	Ilam
+Isfahan	Iran	Isfahan	Isfahan
+Karaj	Iran	Alborz	Karaj
+Kerman	Iran	Kerman	Kerman
+Kermanshah	Iran	Kermanshah	Kermanshah
+Kordestan	Iran	Kurdistan	Kurdistan
+Khorasan	Iran	Khorasan	Khorasan
+Khozestan	Iran	Khuzestan	Khuzestan
+Kurdistan	Iran	Kurdistan	Kurdistan
+Lorestan	Iran	Lorestan	Lorestan
+Markazi	Iran	Markazi	Markazi
+Mashad	Iran	RazaviKhorasan	Mashad
+Marivan	Iran	Kurdistan	Marivan
+Mazandaran	Iran	Mazandaran	Mazandaran
+Minab	Iran	Hormozgan	Minab
+Qazvin	Iran	Qazvin	Qazvin
+Qom	Iran	Qom	Qom
+Sanandaj	Iran	Kurdistan	Sanandaj
+Sardasht	Iran	WestAzerbaijan	Sardasht
+Sari	Iran	Mazandaran	Sari
+Semnan	Iran	Semnan	Semnan
+Shiraz	Iran	Fars	Shiraz
+Shahriar	Iran	Tehran	Shahriar
+Sistan	Iran	SistanAndBaluchestan	Sistan
+Tabriz	Iran	EastAzerbaijan	Tabriz
+Tehran	Iran	Tehran	Tehran
+Yazd	Iran	Yazd	Yazd
+Zahedan	Iran	SistanAndBaluchestan	Zahedan
+Zanjan	Iran	Zanjan	Zanjan
+
+# Iraq
+Iraq	Iraq	Iraq	Iraq
+Baghdad	Iraq	Baghdad	Baghdad
+Sulaimani	Iraq	Kurdistan	Sulaimani
+
+# Ireland
+Ireland	Ireland	Ireland	Ireland
+Dublin	Ireland	Leinster	Dublin
+
+# Israel
+Israel	Israel	Israel	Israel
+Jerusalem	Israel	Jerusalem	Jerusalem
+
+# Italy
+Italy	Italy	Italy	Italy
+Ancona	Italy	Marche	Ancona
+Bari	Italy	Apulia	Bari
+Bolzano	Italy	TrentinoAltoAdige	Bolzano
+Caserta	Italy	Caserta	Caserta
+Enna	Italy	Sicily	Enna
+Florence	Italy	Tuscany	Florence
+FriuliVeneziaGiulia	Italy	FriuliVeneziaGiulia	FriuliVeneziaGiulia
+Genoa	Italy	Liguria	Genoa
+Lazio	Italy	Lazio	Lazio
+Messina	Italy	Sicily	Messina
+Milan	Italy	Lombardy	Milan
+Padova	Italy	Veneto	Padova
+Palermo	Italy	Sicily	Palermo
+Parma	Italy	EmiliaRomagna	Parma
+Pavia	Italy	Lombardy	Pavia
+Perugia	Italy	Umbria	Perugia
+Rome	Italy	Lazio	Rome
+Sassari	Italy	Sardinia	Sassari
+Siena	Italy	Tuscany	Siena
+Torino	Italy	Piedmont	Torino
+Trento	Italy	TrentinoAltoAdige	Trento
+Trieste	Italy	FriuliVeneziaGiulia	Trieste
+Turin	Italy	Piedmont	Turin
+Verona	Italy	Veneto	Verona
+Vicenza	Italy	Veneto	Vicenza
+
+# Jamaica
+Jamaica	Jamaica	Jamaica	Jamaica
+RioBueno	Jamaica	Trelawney	RioBueno
+
+# Japan
+Japan	Japan	Japan	Japan
+Aichi	Japan	Aichi	Aichi
+Akita	Japan	Akita	Akita
+Aomori	Japan	Aomori	Aomori
+Chiba	Japan	Chiba	Chiba
+Ehime	Japan	Ehime	Ehime
+Fukui	Japan	Fukui	Fukui
+Fukuoka	Japan	Fukuoka	Fukuoka
+Fukushima	Japan	Fukushima	Fukushima
+Gifu	Japan	Gifu	Gifu
+Gunma	Japan	Gunma	Gunma
+Hamamatu	Japan	Shizuoka	Shizuoka
+Himeji	Japan	Hyogo	Himeji
+Hiroshima	Japan	Hiroshima	Hiroshima
+Hokkaido	Japan	Hokkaido	Hokkaido
+Hyogo	Japan	Hyogo	Hyogo
+Hyogonishinomiya	Japan	Hyogo	Nishinomiya
+Ibaraki	Japan	Ibaraki	Ibaraki
+Isahaya	Japan	Nagasaki	Isahaya
+Ishikawa	Japan	Ishikawa	Ishikawa
+Iwate	Japan	Iwate	Iwate
+Kadoma	Japan	Osaka	Kadoma
+Kagawa	Japan	Kagawa	Kagawa
+Kagoshima	Japan	Kagoshima	Kagoshima
+Kamata	Japan	Tokyo	Kamata
+Kanagawa	Japan	Kanagawa	Kanagawa
+Kawasaki	Japan	Kanagawa	Kawasaki
+Kitakyushu	Japan	Fukuoka	Kitakyushu
+Kobe	Japan	Hyogo	Kobe
+Kochi	Japan	Kochi	Kochi
+Kumamoto	Japan	Kumamoto	Kumamoto
+Kurashiki	Japan	Okayama	Kurashiki
+Kyoto	Japan	Kyoto	Kyoto
+Morioka	Japan	Iwate	Morioka
+Mie	Japan	Mie	Mie
+Misawa	Japan	Aomori	Misawa
+Miyagi	Japan	Miyagi	Miyagi
+Miyazaki	Japan	Miyazaki	Miyazaki
+Nagano	Japan	Nagano	Nagano
+Nagasaki	Japan	Nagasaki	Nagasaki
+Nagoya	Japan	Aichi	Nagoya
+Nara	Japan	Nara	Nara
+Narita	Japan	Chiba	Narita
+Niigata	Japan	Niigata	Niigata
+Oita	Japan	Oita	Oita
+Okayama	Japan	Okayama	Okayama
+Okinawa	Japan	Okinawa	Okinawa
+Osaka	Japan	Osaka	Osaka
+Saga	Japan	Saga	Saga
+Sagamihara	Japan	Kanagawa	Sagamihara
+Saitama	Japan	Saitama	Saitama
+Sakai	Japan	Osaka	Sakai
+Sapporo	Japan	Hokkaido	Sapporo
+Sendai	Japan	Miyagi	Sendai
+Shiga	Japan	Shiga	Shiga
+Shimane	Japan	Shimane	Shimane
+Shizuoka	Japan	Shizuoka	Shizuoka
+Suita	Japan	Osaka	Suita
+Tochigi	Japan	Tochigi	Tochigi
+Tokushima	Japan	Tokushima	Tokushima
+Tokyo	Japan	Tokyo	Tokyo
+Tokyoshibuyayoyogipark	Japan	Tokyo	Tokyo
+Tokyoshibuya	Japan	Tokyo	Tokyo
+Tokyoshinjuku	Japan	Tokyo	Tokyo
+Tottori	Japan	Tottori	Tottori
+Toyama	Japan	Toyama	Toyama
+Utsunomiya	Japan	Tochigi	Utsunomiya
+Wakayama	Japan	Wakayama	Wakayama
+Yamagata	Japan	Yamagata	Yamagata
+Yamaguchi	Japan	Yamaguchi	Yamaguchi
+Yamanashi	Japan	Yamanashi	Yamanashi
+Yokohama	Japan	Kanagawa	Yokohama
+Yokosuka	Japan	Kanagawa	Yokosuka
+
+# Jordan
+Jordan	Jordan	Jordan	Jordan
+Amman	Jordan	CapitalGovernorate	Amman
+
+# Kazakhstan
+Kazakhstan	Kazakhstan	Kazakhstan	Kazakhstan
+Aktobe	Kazakhstan	Aktobe	Aktobe
+Almaty	Kazakhstan	Almaty	Almaty
+Astana	Kazakhstan	Astana	Astana
+Gvardeyskiy	Kazakhstan	Almaty	Gvardeyskiy
+Jambyl	Kazakhstan	Jambyl	Jambyl
+Karaganda	Kazakhstan	Karaganda	Karaganda
+NorthKazakhstan	Kazakhstan	NorthKazakhstan	NorthKazakhstan
+Oskemen	Kazakhstan	EastKazakhstan	Oskemen
+Petropavlovsk	Kazakhstan	NorthKazakhstan	Petropavlovsk
+Semey	Kazakhstan	EastKazakhstan	Semey
+Taldykorgan	Kazakhstan	Almaty	Taldykorgan
+Taraz	Kazakhstan	Jambyl	Taraz
+Uralsk	Kazakhstan	WestKazakhstan	Uralsk
+
+# Kenya
+Kenya	Kenya	Kenya	Kenya
+Alupe	Kenya	Nairobi	Alupe
+Eldoret	Kenya	UasinGishu	Eldoret
+Embu	Kenya	Embu	Embu
+Garissa	Kenya	Garissa	Garissa
+Isiolo	Kenya	Eastern	Isiolo
+Kakamega	Kenya	Kakamega	Kakamega
+Kapenguria	Kenya	WestPokot	Kapenguria
+Keiyo	Kenya	ElgeyoMarakwet	Keiyo
+Kericho	Kenya	Kericho	Kericho
+Kijabe	Kenya	Kiambu	Kijabe
+Kikuyu	Kenya	Kiambu	Kikuyu
+Kisii	Kenya	Kisii	Kisii
+Kisumu	Kenya	Kisumu	Kisumu
+Kitale	Kenya	TransNzoia	Kitale
+Kwanza	Kenya	TransNzoia	Kwanza
+Malindi	Kenya	Nairobi	Malindi
+Mbagathi	Kenya	Nairobi	Nairobi
+Meru	Kenya	Meru	Meru
+Mombasa	Kenya	Mombasa	Mombasa
+Nairobi	Kenya	Nairobi	Nairobi
+Nakuru	Kenya	Nakuru	Nakuru
+Nyeri	Kenya	Nyeri	Nyeri
+TransNzoia	Kenya	TransNzoia	TransNzoia
+
+# Kiribati
+Kiribati	Kiribati	Kiribati	Kiribati
+
+# Kosovo
+Kosovo	Kosovo	Kosovo	Kosovo
+
+# Kuwait
+Kuwait	Kuwait	Kuwait	Kuwait
+
+# Kyrgyzstan
+Kyrgyzstan	Kyrgyzstan	Kyrgyzstan	Kyrgyzstan
+Bishkek	Kyrgyzstan	Chuy	Bishkek
+
+# Lao
+Lao	Laos	Laos	Laos
+Laos	Laos	Laos	Laos
+
+# Latvia
+Latvia	Latvia	Latvia	Latvia
+
+# Lebanon
+Lebanon	Lebanon	Lebanon	Lebanon
+
+# Liberia
+Liberia	Liberia	Liberia	Liberia
+Bomi	Liberia	Bomi	Bomi
+Bong	Liberia	Bong	Bong
+Gbarpolu	Liberia	Gbarpolu	Gbarpolu
+GrandBassa	Liberia	GrandBassa	GrandBassa
+GrandCapeMount	Liberia	GrandCapeMount	GrandCapeMount
+GrandKru	Liberia	GrandKru	GrandKru
+Lofa	Liberia	Lofa	Lofa
+Margibi	Liberia	Margibi	Margibi
+Montserrado	Liberia	Montserrado	Montserrado
+Nimba	Liberia	Nimba	Nimba
+Rivercess	Liberia	Rivercess	Rivercess
+RiverGee	Liberia	RiverGee	RiverGee
+Sinoe	Liberia	Sinoe	Sinoe
+
+# Lithuania
+Lithuania	Lithuania	Lithuania	Lithuania
+Klaipeda	Lithuania	Klaipeda	Klaipeda
+Telsiai	Lithuania	Telsiai	Telsiai
+Kaunas	Lithuania	Kaunas	Kaunas
+Vilnius	Lithuania	Vilnius	Vilnius
+Skuodas	Lithuania	Klaipeda	Skuodas
+
+# Luxembourg
+Luxembourg	Luxembourg	Luxembourg	Luxembourg
+
+# Macedonia
+Macedonia	Macedonia	Macedonia	Macedonia
+Skopje	Macedonia	Skopje	Skopje
+Ohrid	Macedonia	Ohrid	Ohrid
+Tetovo	Macedonia	Tetovo	Tetovo
+Gostivar	Macedonia	Gostivar	Gostivar
+Strumica	Macedonia	Strumica	Strumica
+Kocani	Macedonia	Kocani	Kocani
+
+# Madagascar
+Madagascar	Madagascar	Madagascar	Madagascar
+Analavory	Madagascar	Miarinarivo	Analavory
+Anjeva	Madagascar	Antananarivo	Anjeva
+Antananarivo	Madagascar	Antananarivo	Antananarivo
+Antsirabe	Madagascar	Vakinankaratra	Antsirabe
+Antsohihy	Madagascar	Sofia	Antsohihy
+Behoririka	Madagascar	Antananarivo	Behoririka
+Fianarantsoa	Madagascar	HauteMatsiatra	Fianarantsoa
+Itaosy	Madagascar	Antananarivo	Itaosy
+Maevatanana	Madagascar	Betsiboka	Maevatanana
+Mahajanga	Madagascar	Mahajanga	Mahajanga
+Mananjary	Madagascar	VatovavyFitovinany	Mananjary
+Manjakaray	Madagascar	Antananarivo	Antananarivo
+Moramanga	Madagascar	AlaotraMangoro	Moramanga
+NosyBe	Madagascar	Diana	NosyBe
+Toamasina	Madagascar	Atsinanana	Toamasina
+Tolagnaro	Madagascar	Anosy	Tolagnaro
+Tsaralalana	Madagascar	Antananarivo	Tsaralalana
+Tsiroanomandidy	Madagascar	Bongolava	Tsiroanomandidy
+
+# Malaysia
+Malaysia	Malaysia	Malaysia	Malaysia
+Johorbahru	Malaysia	Johor	JohorBahru
+Kualalumpur	Malaysia	Malaysia	KualaLumpur
+Klangvalley	Malaysia	KlangValley	KlangValley
+
+# Maldives
+Maldives	Maldives	Maldives	Maldives
+
+# Mali
+Mali	Mali	Mali	Mali
+Bamako	Mali	Bamako	Bamako
+
+# Malta
+Malta	Malta	Malta	Malta
+
+# Marshall	Islands
+MarshallIslands	MarshallIslands	MarshallIslands	MarshallIslands
+
+# Martinique
+Martinique	Martinique	Martinique	Martinique
+
+# Mauritania
+Mauritania	Mauritania	Mauritania	Mauritania
+Nouakchott	Mauritania	Nouakchott	Nouakchott
+
+# Mauritius
+Mauritius	Mauritius	Mauritius	Mauritius
+Candos	Mauritius	QuatreBornes	Candos
+
+# Mayotte
+Mayotte	Mayotte	Mayotte	Mayotte
+
+# Mexico
+Mexico	Mexico	Mexico	Mexico
+Guerrero	Mexico	Guerrero	Guerrero
+Yucatan	Mexico	Mexico	Yucatan
+Yucatanstate	Mexico	Yucatan	Yucatan
+Monterrey	Mexico	Mexico	Monterrey
+Morelos	Mexico	Morelos	Morelos
+Merida	Mexico	Mexico	Merida
+Puebla	Mexico	Puebla	Puebla
+Queretaro	Mexico	Queretaro	Queretaro
+QuintanaRoo	Mexico	QuintanaRoo	QuintanaRoo
+Sonora	Mexico	Sonora	Sonora
+Lacoloradasonora	Mexico	Sonora	LaColorada
+Nayarit	Mexico	Nayarit	Nayarit
+Chiapas	Mexico	Chiapas	Chiapas
+MexicoCity	Mexico	DistritoFederal	MexicoCity
+NuevoLeon	Mexico	NuevoLeon	NuevoLeon
+Oaxaca	Mexico	Oaxaca	Oaxaca
+Cerrodeltepezcouintleoaxaca	Mexico	Oaxaca	Oaxaca
+Nejapademorelosoaxaca	Mexico	Oaxaca	NejapaDeMorelos
+Hidalgo	Mexico	Hidalgo	Hidalgo
+Tapachula	Mexico	Chiapas	Tapachula
+Tlaxcala	Mexico	Tlaxcala	Tlaxcala
+Zacatecas	Mexico	Zacatecas	Zacatecas
+Tlaltizapanmorelos	Mexico	Morelos	Tlaltizapan
+Altoluceroveracruz	Mexico	Veracruz	AltoLucero
+Ixtaczoquitlanveracruz	Mexico	Veracruz	Ixtaczoquitlan
+Mocoritosinaloa	Mexico	Sinaloa	Mocorito
+Jalpandeserraqueretaro	Mexico	Queretaro	JalpanDeSerra
+Othonpblancoquintanaroo	Mexico	QuintanaRoo	OthonPBlanco
+Ocosingochiapas	Mexico	Ocosingo	Chiapas
+Mujicatabasco	Mexico	Tabasco	Mujica
+Huimanguillotabasco	Mexico	Tabasco	Huimanguillotabasco
+Leonguanajuato	Mexico	Guanajuato	Leon
+Puertovallartajalisco	Mexico	Jalisco	PuertoVallarta
+Cdvictoriatamaulipas	Mexico	Tamaulipas	CiudadVictoria
+
+# Micronesia
+MicronesiaFederatedStatesOf	Micronesia	Micronesia	Micronesia
+Micronesia	Micronesia	Micronesia	Micronesia
+Chuuk	Micronesia	Chuuk	Chuuk
+Nauru	Micronesia	Nauru	Nauru
+Pohnpei	Micronesia	Pohnpei	Pohnpei
+Kosrae	Micronesia	Kosrae	Kosrae
+Yap	Micronesia	Yap	Yap
+Yapisland	Micronesia	Yap	Yap
+
+# Moldova
+Moldova	Moldova	Moldova	Moldova
+
+# Mongolia
+Mongolia	Mongolia	Mongolia	Mongolia
+Arvaikheer	Mongolia	Arvaikheer	Arvaikheer
+Bayankhongor	Mongolia	Bayankhongor	Bayankhongor
+BayanOlgii	Mongolia	BayanOlgii	BayanOlgii
+Bulgan	Mongolia	Bulgan	Bulgan
+Choibalsan	Mongolia	Dornod	Choibalsan
+Darkhan	Mongolia	DarkhanUul	Darkhan
+DarkhanUul	Mongolia	DarkhanUul	DarkhanUul
+Dornogovi	Mongolia	Dornogovi	Dornogovi
+Dundgovi	Mongolia	Dundgovi	Dundgovi
+Govisumber	Mongolia	Govisumber	Govisumber
+Khentii	Mongolia	Khentii	Khentii
+Kherlen	Mongolia	Dornod	Kherlen
+Khovd	Mongolia	Khovd	Khovd
+Olgii	Mongolia	BayanOlgii	Olgii
+Omnogovi	Mongolia	Omnogovi	Omnogovi
+Orkhon	Mongolia	Orkhon	Orkhon
+Sainshand	Mongolia	Dornogobi	Sainshand
+Selenge	Mongolia	Selenge	Selenge
+Sukhbaatar	Mongolia	Sukhbaatar	Sukhbaatar
+Tuv	Mongolia	Tuv	Tuv
+Ulaanbaatar	Mongolia	Ulaanbaatar	Ulaanbaatar
+Ulaangom	Mongolia	Uvs	Ulaangom
+Uvurkhangai	Mongolia	Uvurkhangai	Uvurkhangai
+Zavkhan	Mongolia	Zavkhan	Zavkhan
+
+# Montenegro
+Montenegro	Montenegro	Montenegro	Montenegro
+Podgorica	Montenegro	Podgorica	Podgorica
+
+# Montserrat
+Montserrat	Montserrat	BritishOverseasTerritory	Montserrat
+
+# Morocco
+Morocco	Morocco	Morocco	Morocco
+Agadir	Morocco	SoussMassa	Agadir
+BeniMellal	Morocco	BeniMellalKhenifra	BeniMellal
+Casablanca	Morocco	CasablancaSettat	Casablanca
+Fes	Morocco	FesMeknes	Fes
+Kenitra	Morocco	RabatSaleKenitra	Kenitra
+Marrakech	Morocco	MarrakechSafi	Marrakech
+Meknes	Morocco	FesMeknes	Meknes
+Oujda	Morocco	Rif	Oujda
+Rabat	Morocco	RabatSaleKenitra	Rabat
+Safi	Morocco	MarrakechSafi	Safi
+Sale	Morocco	RabatSaleKenitra	Sale
+Settat	Morocco	CasablancaSettat	Settat
+Tanger	Morocco	TangerTetouan	Tanger
+Temara	Morocco	RabatSaleKenitra	Temara
+Tiznit	Morocco	SoussMassa	Tiznit
+
+# Mozambique
+Mozambique	Mozambique	Mozambique	Mozambique
+Maputo	Mozambique	Maputo	Maputo
+
+# Myanmar
+Myanmar	Myanmar	Myanmar	Myanmar
+Mandalay	Myanmar	Mandalay	Mandalay
+Sagaing	Myanmar	Sagaing	Sagaing
+Yangon	Myanmar	Yangon	Yangon
+Naypyitaw	Myanmar	Naypyitaw	Naypyitaw
+
+# Nauru
+Nauru	Nauru	Nauru	Nauru
+nauruisland	Nauru	Nauru	Nauru
+
+# Nepal
+Nepal	Nepal	Nepal	Nepal
+KathmanduBGN	Nepal	Central	Kathmandu
+Kathmandu	Nepal	Central	Kathmandu
+
+# Netherlands
+Netherlands	Netherlands	Netherlands	Netherlands
+Amsterdam	Netherlands	NorthHolland	Amsterdam
+Bilthoven	Netherlands	Utrecht	Bilthoven
+Eindhoven	Netherlands	NorthBrabant	Eindhoven
+Enschede	Netherlands	Overijssel	Enschede
+Groningen	Netherlands	Groningen	Groningen
+Leiden	Netherlands	SouthHolland	Leiden
+Nijmegen	Netherlands	Gelderland	Nijmegen
+Rotterdam	Netherlands	SouthHolland	Rotterdam
+Tilburg	Netherlands	NorthBrabant	Tilburg
+
+# NewCaledonia
+NewCaledonia	NewCaledonia	NewCaledonia	NewCaledonia
+Noumea	NewCaledonia	NewCaledonia	Noumea
+Dumbea	NewCaledonia	NewCaledonia	Dumbea
+
+# NewZealand
+NewZealand	NewZealand	NewZealand	NewZealand
+Ashburton	NewZealand	Canterbury	Ashburton
+Auckland	NewZealand	Auckland	Auckland
+BayOfPlenty	NewZealand	BayOfPlenty	BayOfPlenty
+CapitalCoast	NewZealand	Wellington	Wellington
+Canterbury	NewZealand	Canterbury	Canterbury
+Christchurch	NewZealand	Canterbury	Christchurch
+Dunedin	NewZealand	Otago	Dunedin
+Gisborne	NewZealand	Gisborne	Gisborne
+HawkesBay	NewZealand	HawkesBay	HawkesBay
+Hutt	NewZealand	Wellington	Hutt
+HuttValley	NewZealand	Wellington	HuttValley
+Midcentral	NewZealand	NewZealand	PalmerstonNorth
+Napier	NewZealand	HawkesBay	Napier
+Nelson	NewZealand	Nelson	Nelson
+NelsonMarlborough	NewZealand	Nelson	Nelson
+Northland	NewZealand	Northland	Northland
+NorthWestAuckland	NewZealand	Auckland	Auckland
+Otago	NewZealand	Otago	Otago
+PortChalmers	NewZealand	Otago	PortChalmers
+SouthAuckland	NewZealand	Auckland	SouthAuckland
+SouthCanterbury	NewZealand	Canterbury	SouthCanterbury
+Southland	NewZealand	Southland	Southland
+Tairawhiti	NewZealand	Gisborne	Gisborne
+Taranaki	NewZealand	Taranaki	Taranaki
+Tauranga	NewZealand	NorthIsland	Tauranga
+Waikato	NewZealand	Waikato	Waikato
+Wellington	NewZealand	Wellington	Wellington
+WestCoast	NewZealand	WestCoast	WestCoast
+Whanganui	NewZealand	ManawatuWanganui	Whanganui
+
+# Nicaragua
+Nicaragua	Nicaragua	Nicaragua	Nicaragua
+Andalucia	Nicaragua	Nicaragua	Andalucia
+Carazo	Nicaragua	Carazo	Carazo
+Chinandega	Nicaragua	Chinandega	Chinandega
+Esteli	Nicaragua	Esteli	Esteli
+Managua	Nicaragua	Managua	Managua
+Matagalpa	Nicaragua	Matagalpa	Matagalpa
+Rivas	Nicaragua	Rivas	Rivas
+Ciudadsandino	Nicaragua	Managua	CiudadSandino
+Nuevasegovia	Nicaragua	NuevaSegovia	NuevaSegovia
+Boaco	Nicaragua	Boaco	Boaco
+Masaya	Nicaragua	Masaya	Masaya
+
+# Niger
+Niger	Niger	Niger	Niger
+
+# Nigeria
+Nigeria	Nigeria	Nigeria	Nigeria
+Lagos	Nigeria	Lagos	Lagos
+
+# Niue
+Niue	Niue	Niue	Niue
+
+# NorthernMarianaIslands
+NorthernMarianaIslands	NorthernMarianaIslands	NorthernMarianaIslands	NorthernMarianaIslands
+Saipan	NorthernMarianaIslands	Saipan	Saipan
+
+# Norway
+Norway	Norway	Norway	Norway
+Oslo	Norway	Ostlandet	Oslo
+
+# Oman
+Oman	Oman	Oman	Oman
+Buraimi	Oman	AlBuraimi	Buraimi
+Sur	Oman	AshSharqiyah	Sur
+Sohar	Oman	AlBatinah	Sohar
+Salalah	Oman	Dhofar	Salalah
+
+# Pakistan
+Pakistan	Pakistan	Pakistan	Pakistan
+Lahore	Pakistan	Punjab	Lahore
+Muridke	Pakistan	Punjab	Muridke
+Karachi	Pakistan	Sindh	Karachi
+
+# Palau
+Palau	Palau	Palau	Palau
+
+# Palestine
+Bethlehem	Palestine	Bethlehem	Bethlehem
+Hebron	Palestine	Hebron	Hebron
+Jenin	Palestine	Jenin	Jenin
+Jericho	Palestine	Jericho	Jericho
+Nablus	Palestine	Nablus	Nablus
+Qalqilya	Palestine	Qalqilya	Qalqilya
+Ramallah	Palestine	RamallahAndAlBireh	Ramallah
+Salfeet	Palestine	Salfit	Salfeet
+Tubas	Palestine	Tubas	Tubas
+Tulkarem	Palestine	Tulkarm	Tulkarem
+
+# Panama
+Panama	Panama	Panama	Panama
+
+# PapuaNewGuinea
+PapuaNewGuinea	PapuaNewGuinea	PapuaNewGuinea	PapuaNewGuinea
+Goroka	PapuaNewGuinea	EasternHighlands	Goroka
+PortMoresby	PapuaNewGuinea	NationalCapitalDistrict	PortMoresby
+Morobe	PapuaNewGuinea	Morobe	Morobe
+WesternSepik	PapuaNewGuinea	Sandaun	WesternSepik
+Vanimo	PapuaNewGuinea	Sandaun	Vanimo
+Simbu	PapuaNewGuinea	Simbu	Simbu
+EastSepik	PapuaNewGuinea	EastSepik	EastSepik
+
+# Paraguay
+Paraguay	Paraguay	Paraguay	Paraguay
+Asuncion	Paraguay	Asuncion	Asuncion
+Asuncioncentral	Paraguay	Asuncion	Asuncion
+Pedrojuancaballeroamambay	Paraguay	Amambay	PedroJuanCaballero
+
+# Peru
+Peru	Peru	Peru	Peru
+Ancon	Peru	Lima	Ancon
+Arequipa	Peru	Arequipa	Arequipa
+Chanchamayo	Peru	Junin	Chanchamayo
+Chorrillos	Peru	Lima	Chorrillos
+Cusco	Peru	Cusco	Cusco
+Iquitos	Peru	Loreto	Iquitos
+Juliaca	Peru	Puno	Juliaca
+Junin	Peru	Junin	Junin
+MadreDeDios	Peru	MadreDeDios	MadreDeDios
+Maldonado	Peru	MadreDeDios	Maldonado
+Lima	Peru	Lima	Lima
+Piura	Peru	Piura	Piura
+Pucallpa	Peru	Ucayali	Pucallpa
+Puertomaldonado	Peru	MadreDeDios	PuertoMaldonado
+Puno	Peru	Puno	Puno
+Sullana	Peru	Piura	Sullana
+Trujillo	Peru	LaLibertad	Trujillo
+Tumbes	Peru	Tumbes	Tumbes
+Ucayali	Peru	Ucayali	Ucayali
+Yurimaguas	Peru	Loreto	Yurimaguas
+Zarumilla	Peru	Tumbes	Zarumilla
+
+# Philippines
+Philippines	Philippines	Philippines	Philippines
+
+# Poland
+Poland	Poland	Poland	Poland
+Olsztyn	Poland	WarmianMasurian	Olsztyn
+Warsaw	Poland	Masovian	Warsaw
+Gdansk	Poland	Pomeranian	Gdansk
+Rzeszow	Poland	Subcarpathia	Rzeszow
+Wroclaw	Poland	LowerSilesian	Wroclaw
+
+# Portugal
+Portugal	Portugal	Portugal	Portugal
+Acores	Portugal	Acores	Acores
+Aveiro	Portugal	Aveiro	Aveiro
+Beja	Portugal	Beja	Beja
+Braga	Portugal	Braga	Braga
+CasteloBranco	Portugal	CasteloBranco	CasteloBranco
+Coimbra	Portugal	Coimbra	Coimbra
+Evora	Portugal	Evora	Evora
+Guarda	Portugal	Guarda	Guarda
+Leiria	Portugal	Leiria	Leiria
+Lisbon	Portugal	Lisbon	Lisbon
+Madeira	Portugal	Madeira	Madeira
+Portalegre	Portugal	Portalegre	Portalegre
+Porto	Portugal	Porto	Porto
+Santarem	Portugal	Santarem	Santarem
+VilaReal	Portugal	VilaReal	VilaReal
+
+# PuertoRico
+PuertoRico	PuertoRico	PuertoRico	PuertoRico
+
+# Qatar
+Qatar	Qatar	Qatar	Qatar
+
+# Romania
+Romania	Romania	Romania	Romania
+Alba	Romania	Alba	Alba
+Arad	Romania	Arad	Arad
+Arges	Romania	Arges	Arges
+Bacau	Romania	Bacau	Bacau
+Bihor	Romania	Bihor	Bihor
+BistritaNasaud	Romania	BistritaNasaud	BistritaNasaud
+Botosani	Romania	Botosani	Botosani
+Braila	Romania	Braila	Braila
+Brasov	Romania	Brasov	Brasov
+Bucharest	Romania	Romania	Bucharest
+Buzau	Romania	Buzau	Buzau
+Calarasi	Romania	Calarasi	Calarasi
+CarasSeverin	Romania	CarasSeverin	CarasSeverin
+Constanta	Romania	Constanta	Constanta
+Covasna	Romania	Covasna	Covasna
+Cluj	Romania	Cluj	Cluj
+Craiova	Romania	Dolj	Craiova
+Dambovita	Romania	Dambovita	Dambovita
+Dolj	Romania	Dolj	Dolj
+Galati	Romania	Galati	Galati
+Giurgiu	Romania	Giurgiu	Giurgiu
+Gorj	Romania	Gorj	Gorj
+Harghita	Romania	Harghita	Harghita
+Hunedoara	Romania	Hunedoara	Hunedoara
+Ialomita	Romania	Ialomita	Ialomita
+Iasi	Romania	Iasi	Iasi
+Ilfov	Romania	Ilfov	Ilfov
+Lasi	Romania	Lasi	Lasi
+Maramures	Romania	Maramures	Maramures
+Mures	Romania	Mures	Mures
+Neamt	Romania	Neamt	Neamt
+Olt	Romania	Olt	Olt
+Prahova	Romania	Prahova	Prahova
+Salaj	Romania	Salaj	Salaj
+Sibiu	Romania	Sibiu	Sibiu
+Suceava	Romania	Suceava	Suceava
+Teleorman	Romania	Teleorman	Teleorman
+Timis	Romania	Timis	Timis
+Tulcea	Romania	Tulcea	Tulcea
+Vaslui	Romania	Vaslui	Vaslui
+Valcea	Romania	Valcea	Valcea
+Vrancea	Romania	Vrancea	Vrancea
+
+# Russia
+Russia	Russia	Russia	Russia
+Adygea	Russia	Adygea	Adygea
+Alania	Russia	OssetiaAlania	Alania
+Anadyr	Russia	Chukotka	Anadyr
+Arkhangelsk	Russia	Arkhangelsk	Arkhangelsk
+Astrakhan	Russia	Astrakhan	Astrakhan
+Barnaul	Russia	AltaiKrai	Barnaul
+Belgorod	Russia	Belgorod	Belgorod
+Birobidzhan	Russia	JewishOblast	Birobidzhan
+Blagoveshchensk	Russia	Amur	Blagoveshchensk
+Bryansk	Russia	Bryansk	Bryansk
+Buryatia	Russia	Buryatia	Buryatia
+Cheboksary	Russia	Chuvash	Cheboksary
+Chelyabinsk	Russia	Chelyabinsk	Chelyabinsk
+Cherkessk	Russia	Karachay-Cherkess	Cherkessk
+Chita	Russia	ZabaykalskyKrai	Chita
+Dagestan	Russia	Dagestan	Dagestan
+Ekaterinburg	Russia	SverdlovskOblast	Ekaterinburg
+GornoAltaysk	Russia	Altaia	GornoAltaysk
+Irkutsk	Russia	Irkutsk	Irkutsk
+Ivanovo	Russia	Ivanovo	Ivanovo
+Izhevsk	Russia	Udmurt	Izhevsk
+Kaliningrad	Russia	Kaliningrad	Kaliningrad
+Kalingrad	Russia	Kaliningrad	Kaliningrad
+Kaluga	Russia	Kaluga	Kaluga
+Karasuk	Russia	Novosibirsk	Karasuk
+Kazan	Russia	Tatarstan	Kazan
+Kemerovo	Russia	Kemerovo	Kemerovo
+Khabarovsk	Russia	Khabarovsk	Khabarovsk
+Kirov	Russia	Kirov	Kirov
+KhantyMansia	Russia	KhantyMansia	KhantyMansia
+Koltsovo	Russia	Novosibirsk	Koltsovo
+Komi	Russia	Komi	Komi
+Kostroma	Russia	Kostroma	Kostroma
+Krasnodar	Russia	Krasnodar	Krasnodar
+Krasnoyarsk	Russia	Krasnoyarsk	Krasnoyarsk
+Kurgan	Russia	Kurgan	Kurgan
+Kursk	Russia	Kursk	Kursk
+Leningrad	Russia	Leningrad	Leningrad
+Lipetsk	Russia	Lipetsk	Lipetsk
+Magadan	Russia	Magadan	Magadan
+Majkop	Russia	Adygeya	Majkop
+MariEl	Russia	MariEl	MariEl
+Mcensk	Russia	Oryol	Mcensk
+Mordovia	Russia	Mordovia	Mordovia
+Moscow	Russia	Moscow	Moscow
+Murmansk	Russia	Murmansk	Murmansk
+Naryan-Mar	Russia	Naryan-Mar	Naryan-Mar
+NizhnyNovgorod	Russia	NizhnyNovgorod	NizhnyNovgorod
+Novosibirsk	Russia	Novosibirsk	Novosibirsk
+NovyUrengoy	Russia	Yamalia	NovyUrengoy
+Noyabrsk	Russia	Yamalia	Noyabrsk
+Omsk	Russia	Omsk	Omsk
+Orel	Russia	Oryol	Orel
+Orenburg	Russia	Orenburg	Orenburg
+OssetiaAlania	Russia	OssetiaAlania	OssetiaAlania
+Penza	Russia	Penza	Penza
+Perm	Russia	Perm	Perm
+Petrozavodsk	Russia	Karelia	Petrozavodsk
+RostovOnDon	Russia	Rostov	RostovOnDon
+Rostov	Russia	Rostov	Rostov
+Ryazan	Russia	Ryazan	Ryazan
+StPetersburg	Russia	StPetersburg	StPetersburg
+Salekhard	Russia	Yamalia	Salekhard
+Samara	Russia	Samara	Samara
+Saransk	Russia	Saransk	Saransk
+Saratov	Russia	Saratov	Saratov
+Stavropol	Russia	Stavropol	Stavropol
+Smolensk	Russia	Smolensk	Smolensk
+Surgut	Russia	KhantyMansia	Surgut
+Syktyvkar	Russia	Komi	Syktyvkar
+Tambov	Russia	Tambov	Tambov
+Tatarstan	Russia	Tatarstan	Tatarstan
+Tomsk	Russia	Tomsk	Tomsk
+Tula	Russia	Tula	Tula
+Tver	Russia	Tver	Tver
+Tyumen	Russia	Tyumen	Tyumen
+Ufa	Russia	Bashkortostan	Ufa
+UlanUde	Russia	Buryatia	UlanUde
+Ulyanovsk	Russia	Ulyanovsk	Ulyanovsk
+Urengoy	Russia	Yamalia	Urengoy
+USSR	Russia	Russia	Russia
+VelikyNovgorod	Russia	Novgorod	VelikyNovgorod
+Vladikavkaz	Russia	NorthOssetia	Vladikavkaz
+Vladimir	Russia	Vladimir	Vladimir
+Vladivostok	Russia	Primorsky	Vladivostok
+Voronezh	Russia	Voronezh	Voronezh
+Volgograd	Russia	Volgograd	Volgograd
+Vologda	Russia	Vologda	Vologda
+Yakutsk	Russia	Sakha	Yakutsk
+Yaroslavl	Russia	Yaroslavl	Yaroslavl
+Yekaterinburg	Russia	Sverdlovsk	Yekaterinburg
+YoshkarOla	Russia	MariElRepublic	YoshkarOla
+
+# Rwanda
+Rwanda	Rwanda	Rwanda	Rwanda
+
+# SaintKitts
+SaintKitts	SaintKitts	SaintKitts	SaintKitts
+StKitts	SaintKitts	SaintKitts	SaintKitts
+saint_kitts_and_nevis	SaintKitts	SaintKitts	SaintKitts
+SaintKittsAndNevis	SaintKitts	SaintKitts	SaintKitts
+
+# SaintLucia
+SaintLucia	SaintLucia	SaintLucia	SaintLucia
+
+# Saint Barthelemy
+SaintBarthelemy	SaintBarthelemy	SaintBarthelemy	SaintBarthelemy
+
+# Samoa
+Samoa	Samoa	Samoa	Samoa
+
+# SaudiArabia
+SaudiArabia	SaudiArabia	SaudiArabia	SaudiArabia
+Jeddah	SaudiArabia	Makkah	Jeddah
+Riyadh	SaudiArabia	Riyadh	Riyadh
+
+# Senegal
+Senegal	Senegal	Senegal	Senegal
+Dakar	Senegal	Dakar	Dakar
+Fatick	Senegal	Fatick	Fatick
+Niakhar	Senegal	Fatick	Niakhar
+
+# Serbia
+Serbia	Serbia	Serbia	Serbia
+Belgrade	Serbia	Belgrade	Belgrade
+Cuprija	Serbia	Pomoravlje	Cuprija
+Kragujevac	Serbia	Sumadija	Kragujevac
+Kraljevo	Serbia	Raska	Kraljevo
+Leskovac	Serbia	Jablanica	Leskovac
+Mitrovica	Serbia	Mitrovica	Mitrovica
+Nis	Serbia	Nisava	Nis
+NoviSad	Serbia	Vojvodina	NoviSad
+Pancevo	Serbia	Vojvodina	Pancevo
+Pirot	Serbia	Pirot	Pirot
+Pozarevac	Serbia	Branicevo	Pozarevac
+Sabac	Serbia	Macva	Macva
+Valjevo	Serbia	Kolubara	Valjevo
+Zrenjanin	Serbia	Vojvodina	Zrenjanin
+
+# Seychelles
+Seychelles	Seychelles	Seychelles	Seychelles
+
+# SierraLeone
+SierraLeone	SierraLeone	SierraLeone	SierraLeone
+Bo	SierraLeone	Bo	Bo
+Bombali	SierraLeone	Bombali	Bombali
+Bonthe	SierraLeone	Bonthe	Bonthe
+Kailahun	SierraLeone	Kailahun	Kailahun
+Kambia	SierraLeone	Kambia	Kambia
+Kenema	SierraLeone	Kenema	Kenema
+Koinadugu	SierraLeone	Koinadugu	Koinadugu
+Kono	SierraLeone	Kono	Kono
+Moyamba	SierraLeone	Moyamba	Moyamba
+PortLoko	SierraLeone	PortLoko	PortLoko
+Pujehun	SierraLeone	Pujehun	Pujehun
+Tonkolili	SierraLeone	Tonkolili	Tonkolili
+WesternArea	SierraLeone	WesternArea	WesternArea
+WesternRural	SierraLeone	WesternRural	WesternRural
+WesternUrban	SierraLeone	WesternUrban	WesternUrban
+
+
+# Singapore
+Singapore	Singapore	Singapore	Singapore
+
+# Slovakia
+Slovakia	Slovakia	Slovakia	Slovakia
+BanskaBystrica	Slovakia	Banskobystricky	BanskaBystrica
+Bratislava	Slovakia	Bratislava	Bratislava
+Galanta	Slovakia	Trnava	Galanta
+Komarno	Slovakia	Nitra	Komarno
+Kosice	Slovakia	Kosice	Kosice
+Levice	Slovakia	Nitriansky	Levice
+Lubica	Slovakia	Presov	Lubica
+Malacky	Slovakia	Bratislava	Malacky
+Michalovce	Slovakia	Kosice	Michalovce
+Modra	Slovakia	Bratislava	Modra
+Nitra	Slovakia	Nitra	Nitra
+NoveZamky	Slovakia	Nitra	NoveZamky
+Partizanske	Slovakia	Trencin	Partizanske
+Piestany	Slovakia	Trnava	Piestany
+Poprad	Slovakia	Presov	Poprad
+PovazskaBystrica	Slovakia	Trencin	PovazskaBystrica
+Prievidza	Slovakia	Trencin	Prievidza
+Topolcany	Slovakia	Nitra	Topolcany
+Trencin	Slovakia	Trencin	Trencin
+Trnava	Slovakia	Trnava	Trnava
+Sastin	Slovakia	Trnava	Sastin
+SastinStraze	Slovakia	Trnava	SastinStraze
+Sobotiste	Slovakia	Trnava	Sobotiste
+
+# Slovenia
+Slovenia	Slovenia	Slovenia	Slovenia
+
+# SolomonIslands
+SolomonIslands	SolomonIslands	SolomonIslands	SolomonIslands
+
+# Somalia
+Somalia	Somalia	Somalia	Somalia
+
+# SouthAfrica
+SouthAfrica	SouthAfrica	SouthAfrica	SouthAfrica
+South-Africa	SouthAfrica	SouthAfrica	SouthAfrica
+Johannesburg	SouthAfrica	Gauteng	Johannesburg
+Durban	SouthAfrica	KwaZuluNatal	Durban
+Pretoria	SouthAfrica	Gauteng	Pretoria
+CapeTown	SouthAfrica	WesternCape	CapeTown
+KwaZuluNatal	SouthAfrica	KwaZuluNatal	KwaZuluNatal
+Middleburg	SouthAfrica	Mpumalanga	Middleburg
+
+# SouthKorea
+SouthKorea	SouthKorea	SouthKorea	SouthKorea
+Korearepublicof	SouthKorea	SouthKorea	SouthKorea
+Ansan	SouthKorea	Gyeonggi	Ansan
+Busan	SouthKorea	Busan	Busan
+Changwon	SouthKorea	Gyeongsangnam	Changwon
+Cheonbuk	SouthKorea	Jeollabuk	Jeonbuk
+Cheongju	SouthKorea	Chungcheongnam	Cheongju
+Cheonnam	SouthKorea	Jeollanam	Jeollanam
+Chu	SouthKorea	SouthKorea	Chu
+Chungbuk	SouthKorea	Chungcheongbuk	Chungbuk
+Chungnam	SouthKorea	Chungcheongnam	Chungnam
+Daegu	SouthKorea	Daegu	Daegu
+Daejeon	SouthKorea	Daejeon	Daejeon
+Gangwon	SouthKorea	Gangwon	Gangwon
+Gwangju	SouthKorea	Gwangju	Gwangju
+Gyeonggi	SouthKorea	Gyeonggi	Gyeonggi
+Gyeongbuk	SouthKorea	Gyeongsangbuk	Gyeongbuk
+Gyeongnam	SouthKorea	Gyeongsangnam	Gyeongnam
+Incheon	SouthKorea	Seoul	Incheon
+Jeju	SouthKorea	Jeju	Jeju
+Jeonbuk	SouthKorea	Seoul	Gangnam
+Jeonnam	SouthKorea	Jeollanam	Jeonnam
+Jochiwon	SouthKorea	Daejeon	Jochiwon
+Korea	SouthKorea	SouthKorea	SouthKorea
+Kwangju	SouthKorea	Honam	Kwangju
+Kyongbuk	SouthKorea	Gyeongsang	Gyeongbuk
+Kyonggi	SouthKorea	Gyeonggi	Gyeonggi
+Kyongnam	SouthKorea	Gyeongsangnam	Gyeongnam
+Kyungbuk	SouthKorea	Gyeongsangbuk	Gyeongbuk
+Kyunggi	SouthKorea	Gyeonggi	Gyeonggi
+Kyungnam	SouthKorea	Gyeongsangnam	Gyeongnam
+Seoul	SouthKorea	Seoul	Seoul
+Suwon	SouthKorea	Gyeonggi	Suwon
+Ulsan	SouthKorea	Ulsan	Ulsan
+Wonju	SouthKorea	Gangwon	Wonju
+
+# Spain
+Spain	Spain	Spain	Spain
+Alicante	Spain	Valencia	Alicante
+Aragon	Spain	Aragon	Aragon
+Asturias	Spain	Asturias	Asturias
+Baleares	Spain	BalearicIslands	Baleares
+Barcelona	Spain	Catalonia	Barcelona
+Burgos	Spain	CastillaLaMancha	Burgos
+Canarias	Spain	CanaryIslands	Canarias
+Cantabria	Spain	Cantabria	Cantabria
+CastillaLaMancha	Spain	CastillaLaMancha	CastillaLaMancha
+CastileAndLeon	Spain	CastileAndLeon	CastileAndLeon
+Catalonia	Spain	Catalonia	Catalonia
+Ceuta	Spain	Ceuta	Ceuta
+Euskadi	Spain	BasqueCountry	Euskadi
+Extremadura	Spain	Extremadura	Extremadura
+Galicia	Spain	Galicia	Galicia
+Girona	Spain	Catalonia	Girona
+LaRioja	Spain	LaRioja	LaRioja
+Leon	Spain	CastileAndLeon	Leon
+Lleida	Spain	Catalonia	Lleida
+Madrid	Spain	Madrid	Madrid
+Melilla	Spain	Melilla	Melilla
+Murcia	Spain	Murcia	Murcia
+Navarra	Spain	Navarra	Navarra
+Oviedo	Spain	Asturias	Oviedo
+PaisVasco	Spain	BasqueCountry	PaisVasco
+Palencia	Spain	CastileAndLeon	Palencia
+Santander	Spain	Cantabria	Santander
+Salamanca	Spain	CastileAndLeon	Salamanca
+SanSebastian	Spain	BasqueCountry	SanSebastian
+Segovia	Spain	CastileAndLeon	Segovia
+Soria	Spain	CastileAndLeon	Soria
+Terrassa	Spain	Catalonia	Terrassa
+Tarragona	Spain	Catalonia	Tarragona
+Valencia	Spain	Valencia	Valencia
+Valladolid	Spain	CastileAndLeon	Valladolid
+Zamora	Spain	CastileAndLeon	Zamora
+Zaragoza	Spain	Aragon	Zaragoza
+
+# SriLanka
+SriLanka	SriLanka	SriLanka	SriLanka
+Colombo	SriLanka	WesternProvince	SriLanka
+Karapitiya	SriLanka	SouthernProvince	Karapitiya
+Matara	SriLanka	SouthernProvince	Matara
+Ratnapura	SriLanka	Sabaragamuwa	Ratnapura
+
+# StVincentAndTheGrenadines
+StVincentAndTheGrenadines	SaintVincentAndTheGrenadines	SaintVincentAndTheGrenadines	SaintVincentAndTheGrenadines
+saint_vincent_and_the_grenadines	SaintVincentAndTheGrenadines	SaintVincentAndTheGrenadines	SaintVincentAndTheGrenadines
+SaintVincentAndTheGrenadines	SaintVincentAndTheGrenadines	SaintVincentAndTheGrenadines	SaintVincentAndTheGrenadines
+
+# Sudan
+Sudan	Sudan	Sudan	Sudan
+
+# Suriname
+Suriname	Suriname	Suriname	Suriname
+
+# Sweden
+Sweden	Sweden	Sweden	Sweden
+Alingsas	Sweden	VastraGotaland	Alingsas
+Boras	Sweden	VastraGotaland	Boras
+Eskilstuna	Sweden	Sodermanland	Eskilstuna
+Falun	Sweden	Dalarna	Falun
+Gavle	Sweden	Gavleborgs	Gavle
+Gothenburg	Sweden	VastraGotaland	Gothenburg
+Halmstad	Sweden	Halland	Halmstad
+Helsingborg	Sweden	Skane	Helsingborg
+Jonkoping	Sweden	Jonkoping	Jonkoping
+Kalmar	Sweden	Kalmar	Kalmar
+Karlstad	Sweden	Varmland	Karlstad
+Kristianstad	Sweden	Skane	Kristianstad
+Kungalv	Sweden	VastraGotaland	Kungalv
+Linkoping	Sweden	Ostergotland	Linkoping
+Lund	Sweden	Skane	Lund
+Malmo	Sweden	Skane	Malmo
+Orebro	Sweden	Orebro	Orebro
+Ostersund	Sweden	Jamtland	Ostersund
+Skovde	Sweden	VastraGotaland	Skovde
+Stockholm	Sweden	Stockholm	Stockholm
+Sundsvall	Sweden	Vasternorrland	Sundsvall
+Trollhattan	Sweden	VastraGotaland	Trollhattan
+Umea	Sweden	Vasterbottens	Umea
+Uppsala	Sweden	Uppsala	Uppsala
+Vasteras	Sweden	Vastmanland	Vasteras
+Vaxjo	Sweden	Kronoberg	Vaxjo
+Vimmerby	Sweden	Kalmar	Vimmerby
+Visby	Sweden	Gotland	Visby
+Ystad	Sweden	Skane	Ystad
+
+# Switzerland
+Switzerland	Switzerland	Switzerland	Switzerland
+Geneva	Switzerland	Geneva	Geneva
+Zurich	Switzerland	Zurich	Zurich
+
+# Syria
+Syria	Syria	Syria	Syria
+
+# Taiwan
+Taiwan	Taiwan	Taiwan	Taiwan
+TaiwanProvinceOfChina	Taiwan	Taiwan	Taiwan
+Hsiaoliuchiuisletpingtong	Taiwan	Pingtung	Pingtung
+Keelung	Taiwan	Keelung	Keelung
+Kinmen	Taiwan	Kinmen	Kinmen
+Linkou	Taiwan	Linkou	Linkou
+Pingtung	Taiwan	Pingtung	Pingtung
+Taipei	Taiwan	Taipei	Taipei
+Taoyuan	Taiwan	Taoyuan	Taoyuan
+Yilan	Taiwan	Yilan	Yilan
+
+# Tajikistan
+Tajikistan	Tajikistan	Tajikistan	Tajikistan
+
+# Tanzania
+Tanzania	Tanzania	Tanzania	Tanzania
+Tanzaniaunitedrepublicof	Tanzania	Tanzania	Tanzania
+
+# Thailand
+Thailand	Thailand	Thailand	Thailand
+Ayutthaya	Thailand	Ayutthaya	Ayutthaya
+Bangkok	Thailand	Bangkok	Bangkok
+Chachoengsao	Thailand	Chachoengsao	Chachoengsao
+Chanthaburi	Thailand	Chanthaburi	Chanthaburi
+ChiangMai	Thailand	ChiangMai	ChiangMai
+ChiangRai	Thailand	ChiangRai	ChiangRai
+Chonburi	Thailand	Chonburi	Chonburi
+CuTha	Thailand	Thailand	CuTha
+Kampheangphet	Thailand	KamphaengPhet	KamphaengPhet
+Kampheangephet	Thailand	KamphaengPhet	KamphaengPhet
+KamphaengPhet	Thailand	KamphaengPhet	KamphaengPhet
+KhonKaen	Thailand	KhonKaen	KhonKaen
+Krabi	Thailand	Krabi	Krabi
+LopBuri	Thailand	LopBuri	LopBuri
+MaeHongSon	Thailand	MaeHongSon	MaeHongSon
+MahaSarakham	Thailand	MahaSarakham	MahaSarakham
+Nakhonphanom	Thailand	NakhonPhanom	NakhonPhanom
+NakhonRatachasima	Thailand	NakhonRatachasima	NakhonRatachasima
+NakhonSiThammarat	Thailand	NakhonSiThammarat	NakhonSiThammarat
+Nan	Thailand	Nan	Nan
+NongKhai	Thailand	NongKhai	NongKhai
+Nonthaburi	Thailand	Nonthaburi	Nonthaburi
+PathumThani	Thailand	PathumThani	PathumThani
+Phetchaburi	Thailand	Phetchaburi	Phetchaburi
+Phitsanulok	Thailand	Phitsanulok	Phitsanulok
+PhraNakhonSiAyutthaya	Thailand	PhraNakhonSiAyutthaya	PhraNakhonSiAyutthaya
+Phuket	Thailand	Phuket	Phuket
+PrachinBuri	Thailand	PrachinBuri	PrachinBuri
+PrachuapKhiriKhan	Thailand	PrachuapKhiriKhan	PrachuapKhiriKhan
+Ratchaburi	Thailand	Ratchaburi	Ratchaburi
+Rayong	Thailand	Rayong	Rayong
+SaKaeo	Thailand	SaKaeo	SaKaeo
+SamutPrakan	Thailand	SamutPrakan	SamutPrakan
+Saraburi	Thailand	Saraburi	Saraburi
+Satun	Thailand	Satun	Satun
+Siriraj_ICRC_NKS_1	Thailand	Bangkok	Bangkok
+Songkhla	Thailand	Songkhla	Songkhla
+Sukhothai	Thailand	Sukhothai	Sukhothai
+SuphanBuri	Thailand	SuphanBuri	SuphanBuri
+SuratThani	Thailand	SuratThani	SuratThani
+Tak	Thailand	Tak	Tak
+Trang	Thailand	Trang	Trang
+Udorn	Thailand	NakhonRatachasima	NongPhaiLom
+Uttaradit	Thailand	Uttaradit	Uttaradit
+Yasothon	Thailand	Yasothon	Yasothon
+
+# Togo
+Togo	Togo	Togo	Togo
+
+# Tonga
+Tonga	Tonga	Tonga	Tonga
+
+# TrinidadAndTobago
+Trinidad	TrinidadAndTobago	Trinidad	Trinidad
+Trinidadandtobago	TrinidadAndTobago	Trinidad	Trinidad
+
+# Tunisia
+Tunisia	Tunisia	Tunisia	Tunisia
+Tunis	Tunisia	Tunisia	Tunis
+
+# Turkey
+Turkey	Turkey	Turkey	Turkey
+Adana	Turkey	Adana	Adana
+Adiyaman	Turkey	Adiyaman	Adiyaman
+Afyon	Turkey	Afyon	Afyon
+Agri	Turkey	Agri	Agri
+Aksaray	Turkey	Aksaray	Aksaray
+Amasya	Turkey	Amasya	Amasya
+Ankara	Turkey	Ankara	Ankara
+Antalya	Turkey	Antalya	Antalya
+Aydin	Turkey	Aydin	Aydin
+Bartin	Turkey	Bartin	Bartin
+Batman	Turkey	Batman	Batman
+Bayburt	Turkey	Bayburt	Bayburt
+Bitlis	Turkey	Bitlis	Bitlis
+Bolu	Turkey	Bolu	Bolu
+Burdur	Turkey	Burdur	Burdur
+Bursa	Turkey	Bursa	Bursa
+Canakkale	Turkey	Canakkale	Canakkale
+Cankiri	Turkey	Cankiri	Cankiri
+Corum	Turkey	Corum	Corum
+Denizli	Turkey	Denizli	Denizli
+Diyarbakir	Turkey	Diyarbakir	Diyarbakir
+Edirne	Turkey	Edirne	Edirne
+Erzurum	Turkey	Erzurum	Erzurum
+Eskisehir	Turkey	Eskisehir	Eskisehir
+Gaziantep	Turkey	Gaziantep	Gaziantep
+Giresun	Turkey	Giresun	Giresun
+Gumushane	Turkey	Gumushane	Gumushane
+Hatay	Turkey	Hatay	Hatay
+Karabuk	Turkey	Karabuk	Karabuk
+Karaman	Turkey	Karaman	Karaman
+Kocaeli	Turkey	Kocaeli	Kocaeli
+Kutahya	Turkey	Kutahya	Kutahya
+Isparta	Turkey	Isparta	Isparta
+Istanbul	Turkey	Istanbul	Istanbul
+Izmir	Turkey	Izmir	Izmir
+Konya	Turkey	Konya	Konya
+Kastamonu	Turkey	Kastamonu	Kastamonu
+Kibris	Turkey	Cyprus	Cyprus
+Kirklareli	Turkey	Kirklareli	Kirklareli
+Kirikkale	Turkey	Kirikkale	Kirikkale
+Malatya	Turkey	Malatya	Malatya
+Manisa	Turkey	Manisa	Manisa
+Mardin	Turkey	Mardin	Mardin
+Mersin	Turkey	Mersin	Mersin
+Nevsehir	Turkey	Nevsehir	Nevsehir
+Nigde	Turkey	Nigde	Nigde
+Ordu	Turkey	Ordu	Ordu
+Samsun	Turkey	Samsun	Samsun
+Sivas	Turkey	Sivas	Sivas
+Sanliurfa	Turkey	Sanliurfa	Sanliurfa
+Siirt	Turkey	Siirt	Siirt
+Tekirdag	Turkey	Tekirdag	Tekirdag
+Tokat	Turkey	Tokat	Tokat
+Trabzon	Turkey	Trabzon	Trabzon
+Usak	Turkey	Usak	Usak
+Van	Turkey	Van	Van
+Yalova	Turkey	Yalova	Yalova
+Yozgat	Turkey	Yozgat	Yozgat
+Zonguldak	Turkey	Zonguldak	Zonguldak
+
+# Turkmenistan
+Turkmenistan	Turkmenistan	Turkmenistan	Turkmenistan
+Ashgabat	Turkmenistan		Ashgabat
+
+# TurksAndCaicos
+TurksAndCaicos	TurksAndCaicos	BritishOverseasTerritory	TurksAndCaicos
+
+# Tuvalu
+Tuvalu	Tuvalu	Tuvalu	Tuvalu
+
+# Uganda
+Uganda	Uganda	Uganda	Uganda
+
+# Ukraine
+Ukraine	Ukraine	Ukraine	Ukraine
+Cherkasy	Ukraine	Cherkasy	Cherkasy
+Chernihiv	Ukraine	Chernihiv	Chernihiv
+Chernivtsi	Ukraine	Chernivtsi	Chernivtsi
+Crimea	Ukraine	Crimea	Crimea
+Dnipropetrovsk	Ukraine	Dnipropetrovsk	Dnipropetrovsk
+Dniprodzerzhynsk	Ukraine	Dnipropetrovsk	Kamianske
+Donetsk	Ukraine	Donetsk	Donetsk
+IvanoFrankivsk	Ukraine	IvanoFrankivsk	IvanoFrankivsk
+Kharkiv	Ukraine	Kharkiv	Kharkiv
+Khmelnitsky	Ukraine	Khmelnitsky	Khmelnitsky
+Khmilnyk	Ukraine	Khmilnyk	Khmilnyk
+Kiev	Ukraine	Kiev	Kiev
+Kirovohrad	Ukraine	Kirovohrad	Kirovohrad
+Kyiv	Ukraine	Kyiv	Kyiv
+Luhansk	Ukraine	Luhansk	Luhansk
+Lviv	Ukraine	Lviv	Lviv
+Odessa	Ukraine	Odessa	Odessa
+Poltava	Ukraine	Poltava	Poltava
+Rivne	Ukraine	Rivne	Rivne
+Ternopil	Ukraine	Ternopil	Ternopil
+Sumy	Ukraine	Sumy	Sumy
+Volyn	Ukraine	Volyn	Volyn
+Zaporizhia	Ukraine	Zaporizhia	Zaporizhia
+Zakarpattia	Ukraine	Zakarpattia	Zakarpattia
+Zakarpattia	Ukraine	Zakarpattia	Zakarpattia
+Zhytomyr	Ukraine	Zhytomyr	Zhytomyr
+
+# UnitedArabEmirates
+UnitedArabEmirates	UnitedArabEmirates	UnitedArabEmirates	UnitedArabEmirates
+Dubai	UnitedArabEmirates	Dubai	Dubai
+AbuDhabi	UnitedArabEmirates	AbuDhabi	AbuDhabi
+
+# UnitedKingdom
+UnitedKingdom	UnitedKingdom	UnitedKingdom	UnitedKingdom
+Aldershot	UnitedKingdom	England	Aldershot
+Aylesbury	UnitedKingdom	England	Aylesbury
+Bedford	UnitedKingdom	England	Bedford
+Belfast	UnitedKingdom	NorthernIreland	Belfast
+Berks	UnitedKingdom	England	Berkshire
+Birmingham	UnitedKingdom	England	Birmingham
+Brighton	UnitedKingdom	England	Brighton
+Bristol	UnitedKingdom	England	Bristol
+Buckinghamshire	UnitedKingdom	England	Buckinghamshire
+Cambridge	UnitedKingdom	England	Cambridge
+Cambridgeshire	UnitedKingdom	England	Cambridgeshire
+Cardiff	UnitedKingdom	Wales	Cardiff
+ChristsHospital	UnitedKingdom	England	Horsham
+Cheshire	UnitedKingdom	England	Cheshire
+Cirencester	UnitedKingdom	England	Cirencester
+CityofLondon	UnitedKingdom	England	London
+CityofSouthampton	UnitedKingdom	England	Southampton
+Co.Durham	UnitedKingdom	England	CountyDurham
+Colchester	UnitedKingdom	England	Colchester
+Cornwall	UnitedKingdom	England	Cornwall
+Craven	UnitedKingdom	England	Craven
+Croydon	UnitedKingdom	England	Croydon
+Cumbria	UnitedKingdom	England	Cumbria
+Derbyshire	UnitedKingdom	England	Derbyshire
+Dundee	UnitedKingdom	England	Dundee
+Edinburgh	UnitedKingdom	Scotland	Edinburgh
+England	UnitedKingdom	England	England
+Exeter	UnitedKingdom	England	Exeter
+Feltham	UnitedKingdom	England	Feltham
+GerrardsCross	UnitedKingdom	England	GerrardsCross
+Gibraltar	UnitedKingdom	BritishOverseasTerritory	Gibraltar
+Glasgow	UnitedKingdom	Scotland	Glasgow
+Gloucester	UnitedKingdom	England	Gloucester
+Guildford	UnitedKingdom	England	Guildford
+Hampshire	UnitedKingdom	England	Hampshire
+Headington	UnitedKingdom	England	Headington
+HERTS	UnitedKingdom	England	Hertfordshire
+Hexham	UnitedKingdom	England	Hexham
+Huntingdon	UnitedKingdom	England	Huntingdon
+HUNTINGDONCAMBS	UnitedKingdom	England	Huntingdon
+Inverness	UnitedKingdom	Scotland	Inverness
+Kent	UnitedKingdom	England	Kent
+Lambeth	UnitedKingdom	England	Lambeth
+Leeds	UnitedKingdom	England	Leeds
+Leicester	UnitedKingdom	England	Leicester
+LINCS	UnitedKingdom	England	Lincolnshire
+Liverpool	UnitedKingdom	England	Liverpool
+London	UnitedKingdom	England	London
+Luton	UnitedKingdom	England	Luton
+Manchester	UnitedKingdom	England	Manchester
+Middlesex	UnitedKingdom	England	Middlesex
+Middx	UnitedKingdom	England	Middlesex
+Minehead	UnitedKingdom	England	Minehead
+NewcastleuponTyne	UnitedKingdom	England	Newcastle
+Ni	UnitedKingdom	NorthernIreland	Belfast
+Nib	UnitedKingdom	UnitedKingdom	UnitedKingdom
+NorthernIreland	UnitedKingdom	NorthernIreland	NorthernIreland
+Norwich	UnitedKingdom	England	Norwich
+Nottingham	UnitedKingdom	England	Nottingham
+Oxford	UnitedKingdom	England	Oxford
+Oxon	UnitedKingdom	England	Oxfordshire
+Oxfordshire	UnitedKingdom	England	Oxfordshire
+Peterborough	UnitedKingdom	England	Peterborough
+Plymouth	UnitedKingdom	England	Plymouth
+Poole	UnitedKingdom	England	Poole
+Portsmouth	UnitedKingdom	England	Portsmouth
+Reading	UnitedKingdom	England	Reading
+Scotland	UnitedKingdom	Scotland	Scotland
+Scunthorpe	UnitedKingdom	England	Scunthorpe
+Sheffield	UnitedKingdom	England	Sheffield
+Somerset	UnitedKingdom	England	Somerset
+Southampton	UnitedKingdom	England	Southampton
+Stevenage	UnitedKingdom	England	Stevenage
+Steyning	UnitedKingdom	England	Steyning
+Surrey	UnitedKingdom	England	Surrey
+Swansea	UnitedKingdom	Wales	Swansea
+Telford	UnitedKingdom	England	Telford
+Tetbury	UnitedKingdom	England	Tetbury
+Ware	UnitedKingdom	England	Ware
+Whitechapel	UnitedKingdom	England	London
+Wirral	UnitedKingdom	England	Wirral
+Wythenshawe	UnitedKingdom	England	Wythenshawe
+Wales	UnitedKingdom	Wales	Wales
+York	UnitedKingdom	England	York
+
+# USA
+Alabama	USA	Alabama	Alabama
+Alaska	USA	Alaska	Alaska
+Arizona	USA	Arizona	Arizona
+Arkansas	USA	Arkansas	Arkansas
+Baltimore	USA	Maryland	Baltimore
+California	USA	California	California
+Colorado	USA	Colorado	Colorado
+Connecticut	USA	Connecticut	Connecticut
+Delaware	USA	Delaware	Delaware
+DistrictOfColumbia	USA	DistrictOfColumbia	DistrictOfColumbia
+Florida	USA	Florida	Florida
+Georgia	USA	Georgia	Georgia
+Hawaii	USA	Hawaii	Hawaii
+Idaho	USA	Idaho	Idaho
+Illinois	USA	Illinois	Illinois
+Indiana	USA	Indiana	Indiana
+Iowa	USA	Iowa	Iowa
+Kentucky	USA	Kentucky	Kentucky
+Louisiana	USA	Louisiana	Louisiana
+Maine	USA	Maine	Maine
+Maryland	USA	Maryland	Maryland
+Massachusetts	USA	Massachusetts	Massachusetts
+Memphis	USA	Tennessee	Memphis
+Michigan	USA	Michigan	Michigan
+Minnesota	USA	Minnesota	Minnesota
+Mississippi	USA	Mississippi	Mississippi
+Missouri	USA	Missouri	Missouri
+Montana	USA	Montana	Montana
+Nebraska	USA	Nebraska	Nebraska
+Nevada	USA	Nevada	Nevada
+NewHampshire	USA	NewHampshire	NewHampshire
+NewJersey	USA	NewJersey	NewJersey
+NewMexico	USA	NewMexico	NewMexico
+NewYork	USA	NewYork	NewYork
+NorthCarolina	USA	NorthCarolina	NorthCarolina
+NorthDakota	USA	NorthDakota	NorthDakota
+Ohio	USA	Ohio	Ohio
+Oklahoma	USA	Oklahoma	Oklahoma
+Oregon	USA	Oregon	Oregon
+Pennsylvania	USA	Pennsylvania	Pennsylvania
+RhodeIsland	USA	RhodeIsland	RhodeIsland
+SouthCarolina	USA	SouthCarolina	SouthCarolina
+SouthDakota	USA	SouthDakota	SouthDakota
+Tennessee	USA	Tennessee	Tennessee
+Texas	USA	Texas	Texas
+Utah	USA	Utah	Utah
+Vermont	USA	Vermont	Vermont
+Virginia	USA	Virginia	Virginia
+Washington	USA	Washington	Washington
+WestVirginia	USA	WestVirginia	WestVirginia
+Wisconsin	USA	Wisconsin	Wisconsin
+Wyoming	USA	Wyoming	Wyoming
+
+UnitedStates	USA	USA	USA
+Usa	USA	USA	USA
+USA	USA	USA	USA
+Albany	USA	NewYork	Albany
+AnnArbor	USA	Michigan	AnnArbor
+Atlanta	USA	Georgia	Atlanta
+Baylor	USA	Texas	Baylor
+Bcm	USA	Texas	Baylor
+Berkeley	USA	California	Berkeley
+Bethesda	USA	Maryland	Bethesda
+Boston	USA	Massachusetts	Massachusetts
+Brawley	USA	California	Brawley
+Brooklyn	USA	NewYork	Brooklyn
+Bronx	USA	NewYork	Bronx
+Brownsville	USA	Texas	Brownsville
+Cambridge	USA	Massachusetts	Cambridge
+CapeMay	USA	NewJersey	CapeMay
+Charlottesville	USA	Virginia	Charlottesville
+CherryPoint	USA	NorthCarolina	CherryPoint
+Chicago	USA	Illinois	Chicago
+Cornell	USA	NewYork	Cornell
+Dayton	USA	Ohio	Dayton
+Durham	USA	NorthCarolina	Durham
+FtBenning	USA	Georgia	FortBenning
+FtCarson	USA	Colorado	FortCarson
+Gainesville	USA	Florida	Gainesville
+GeorgiaNHRC	USA	Georgia	FortBenning
+Gilroy	USA	California	Gilroy
+GreatLakes	USA	Michigan	GreatLakes
+Houston	USA	Texas	Houston
+Kansas	USA	Kansas	Kansas
+Lackland	USA	Texas	Lackland
+LosAngeles	USA	California	LosAngeles
+Keywestfl	USA	Florida	KeyWest
+Mayoclinic	USA	Minnesota	Mayoclinic
+Minneapolis	USA	Minnesota	Minneapolis
+Memphis	USA	Tennessee	Memphis
+Nashville	USA	Tennessee	Nashville
+Newark	USA	NewJersey	Newark
+NewBern	USA	NorthCarolina	NewBern
+Pendleton	USA	Oregon	Pendleton
+Pensacola	USA	Florida	Pensacola
+Rochester	USA	NewYork	Rochester
+Temple	USA	Pennsylvania	Temple
+SanAntonio	USA	Texas	SanAntonio
+SanDiego	USA	California	SanDiego
+SanFrancisco	USA	California	SanFrancisco
+SanRamon	USA	California	SanRamon
+SantaClara	USA	California	SantaClara
+SantaFe	USA	NewMexico	SantaFe
+SilverSpring	USA	Maryland	SilverSpring
+SL	USA	USA	USA
+Springfield	USA	Illinois	Springfield
+Sophia	USA	WestVirginia	Sophia
+StLouis	USA	Missouri	StLouis
+
+# US Virgin Islands
+USVI	USVI	USVI	USVI
+USVirginIslands	USVI	USVI	USVI
+Usvirginislandssaintthomas	USVI	SaintThomas	SaintThomas
+usvirginislandssaintcroix	USVI	SaintCroix	SaintCroix
+SaintCroix	USVI	SaintCroix	SaintCroix
+SaintThomas	USVI	SaintThomas	SaintThomas
+SaintJohn	USVI	SaintJohn	SaintJohn
+
+# Uruguay
+Uruguay	Uruguay	Uruguay	Uruguay
+Montevideo	Uruguay	Montevideo	Montevideo
+Maldonando	Uruguay	Maldonando	Maldonando
+
+# Uzbekistan
+Uzbekistan	Uzbekistan	Uzbekistan	Uzbekistan
+Tashkent	Uzbekistan	Tashkent	Tashkent
+
+# Vanuatu
+Vanuatu	Vanuatu	Vanuatu	Vanuatu
+
+# Yemen
+Yemen	Yemen	Yemen	Yemen
+
+# Venezuela
+Venezuela	Venezuela	Venezuela	Venezuela
+Districtfederalcaracas	Venezuela	FederalCapital	Caracas
+Dfcaracas	Venezuela	FederalCapital	Caracas
+Caracas	Venezuela	FederalCapital	Caracas
+Maracay	Venezuela	Aragua	Maracay
+Aragua	Venezuela	Aragua	Aragua
+
+# Vietnam
+Vietnam	Vietnam	Vietnam	Vietnam
+BacGiang	Vietnam	BacGiang	BacGiang
+BacNinh	Vietnam	BacNinh	BacNinh
+DaNang	Vietnam	DaNang	DaNang
+HaNam	Vietnam	HaNam	HaNam
+Hanoi	Vietnam	Hanoi	Hanoi
+HoaBinh	Vietnam	HoaBinh	HoaBinh
+HoChiMinh	Vietnam	HoChiMinh	HoChiMinh
+Hue	Vietnam	ThuaThienHue	Hue
+HungYen	Vietnam	HungYen	HungYen
+KhanhHoa	Vietnam	KhanhHoa	KhanhHoa
+LangSon	Vietnam	LangSon	LangSon
+LongAn	Vietnam	LongAn	LongAn
+Mekongdelta	Vietnam	MekongDelta	MekongDelta
+TayNguyen	Vietnam	DakLak	TayNguyen
+TayNinh	Vietnam	TayNinh	TayNinh
+ThaiBinh	Vietnam	ThaiBinh	ThaiBinh
+
+# WallisAndFutuna
+WallisAndFutuna	WallisAndFutuna	FrenchOverseasCollectivity	WallisAndFutuna
+
+# Zambia
+Zambia	Zambia	Zambia	Zambia
+Lusaka	Zambia	Lusaka	Lusaka

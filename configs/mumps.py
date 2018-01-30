@@ -1,7 +1,7 @@
 import sys, re
 sys.path.append("")
 from src.default_config import default_config, common_fasta_headers
-from src.utils.misc import make_dict_from_file
+from src.utils.file_readers import make_dict_from_file
 import src.utils.fix_functions as fix_functions
 
 ### modified functions ###
@@ -24,14 +24,12 @@ def fix_strain_name(obj, name, logger):
         logger.debug("Changed strain name from {} to {}".format(original_name, name))
     return name
 
-def fix_date(obj, provided_date, logger):
-    date = provided_date
-    if obj.parent.strain_name in date_fix_dict:
-        date = date_fix_dict[obj.parent.strain_name]
-    date = fix_functions.collection_date(obj, date, logger)
-    if provided_date is not date:
-        logger.debug("Changed collection date from {} to {}".format(provided_date, date))
-    return date
+def country(sample, value, logger):
+    general_location_fix(sample, "country", geo_synonyms, value, logger)
+
+def division(sample, value, logger):
+    general_location_fix(sample, "division", geo_synonyms, value, logger)
+
 
 ## initialise with default config
 config = default_config
@@ -52,4 +50,5 @@ config["fasta_headers"] = [
     'accession_url'
 ]
 config["fix_functions"]["strain_name"] = fix_strain_name
-config["fix_functions"]["collection_date"] = fix_date
+config["fix_lookups"]["strain_name_to_location"] = "source-data/mumps_location_fix.tsv"
+config["fix_lookups"]["strain_name_to_date"] = "source-data/mumps_date_fix.tsv"

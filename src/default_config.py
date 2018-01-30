@@ -30,10 +30,19 @@ default_config = {
         "set_attribution_journal": gbp.set_attribution_journal,
         "set_attribution_url": gbp.set_attribution_url
     },
+    "fix_lookups": {
+        "strain_name_to_strain_name": None,
+        "strain_name_to_location": None,
+        "strain_name_to_date": None,
+        "geo_synonyms": "source-data/geo_synonyms.tsv"
+    },
     "fix_functions": {
         "strain_name": fix.strain_name,
         "collection_date": fix.collection_date,
-        "attribution_id": fix.attribution_id
+        "attribution_id": fix.attribution_id,
+        "country": fix.country,
+        "division": fix.division,
+        "location": fix.location
     },
     # TODO: Make this a real minimal default config
     "mapping" : {
@@ -74,7 +83,8 @@ default_config = {
             'sequence_url',
             'attribution',
             'sequence',
-            'sample_id'
+            'sample_id',
+            'location'
         ],
         'attribution' : [
             'attribution_id',

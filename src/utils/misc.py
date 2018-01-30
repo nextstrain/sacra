@@ -1,16 +1,17 @@
-import csv
 import re
 
-def make_dict_from_file(fname):
+def camelcase_to_snakecase(name):
     '''
-    Open strain name fixing files and define corresponding dictionaries
+    convert camelcase format to snakecase format
+    :param name:
+    :return:
     '''
-    reader = csv.DictReader(filter(lambda row: row[0]!='#', open(fname)), delimiter='\t')
-    fix_whole_name = {}
-    for line in reader:
-        if not line["fix"]:
-            x = re.split(" +", line["label"])
-            line["label"] = x[0]
-            line["fix"] = x[1]
-        fix_whole_name[line['label'].decode('unicode-escape')] = line['fix']
-    return fix_whole_name
+    if name is not None:
+        s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
+        return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower().replace(" ", "")
+
+def snakecase_to_camelcase(name):
+    if name is not None:
+        split_name = name.split('_')
+        split_name = [x.title() for x in split_name]
+        return "".join(split_name)
