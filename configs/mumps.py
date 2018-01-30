@@ -49,6 +49,25 @@ def make_config(args, logger):
                 'division',
                 'muv_genotype'
             ]
+        elif args.overwrite_fasta_header == "fauna":
+            # 31170254|mumps|LC325487|2017-XX-XX|japan_korea|japan|japan|japan|genbank|genome|Hasegawa et al|https://www.ncbi.nlm.nih.gov/nuccore/LC325487|Detection of Mumps rubulavirus Tokyo, Japan|Unpublished|https://www.ncbi.nlm.nih.gov/pubmed/|?
+            config["fasta_headers"] = [
+                'strain_name',
+                'virus',
+                'accession',
+                'collection_date',
+                'unused', # region
+                'country',
+                'division',
+                'location',
+                'unused', # genbank field
+                'unused', # genome
+                'authors',
+                'accession_url',
+                'publication_name',
+                'journal',
+                'attribution_url'
+            ]
         else:
             logger.critical("Unknown FASTA header format demanded: \"{}\"".format(args.overwrite_fasta_header)); sys.exit(2)
     else:
