@@ -22,6 +22,14 @@ def attribution_id(obj, existing_id, logger):
         logger.warn("Attribution ID somehow provided and does not equal fixed ID ({} vs {})".format(existing_id, value))
     return value
 
+def sample_name(obj, existing_name, logger):
+    if existing_name:
+        return existing_name
+    obj.fix_single("collection_date")
+    if obj.collection_date is None:
+        return "unknown"
+    return obj.collection_date
+
 
 def strain_name(strain, original_name, logger):
     # the first time this function runs the database needs to be loaded into memory

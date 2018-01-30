@@ -24,7 +24,7 @@ class Sequence(Unit):
             try:
                 self.parent = sample_obj
                 self.parent.children.append(self)
-                logger.debug("Set parent/child connections between {} (self) and {} (parent).".format(self.sequence_id, self.parent.sample_id))
+                # logger.debug("Set parent/child connections between {} (self) and {} (parent).".format(self.sequence_id, self.parent.sample_id))
             except:
                 logger.error("Could not set parent for sequence {}.".format(self.sequence_id))
 

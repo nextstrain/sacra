@@ -45,6 +45,7 @@ default_config = {
         "division": fix.division,
         "location": fix.location,
         "region": fix.region,
+        "sample_name": fix.sample_name,
     },
     # TODO: Make this a real minimal default config
     "mapping" : {
