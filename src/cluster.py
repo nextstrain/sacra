@@ -39,6 +39,10 @@ class Cluster:
             d = Attribution(self.CONFIG, data_dictionary)
             # Operations
             self.attributions.add(d)
+        elif self.cluster_type == "unlinked":
+            self.strains = set()
+            self.samples = set()
+            self.sequences = set()
         else:
             logger.error("Unknown cluster_type {}".format(cluster_type))
 
