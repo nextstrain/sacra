@@ -27,6 +27,9 @@ class Dataset:
         elif ftype == "fasta":
             unmerged_clusters = self.read_fasta_to_clusters(f)
             self.merge_clusters_into_state(unmerged_clusters)
+        elif ftype == "json":
+            unmerged_clusters = self.read_json_to_clusters(f)
+            self.merge_clusters_into_state(unmerged_clusters)
         else:
             logger.error("Unknown input filetype for {}. Fatal.".format(f))
             sys.exit(2)
@@ -65,6 +68,114 @@ class Dataset:
                 if att.is_valid(): clusters.append(att)
         return clusters
 
+    def read_json_to_clusters(self, infile):
+        from strain import Strain
+        from sample import Sample
+        from sequence import Sequence
+        from attribution import Attribution
+
+        strains = []
+        samples = []
+        sequences = []
+        attributions = []
+        # Read file
+        with open(infile, 'r') as f:
+            for key, value in json.load(f).iteritems():
+                # Keys should be "strains, samples, sequences, attributions, and dbinfo"
+                if key == "dbinfo":
+                    pass
+                elif key == "strains":
+                    for d in value:
+                        try:
+                            strains.append(Strain(self.CONFIG, d))
+                        except:
+                            logger.critical("Error reading strain block:\n {}".format(d)); sys.exit(2)
+                elif key == "samples":
+                    for d in value:
+                        try:
+                            samples.append(Sample(self.CONFIG, d, None))
+                        except:
+                            logger.critical("Error reading sample block:\n {}".format(d)); sys.exit(2)
+                elif key == "sequences":
+                    for d in value:
+                        try:
+                            sequences.append(Sequence(self.CONFIG, d, None))
+                        except:
+                            logger.critical("Error reading strain block:\n {}".format(d)); sys.exit(2)
+                elif key == "attributions":
+                    for d in value:
+                        print(d)
+                        try:
+                            attributions.append(Attribution(self.CONFIG, d))
+                        except:
+                            logger.critical("Error reading attribution block:\n {}".format(d)); sys.exit(2)
+
+            print(samples, sequences, strains)
+
+            clusters = self.build_clusters_from_unlinked_units(strains, samples, sequences, attributions)
+
+        return clusters
+
+    def build_clusters_from_unlinked_units(self, strains, samples, sequences, attributions):
+
+        clusters = []
+
+        if strains is not None:
+            strains = self.pop_duplicate_entries(strains, "strain_id")
+            if samples is not None:
+                samples = self.pop_duplicate_entries(samples, "sample_id")
+                if sequences is not None:
+                    sequences = self.pop_duplicate_entries(sequences, "sequence_id")
+                else:
+                    logger.error("Error in build_clusters_from_unlinked_units; no sequences objects found")
+            else:
+                logger.error("Error in build_clusters_from_unlinked_units; no samples objects found")
+        else:
+            logger.error("Error in build_clusters_from_unlinked_units; no strains objects found")
+        if attributions is not None:
+            attributions = self.pop_duplicate_entries(attributions, "attribution_id")
+        else:
+            logger.error("Error in build_clusters_from_unlinked_units; no attributions objects found")
+
+        for strain in strains:
+            clus = Cluster(self.CONFIG, None, cluster_type="unlinked")
+            clus.strains.add(strain)
+            for sample in samples:
+                sample_strain_name = sample.sample_id.split('|')[0]
+                if sample_strain_name == strain.strain_id:
+                    clus.samples.add(sample)
+                    sample.parent = strain
+                    strain.children.append(sample)
+                    for sequence in sequences:
+                        sequence_sample_name = sequence.sequence_id.split('|')[1]
+                        sequence_strain_name = sequence.sequence_id.split('|')[0]
+                        if sequence_sample_name == sample.sample_id.split('|')[1] and sequence_strain_name == strain.strain_id:
+                            clus.sequences.add(sequence)
+                            sequence.parent = sample
+                            sample.children.append(sequence)
+                        else:
+                            pass
+                else:
+                    pass
+            clus.cluster_type = "genic"
+            clusters.append(clus)
+        return clusters
+
+
+    def pop_duplicate_entries(self, items, attr):
+        remove = []
+        for i in range(len(items)):
+            for j in range(i+1,len(items)):
+                if getattr(items[i], attr) == getattr(items[j], attr):
+                    logger.warn("Found duplicate entries for {}, removing extras.".format(items[j]))
+                    remove.append(j)
+        list(set(remove)).sort()
+        remove = remove[::-1]
+        for index in remove:
+            items.pop(index)
+        return items
+
+
     def get_accessions_from_file(self, fname):
         accessions = []
         try:
@@ -81,8 +192,8 @@ class Dataset:
             return "fasta"
         if fname.endswith(".txt"):
             return "accessions"
-        # elif (fname.endswith(".json")):
-        #     return "json"
+        elif (fname.endswith(".json")):
+            return "json"
 
     def download_entrez_data(self, accessions, make_clusters = False):
         ## don't fetch data that's already fetched!
