@@ -15,7 +15,8 @@ class Sequence(Unit):
         # logger.info("Sequence class initializing")
         self.CONFIG = CONFIG
         self.save_sequence_data_to_state(data_dictionary, sm["sequence"])
-        self.clean_id(sample_obj)
+        if sample_obj:
+            self.clean_id(sample_obj)
 
         # logger.debug("Sequence data (sans the actual sequence): {}".format({k:v for k, v in self.__dict__.iteritems() if k != "sequence"}))
 
