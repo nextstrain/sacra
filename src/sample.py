@@ -47,7 +47,5 @@ class Sample(Unit):
         if messy_flag:
             logger.warn("Could not set parent for sample {}. Errors may occur if input file was a FASTA.".format(self.sample_id))
 
-        print("Checkpoint 4")
-
     def is_valid(self):
         return hasattr(self, "sample_id") and hasattr(self, "strain_id")
