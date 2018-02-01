@@ -29,6 +29,9 @@ class Sequence(Unit):
             except:
                 logger.error("Could not set parent for sequence {}.".format(self.sequence_id))
 
+        if "attribution_id" in data_dictionary.keys():
+            self.attribution_id = data_dictionary["attribution_id"]
+
     def save_sequence_data_to_state(self, data_dictionary, spec):
         for field in spec:
             if field in data_dictionary.keys():
