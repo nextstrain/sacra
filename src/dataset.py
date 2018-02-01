@@ -104,13 +104,10 @@ class Dataset:
                             logger.critical("Error reading strain block:\n {}".format(d)); sys.exit(2)
                 elif key == "attributions":
                     for d in value:
-                        print(d)
                         try:
                             attributions.append(Attribution(self.CONFIG, d))
                         except:
                             logger.critical("Error reading attribution block:\n {}".format(d)); sys.exit(2)
-
-            print(samples, sequences, strains)
 
             clusters = self.build_clusters_from_unlinked_units(strains, samples, sequences, attributions)
 
@@ -159,6 +156,13 @@ class Dataset:
                     pass
             clus.cluster_type = "genic"
             clusters.append(clus)
+
+        for attribution in attributions:
+            clus = Cluster(self.CONFIG, None, cluster_type="unlinked")
+            clus.attributions = set([attribution])
+            clus.cluster_type = "attribution"
+            clusters.append(clus)
+
         return clusters
 
 
