@@ -25,9 +25,11 @@ class Sample(Unit):
             self.parent.children.append(self)
         except:
             messy_flag = True
+
         # fix the strain_name and create the strain_id
-        if hasattr(self, "strain_id") and hasattr(self, "parent") and self.parent.strain_id != self.strain_id:
-            logger.error("Mismatched strain id between sample ({}) and it's parent ({})".format(self.strain_id, self.parent.strain_id))
+        if hasattr(self, "strain_id") and hasattr(self, "parent"):
+            if hasattr(self.parent, "strain_id") and self.parent.strain_id != self.strain_id:
+                logger.error("Mismatched strain id between sample ({}) and it's parent ({})".format(self.strain_id, self.parent.strain_id))
         elif hasattr(self, "sample_id"):
             if hasattr(self, "parent") and self.parent is not None:
                 if "|".join(self.sample_id.split('|')[0:2]) != self.parent.strain_id:
@@ -44,6 +46,8 @@ class Sample(Unit):
 
         if messy_flag:
             logger.warn("Could not set parent for sample {}. Errors may occur if input file was a FASTA.".format(self.sample_id))
+
+        print("Checkpoint 4")
 
     def is_valid(self):
         return hasattr(self, "sample_id") and hasattr(self, "strain_id")
