@@ -242,6 +242,48 @@ class Dataset:
         logger.debug("simply setting state to clusters!")
         self.clusters.extend(clusters)
 
+    def refine_clusters_in_state(self):
+        '''
+        Read all clusters and merge clusters whose contents contain matching IDs
+        '''
+        genic_clusters = []
+        attribution_clusters = []
+
+        # Make sure that clusters look okay
+        # This should probably be included in a cluster validation class method
+        for cluster in self.clusters:
+            if cluster.cluster_type == "genic":
+                if len(cluster.strains) != 1:
+                    logger.error("Genic cluster has more than one strain, removing.")
+                    self.clusters.remove(cluster)
+                else:
+                    genic_clusters.append(cluster)
+            elif cluster.cluster_type == "attribution":
+                attribution_clusters.append(cluster)
+            elif cluster.cluster_type == "titer"
+                pass
+            else:
+                logger.error("Unknown cluster type, removing.")
+
+        merged_out = []
+        for i in range(len(genic_clusters)-1):
+            for j in range(i+1,len(genic_clusters)):
+                if genic_clusters[i].strain_id == genic_clusters[j].strain_id:
+                    self.merge_two_clusters(cluster1=genic_clusters[i], cluster2=ginic_clusters[j], clusters_type="genic_clusters")
+                    merged_out.append(j)
+
+    def merge_two_clusters(cluster1, cluster2, clusters_type):
+        if clusters_type == "genic":
+            samples1 = list(cluster1.samples)
+            samples2 = list(cluster2.samples)
+            # Pick up here with sample/sequence merges
+        elif clusters_type == "attribution":
+            pass
+
+
+
+
+
     def clean_clusters(self):
         logger.info("Cleaning clusters (move / fix / create / drop)")
         [c.clean() for c in self.clusters]
