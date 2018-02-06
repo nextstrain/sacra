@@ -260,7 +260,7 @@ class Dataset:
                     genic_clusters.append(cluster)
             elif cluster.cluster_type == "attribution":
                 attribution_clusters.append(cluster)
-            elif cluster.cluster_type == "titer"
+            elif cluster.cluster_type == "titer":
                 pass
             else:
                 logger.error("Unknown cluster type, removing.")

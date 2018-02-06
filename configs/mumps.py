@@ -25,13 +25,6 @@ def fix_strain_name(obj, name, logger):
         logger.debug("Changed strain name from {} to {}".format(original_name, name))
     return name
 
-def country(sample, value, logger):
-    general_location_fix(sample, "country", geo_synonyms, value, logger)
-
-def division(sample, value, logger):
-    general_location_fix(sample, "division", geo_synonyms, value, logger)
-
-
 def make_config(args, logger):
     """ make the function - you can use the args to customise it. Try to minimise the customisation! """
 ## initialise with default config
