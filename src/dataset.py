@@ -269,20 +269,53 @@ class Dataset:
         for i in range(len(genic_clusters)-1):
             for j in range(i+1,len(genic_clusters)):
                 if genic_clusters[i].strain_id == genic_clusters[j].strain_id:
-                    self.merge_two_clusters(cluster1=genic_clusters[i], cluster2=ginic_clusters[j], clusters_type="genic_clusters")
+                    logger.info("Merging clusters on strain index {}".format(genic_clusters[i].strain_id))
+                    self.merge_two_genic_clusters(cluster1=genic_clusters[i], cluster2=genic_clusters[j])
                     merged_out.append(j)
+        # Remove the merged clusters
+        for out in merged_out:
+            self.clusters.remove(out)
 
-    def merge_two_clusters(cluster1, cluster2, clusters_type):
-        if clusters_type == "genic":
-            samples1 = list(cluster1.samples)
-            samples2 = list(cluster2.samples)
-            # Pick up here with sample/sequence merges
-        elif clusters_type == "attribution":
-            pass
-
-
-
-
+    def merge_two_genic_clusters(cluster1, cluster2):
+        '''
+        This function could be split into 5 parts:
+            1. Current function
+            2. merge_two_strains
+            3. merge_two_samples
+            4. merge_two_sequences
+            5. merge_metadata
+        '''
+        mergable_metadata_fields = { "strain" : [],
+                                     "sample" : [],
+                                     "sequence" : [] }
+        samples1 = list(cluster1.samples[:-1])
+        samples2 = list(cluster2.samples[1:])
+        for i in range(len(samples1)):
+            sample1 = samples1[i]
+            for j in range(i+1,len(samples2)):
+                sample2 = samples2[j]
+                # Check for matching samples
+                if sample1.sample_id == sample2.sample_id:
+                    for sequence1 in sample1.children:
+                        for sequence2 in sample2.children:
+                            if sequence1.sequence_id == sequence2.sequence_id:
+                                for field in mergable_metadata_fields["sequence"]:
+                                    #TODO: This should be more robust for metadata merges
+                                    try:
+                                        if getattr(sequence1, field) != getattr(sequence2, field):
+                                            logger.error("Unmatched metadata ({}) for matching sequence ID {}: {} and {}.".format(field, sequence1.sequence_id, getattr(sequence1, field), getattr(sequcne2, field)))
+                                        else:
+                                            logger.debug("Successful merge for sequence ID {} on field {}.".format(sequence1.sequnce_id, field))
+                                    except:
+                                        logger.critical("Couldn't find field {} in sequence ID {}".format(field, sequence1.sequence_id))
+                                sample2.children.remove(sequence2)
+                    strain2.children.remove(sample2)
+        for sample in samples2:
+            for sequence in sample.children:
+                cluster1.sequences.add(sequence)
+                sequence.parent = sample
+            cluster1.samples.add(sample)
+            sample.parent = cluster1.strains[0]
 
     def clean_clusters(self):
         logger.info("Cleaning clusters (move / fix / create / drop)")
