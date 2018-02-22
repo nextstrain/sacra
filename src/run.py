@@ -4,14 +4,15 @@ import logging
 import argparse
 import sys
 sys.path.append('')
-import config
+# import config
 from utils.colorLogging import ColorizingStreamHandler
 
-
-from pycallgraph import PyCallGraph
-from pycallgraph import Config
-from pycallgraph.output import GraphvizOutput
-
+try:
+    from pycallgraph import PyCallGraph
+    from pycallgraph import Config
+    from pycallgraph.output import GraphvizOutput
+except:
+    print("couldn't import pycallgraph and/or graphviz, skipping")
 
 parser = argparse.ArgumentParser(description="Cleaning & combining of genomic & titer data")
 parser.add_argument("--debug", action="store_const", dest="loglevel", const=logging.DEBUG, help="Enable debugging logging")
