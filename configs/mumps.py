@@ -25,6 +25,13 @@ def fix_strain_name(obj, name, logger):
         logger.debug("Changed strain name from {} to {}".format(original_name, name))
     return name
 
+def fix_authors(obj, authors, logger):
+	logger.warn("no author given, setting authors to default")
+	if authors == None:
+		authors = "Wohl et al"
+	return authors
+
+
 def make_config(args, logger):
     """ make the function - you can use the args to customise it. Try to minimise the customisation! """
 ## initialise with default config
@@ -80,6 +87,7 @@ def make_config(args, logger):
             'accession_url'
         ]
     config["fix_functions"]["strain_name"] = fix_strain_name
+    config["fix_functions"]["authors"] = fix_authors
     config["fix_lookups"]["strain_name_to_location"] = "source-data/mumps_location_fix.tsv"
     config["fix_lookups"]["strain_name_to_date"] = "source-data/mumps_date_fix.tsv"
     return config
