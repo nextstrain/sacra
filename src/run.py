@@ -1,74 +1,77 @@
+from __future__ import division, print_function
 from dataset import Dataset
-from genbank_API import query_genbank
-from genbank_parsers import extract_attributions
-import cfg as cfg
-import argparse
 import logging
-import os, sys, time
+import argparse
+import sys
 sys.path.append('')
+# import config
+from utils.colorLogging import ColorizingStreamHandler
 
-def assert_valid_input(pathogen, datatype, path, outpath, infiles, source, subtype, **kwargs):
-    '''
-    Make sure that all the given arguments are valid.
-    '''
-    assert pathogen.lower() in cfg.pathogens, 'Unknown pathogen, currently supported pathogens are: %s' % (", ".join(cfg.pathogens))
-    assert datatype.lower() in cfg.datatypes, 'Unknown datatype, currently supported datatypes are: %s' % (", ".join(cfg.datatypes))
-    assert os.path.isdir(path), 'Invalid input path: %s' % (path)
-    if not os.path.isdir(outpath):
-        print "Writing %s" % (path)
-        os.makedirs(outpath)
-    for infile in infiles:
-        assert os.path.isfile(path+infile), 'Invalid input file: %s' % (infile)
-    assert source.lower() in cfg.sources[datatype], 'Invalid source for %s data %s' % (datatype, source)
-    if subtype:
-        assert subtype in cfg.subtypes[pathogen], 'Invalid subtype %s for pathogen %s' % (subtype, pathogen)
-    assert cfg.required_fields[datatype].issubset(cfg.optional_fields[datatype]), 'Not all required_fields for %s are listed in optional_fields.' % (datatype)
+try:
+    from pycallgraph import PyCallGraph
+    from pycallgraph import Config
+    from pycallgraph.output import GraphvizOutput
+except:
+    print("couldn't import pycallgraph and/or graphviz, skipping")
 
-def list_options(list_pathogens, list_datatypes):
-    if list_pathogens and list_datatypes:
-        print 'Valid pathogens: %s' % (", ".join(cfg.pathogens))
-        print 'Valid datatypes: %s' % (", ".join(cfg.datatypes))
-        sys.exit()
-    elif list_pathogens:
-        print 'Valid pathogens: %s' % (", ".join(cfg.pathogens))
-        sys.exit()
-    elif list_datatypes:
-        print 'Valid datatypes: %s' % (", ".join(cfg.datatypes))
-        sys.exit()
+parser = argparse.ArgumentParser(description="Cleaning & combining of genomic & titer data")
+parser.add_argument("--debug", action="store_const", dest="loglevel", const=logging.DEBUG, help="Enable debugging logging")
+parser.add_argument("--files", default=[], type=str, nargs='*', help="file types: text (list of accessions), FASTA, (to do) FASTA + CSV, (to do) JSON")
+parser.add_argument("--pathogen", required=True, type=str, help="This sets the config file")
+parser.add_argument("--accession_list", default=[], type=str, nargs='*', help="list of strings to query genbank with")
+parser.add_argument("--outfile", default="output/test_output.json")
+parser.add_argument("--visualize_call_graph", action="store_true", default=False, help="draw a graph of calls being made")
+parser.add_argument("--call_graph_fname", default="output/graphviz_test.png", help="filename for call graph")
+
+group = parser.add_argument_group('entrez')
+group.add_argument("--skip_entrez", action="store_true", help="Query genbank for all accessions to help clean / correct metadata data")
+
+group = parser.add_argument_group('overwrites')
+group.add_argument("--overwrite_fasta_header", type=str, help="Overwrite the config-defined FASTA header")
+
+
+def main(args, logger):
+    try:
+        CONFIG = __import__("configs.{}".format(args.pathogen), fromlist=['']).make_config(args, logger)
+        assert(type(CONFIG) is dict)
+    except ImportError:
+        logger.critical("Could not load config! File configs/{}.py must exist!".format(args.pathogen)); sys.exit(2)
+    except AttributeError:
+        logger.critical("Config file configs/{}.py must define a \"make_config\" function".format(args.pathogen)); sys.exit(2)
+    except AssertionError:
+        logger.critical("make_config() in configs/{}.py must return a dictionary".format(args.pathogen)); sys.exit(2)
+
+    # Initialize Dataset class
+    dataset = Dataset(CONFIG)
+    # Read data from files
+    for f in args.files:
+        dataset.read_to_clusters(f)
+    # ditto for accessions if provided as strings on the command line
+    if args.accession_list:
+        dataset.download_entrez_data(args.accession_list, make_clusters = True)
+    # Download additional entrez data which the cleaning functions make make use of
+    if not args.skip_entrez:
+        logger.info("Fetching entrez data for all available accessions to aid in cleaning the data")
+        dataset.download_entrez_data(dataset.get_all_accessions(), make_clusters = False)
+    # Clean clusters
+    dataset.clean_clusters()
+    # Write to JSON
+    dataset.write_to_json(args.outfile)
+
 
 if __name__=="__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-v', '--pathogen', default='seasonal_flu', type=str, help='pathogen type to be processed; default is seasonal_flu')
-    parser.add_argument('-d', '--datatype', default='sequence', type=str, help='type of data being input; default is \"sequence\", other options are \"pathogen\" or \"titer\"')
-    parser.add_argument('-p', '--path', default='data/', type=str, help='path to input file(s), default is \"data/\"')
-    parser.add_argument('-m', '--metafile', default=None, type=str, help='name of file containing pathogen metadata')
-    parser.add_argument('-o', '--outpath', default='output/', type=str, help='path to write output files; default is \"output/\"')
-    parser.add_argument('-i', '--infiles', default=None, nargs='+', help='filename(s) to be processed')
-    parser.add_argument('--source', default=None, type=str, help='data source')
-    parser.add_argument('--subtype', default=None, type=str, help='subtype of pathogen')
-    parser.add_argument('--list_pathogens', default=False, action='store_true', help='list all supported pathogens and exit')
-    parser.add_argument('--list_datatypes', default=False,  action='store_true', help='list all supported datatypes and exit')
-    parser.add_argument('--permissions', default='public', help='permissions level for documents in JSON')
-    parser.add_argument('--test', default=False, action='store_true', help='test run for debugging') # Remove this at some point.
-    parser.add_argument("--debug", action="store_const", dest="loglevel", const=logging.DEBUG, help="Enable debugging logging")
-    parser.add_argument("--update_attributions_via_genbank", action="store_true", default=False, help="Use the genbank API to fill in attributions for accession numbers")
-    ## there will be heaps of arguments here (about 15 just for genbank API) - we should look into argument grouping
     args = parser.parse_args()
-
-    list_options(args.list_pathogens, args.list_datatypes)
-    assert_valid_input(**args.__dict__)
-
-    ## set up logger - it can now be used anywhere simply via
-    ## logger = logging.getLogger(__name__)
-    if not args.loglevel: args.loglevel = logging.INFO
-    logging.basicConfig(level=args.loglevel, format='%(asctime)-15s %(message)s')
+    ## L O G G I N G
+    # https://docs.python.org/2/howto/logging-cookbook.html#multiple-handlers-and-formatters
+    root_logger = logging.getLogger('')
+    root_logger.setLevel(args.loglevel if args.loglevel else logging.INFO)
+    root_logger.addHandler(ColorizingStreamHandler())
     logger = logging.getLogger(__name__)
 
-    if args.test:
-        D = Dataset(**args.__dict__)
-        # TODO: Add abstraction layer to read_data_files()
-        # for read_and_clean_file()
-        D.read_metadata(**args.__dict__)
-        D.read_data_files(**args.__dict__)
-        D.set_sequence_permissions(args.permissions)
-        D.write('%s%s_%s.json' % (args.outpath, args.pathogen, args.datatype))
+    if args.visualize_call_graph:
+        graphviz = GraphvizOutput()
+        graphviz.output_file = args.call_graph_fname
+        with PyCallGraph(config=Config(groups=True), output=graphviz):
+            main(args, logger)
+    else:
+        main(args, logger)

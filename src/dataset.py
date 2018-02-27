@@ -1,122 +1,42 @@
-import os, time, datetime, csv, sys, json
-import cfg
-from Bio import SeqIO
-from pdb import set_trace
-sys.path.append('')
-import schema
+from __future__ import division, print_function
+import logging
+import json
+import os, sys
+from cluster import Cluster
+logger = logging.getLogger(__name__)
+from entrez import query_genbank
+from utils.genbank_parsers import process_genbank_record
 
-# sys.path.append('src/')
-# import cleaning_functions as c
+flatten = lambda l: [item for sublist in l for item in sublist]
 
 class Dataset:
-    '''
-    Defines 'Dataset' class, containing procedures for uploading documents from un-cleaned FASTA files
-    and turning them into rich JSONs that can be:
-        - Uploaded to the fauna database
-        - imported directly by augur (does not take JSONs at this time, instead needs FASTAs)
 
-    Each instance of a Dataset contains:
-        1. metadata: list of high level information that governs how the data contained in the Dataset
-        are treated by Dataset cleaning functions (TODO: Make these in external scripts as a library of
-        functions that can be imported by the Dataset), as well as the exact location in the fauna
-        database where the dataset should be stored (TODO: specify in a markdown file somewhere exactly
-        what the fauna db should look like).
+    # Initializer
+    def __init__(self, CONFIG):
+        self.CONFIG = CONFIG
+        self.clusters = []
+        self.genbank_data = {}
 
-        ex. [FIGURE OUT WHAT THIS WILL LOOK LIKE]
-
-        2. dataset: A list of dictionaries, each one identical in architecture representing 'documents'
-        that are contained within the Dataset. These dictionaries represent both lower-level metadata,
-        as well as the key information (sequence, titer, etc) that is being stored/run in augur.
-
-        ex. [ {date: 2012-06-11, location: Idaho, sequence: GATTACA}, {date: 2016-06-16, location: Oregon, sequence: CAGGGCCTCCA}, {date: 1985-02-22, location: Brazil, sequence: BANANA} ]
-    '''
-    def __init__(self, datatype, pathogen, outpath, **kwargs):
-        # Wrappers for data, described in class description
-        self.metadata = {'datatype': datatype, 'pathogen': pathogen}
-        self.dataset = {}
-
-        # New schema TODO: make dump use these fields
-        self.dbinfo = {'pathogen' : pathogen}
-        self.strains = {}
-        self.samples = {}
-        self.sequences = {}
-        self.attributions = {}
-        # Track which documents should be removed
-        self.bad_docs = []
-
-    def read_data_files(self, infiles, **kwargs):
-        '''
-        Look at all infiles, and determine what file type they are. Based in that determination, import each file individually.
-        Files should be specified in the format:
-          filename[:<filetype>[:<source>]]
-        '''
-        t = time.time()
-        for infile in infiles:
-            filetype = self.determine_filetype(infile)
-            if filetype in ['fasta', 'delimited', 'excel', 'json']:
-                self.read_clean_reshape(infile,filetype, **kwargs)
-            else:
-                print "Could not read %s, unknown filetype"
-
-        print '~~~~~ Read %s file(s) in %s seconds ~~~~~' % (len(infiles), (time.time()-t))
-
-    def determine_filetype(self, infile):
-        '''
-        Look at a file and determine what type of file it is.
-        '''
-        infile = infile.lower()
-        # Parse if infile format is specified by user
-        if len(infile.split(':')) > 1:
-            return infile.split(':')[1]
-
-        fasta_suffixes = ['fasta', 'fa', 'f']
-        csv_tsv_suffixes = ['csv', 'tsv', 'txt']
-        excel_suffixes = ['xls', 'xlsx']
-        json_suffixes = ['json']
-
-        if (True in [ infile.endswith(s) for s in fasta_suffixes ]):
-            return 'fasta'
-        elif (True in [ infile.endswith(s) for s in csv_tsv_suffixes ]):
-            return 'delimited'
-        elif (True in [ infile.endswith(s) for s in excel_suffixes ]):
-            return 'excel'
-        elif (True in [ infile.endswith(s) for s in json_suffixes ]):
-            return 'json'
+    # File handling
+    def read_to_clusters(self, f):
+        logger.info("Initializing sacra parse of files ---")
+        ftype = self.infer_ftype(f)
+        if ftype == "accessions":
+            accessions = self.get_accessions_from_file(f)
+            self.download_entrez_data(accessions, make_clusters=True)
+        elif ftype == "fasta":
+            unmerged_clusters = self.read_fasta_to_clusters(f)
+            self.merge_clusters_into_state(unmerged_clusters)
+        elif ftype == "json":
+            unmerged_clusters = self.read_json_to_clusters(f)
+            self.merge_clusters_into_state(unmerged_clusters)
         else:
-            return 'unknown'
+            logger.error("Unknown input filetype for {}. Fatal.".format(f))
+            sys.exit(2)
 
-###################################################
-####### Read, clean, reshape, and merge functions #
-###################################################
 
-##### Control
-    def read_clean_reshape(self, infile, ftype, **kwargs):
-        '''
-        infile:file -> docs:list(dict) -> reshaped_docs:set(dict)
-        This function performs 4 primary functions:
-          1. read in a file of a known type into a list of dictionaries called docs
-          2. clean each doc in docs according to all functions in cleaning_functions
-          3. reshape docs into a set of dicts and merge the dicts into self
-        '''
-        # Read in a file of a known type into a list of dictionaries
-        if ftype == 'fasta':
-            docs = self.read_fasta(infile, **kwargs)
-        elif ftype != 'fasta':
-            # TODO: other file types
-            return
-
-        # Clean each doc in docs according to all functions in cleaning_functions
-        docs = [ self.clean(doc) for doc in docs ]
-
-        # Reshape docs into a set of dicts
-        # TODO: write self.reshape()
-        reshaped = self.reshape(docs)
-        #
-        # # merge the dicts into self
-        self.merge(reshaped)
-
-##### Read
-    def read_fasta(self, infile, source, path, datatype, **kwargs):
+    def read_fasta_to_clusters(self, infile):
+        from Bio import SeqIO
         '''
         Take a fasta file and a list of information contained in its headers
         and build a dataset object from it.
@@ -124,248 +44,298 @@ class Dataset:
         # TODO: This should return a docs structure
         # (list of docs dicts) instead of its current behavior
         '''
-        import cleaning_functions as cf
-        print 'Reading in %s FASTA from %s%s.' % (source,path,infile)
-        self.fasta_headers = cfg.fasta_headers[source.lower()]
+        logger.info('Reading in FASTA from %s.' % (infile))
 
-        docs = []
-
+        clusters = []
         # Read the fasta
-        with open(path + infile, "rU") as f:
+        with open(infile, "rU") as f:
 
             for record in SeqIO.parse(f, "fasta"):
                 data = {}
                 head = record.description.replace(" ","").split('|')
-                for i in range(len(self.fasta_headers)):
-                    data[self.fasta_headers[i]] = head[i]
-                    data['sequence'] = str(record.seq)
-                docs.append(data)
+                for i in range(len(self.CONFIG["fasta_headers"])):
+                    try:
+                        data[self.CONFIG["fasta_headers"][i]] = head[i]
+                        data['sequence'] = str(record.seq)
+                    except KeyError:
+                        logger.critical("Error parsing FASTA header. Header: {}. CONFIG specifies: {}".format(head, self.CONFIG["fasta_headers"])); sys.exit(2)
+                # logger.debug("Processing this header: {}".format(data))
+                clus = Cluster(self.CONFIG, data)
+                att = Cluster(self.CONFIG, data, cluster_type="attribution")
+                # link the attribute id to each sequence in the cluster
+                self.link_attribution_id(clus, att)
+                if clus.is_valid(): clusters.append(clus)
+                if att.is_valid(): clusters.append(att)
+        return clusters
 
-        return docs
+    def read_json_to_clusters(self, infile):
+        from strain import Strain
+        from sample import Sample
+        from sequence import Sequence
+        from attribution import Attribution
 
-        # # Merge the formatted dictionaries to self.dataset()
-        # print 'Fixing names for new documents'
-        # t = time.time()
-        # cf.format_names(out, self.metadata['pathogen'])
-        # print '~~~~~ Fixed names in %s seconds ~~~~~' % (time.time()-t)
-        #
-        # print 'Merging input FASTA to %s documents.' % (len(out))
-        # for doc in out:
-        #     try:
-        #         assert isinstance(doc, dict)
-        #     except:
-        #         print 'WARNING: Cannot merge doc of type %s: %s' % (type(doc), (str(doc)[:75] + '..') if len(str(doc)) > 75 else str(doc))
-        #         pass
-        #     assert len(doc.keys()) == 1, 'More than 1 key in %s' % (doc)
-        #     self.merge(doc.keys()[0], doc[doc.keys()[0]])
-        # print 'Successfully merged %s documents. Done reading %s.' % (len(self.dataset)-1, infile)
+        strains = []
+        samples = []
+        sequences = []
+        attributions = []
+        # Read file
+        with open(infile, 'r') as f:
+            for key, value in json.load(f).iteritems():
+                # Keys should be "strains, samples, sequences, attributions, and dbinfo"
+                if key == "dbinfo":
+                    pass
+                elif key == "strains":
+                    for d in value:
+                        try:
+                            strains.append(Strain(self.CONFIG, d))
+                        except:
+                            logger.critical("Error reading strain block:\n {}".format(d)); sys.exit(2)
+                elif key == "samples":
+                    for d in value:
+                        try:
+                            samples.append(Sample(self.CONFIG, d, None))
+                        except:
+                            logger.critical("Error reading sample block:\n {}".format(d)); sys.exit(2)
+                elif key == "sequences":
+                    for d in value:
+                        try:
+                            sequences.append(Sequence(self.CONFIG, d, None))
+                        except:
+                            logger.critical("Error reading strain block:\n {}".format(d)); sys.exit(2)
+                elif key == "attributions":
+                    for d in value:
+                        try:
+                            attributions.append(Attribution(self.CONFIG, d))
+                        except:
+                            logger.critical("Error reading attribution block:\n {}".format(d)); sys.exit(2)
 
-##### Clean
-    def clean(self, doc):
-        '''
-        Take a document dictionary and return a canonicalized version of that document dictionary
-        # TODO: Incorporate all the necessary cleaning functions
-        '''
-        # Remove docs with bad keys or that are not of type dict
-        try:
-            assert isinstance(doc, dict)
-        except:
-            print 'Documents must be of type dict, this one is of type %s:\n%s' % (type(doc), doc)
-            return
-        print("=====")
-        print(doc)
-        print("****")
-        # Use functions specified by cfg.py. Fxn defs in cleaning_functions.py
-        fxns = cfg.sequence_clean
-        for fxn in fxns:
-            fxn(doc, None, self.bad_docs, self.metadata['pathogen'])
-        print(doc)
-        print("=====")
-        return doc
+            clusters = self.build_clusters_from_unlinked_units(strains, samples, sequences, attributions)
 
-##### Reshape
-    def reshape(self,docs):
-        """ notes:
-        * this function is really reshape + merge
-        * a document can populate (up to) 4 tables - strain, sample, seq & attribution
-        each table has it's "crucial" fields, required to create the primary key:
-            - strain: "strain_name"
-            - sample: "strain_name & sample_name"
-            - sequence: "strain_name", "sample_name" & "sequence_name"
-            - attribution: first author surname, year & first word of title
-        * sometimes samples may be present without strain data (other than strain_name)
-        and in this case, the strain_name shouldn't nuke any pre-existing strain data...
-        """
+        return clusters
 
-        # import spec_mapping as m
-        # for doc in docs:
-        #     # Make new entries for strains, samples, and sequences
-        #     # Walk downward through hierarchy
-        #     # TODO: Think about what to do if only "sequence_name" is available for some reason
-        #
-        #     if 'strain_name' in doc.keys():
-        #         strain_id = doc['strain_name']
-        #         if strain_id not in self.strains.keys():
-        #             self.strains[strain_id] = {}
-        #         for field in doc.keys():
-        #             if field in m.mapping["strains"]:
-        #                 self.strains[strain_id][field] = doc[field]
-        #         doc['sample_strain_name'] = doc['strain_name']
-        #         if 'sample_name' in doc.keys():
-        #             sample_id = strain_id + '|' + doc['sample_name']
-        #             if sample_id not in self.samples.keys():
-        #                 self.samples[sample_id] = {}
-        #             for field in doc.keys():
-        #                 if field in m.mapping["samples"]:
-        #                     self.samples[sample_id][field] = doc[field]
-        #             doc['sequence_sample_name'] = doc['sample_name']
-        #             if 'sequence_name' in doc.keys():
-        #                 sequence_id = sample_id + '|' + doc['sequence_name']
-        #                 if sequence_id not in self.sequences.keys():
-        #                     self.sequences[sequence_id] = {}
-        #                 for field in doc.keys():
-        #                     if field in m.mapping["sequences"]:
-        #                         self.sequences[sequence_id][field] = doc[field]
-        reshaped = {x:{} for x in schema.tables}
-        for doc in docs:
-            for t_name, p_key in schema.tables_primary_keys.iteritems():
-                try:
-                    p_key_val = schema.make_primary_key[p_key](doc)
-                except KeyError:
-                    print "doc couldn't make primary key {}. skipping.".format(schema.tables_primary_keys[t_name])
-                    continue
-                reshaped[t_name][p_key_val] = {field: doc[field] for field in schema.fields[t_name] if field in doc}
-                # note that we're going to nuke previous values here. This should be improved. See the note in schema.py
-        return reshaped
+    def build_clusters_from_unlinked_units(self, strains, samples, sequences, attributions):
 
-    def merge(self, tables):
-        for name, table in tables.iteritems():
-            store = getattr(self, name)
-            for key, row in table.iteritems():
-                if key not in store:
-                    store[key] = row
+        clusters = []
+
+        if strains is not None:
+            strains = self.pop_duplicate_entries(strains, "strain_id")
+            if samples is not None:
+                samples = self.pop_duplicate_entries(samples, "sample_id")
+                if sequences is not None:
+                    sequences = self.pop_duplicate_entries(sequences, "sequence_id")
                 else:
-                    # can do a cleaver-er merge here
-                    for field, value in row.iteritems():
-                        if field not in store[key]:
-                            store[key][field] = value
-                        elif store[key][field] is not value:
-                            print("warning! table {} key {} field {} values don't match ({} != {})".format(name, key, field, value, store[key][field]))
+                    logger.error("Error in build_clusters_from_unlinked_units; no sequences objects found")
+            else:
+                logger.error("Error in build_clusters_from_unlinked_units; no samples objects found")
+        else:
+            logger.error("Error in build_clusters_from_unlinked_units; no strains objects found")
+        if attributions is not None:
+            attributions = self.pop_duplicate_entries(attributions, "attribution_id")
+        else:
+            logger.error("Error in build_clusters_from_unlinked_units; no attributions objects found")
 
-##################################################
-####### End of RCR functions #####################
-##################################################
+        for strain in strains:
+            clus = Cluster(self.CONFIG, None, cluster_type="unlinked")
+            clus.strains.add(strain)
+            for sample in samples:
+                sample_strain_name = sample.sample_id.split('|')[0]
+                if sample_strain_name == strain.strain_id:
+                    clus.samples.add(sample)
+                    sample.parent = strain
+                    strain.children.append(sample)
+                    for sequence in sequences:
+                        sequence_sample_name = sequence.sequence_id.split('|')[1]
+                        sequence_strain_name = sequence.sequence_id.split('|')[0]
+                        if sequence_sample_name == sample.sample_id.split('|')[1] and sequence_strain_name == strain.strain_id:
+                            clus.sequences.add(sequence)
+                            sequence.parent = sample
+                            sample.children.append(sequence)
+                        else:
+                            pass
+                else:
+                    pass
+            clus.cluster_type = "genic"
+            clusters.append(clus)
+
+        for attribution in attributions:
+            clus = Cluster(self.CONFIG, None, cluster_type="unlinked")
+            clus.attributions = set([attribution])
+            clus.cluster_type = "attribution"
+            clusters.append(clus)
+
+        return clusters
 
 
-# Everything south of here should be considered depracated until
-# it has been looked over and updated relative to the new JSON spec.
+    def pop_duplicate_entries(self, items, attr):
+        remove = []
+        for i in range(len(items)):
+            for j in range(i+1,len(items)):
+                if getattr(items[i], attr) == getattr(items[j], attr):
+                    logger.warn("Found duplicate entries for {}, removing extras.".format(items[j]))
+                    remove.append(j)
+        list(set(remove)).sort()
+        remove = remove[::-1]
+        for index in remove:
+            items.pop(index)
+        return items
 
 
-    def read_metadata(self, path, metafile, **kwargs):
+    def get_accessions_from_file(self, fname):
+        accessions = []
+        try:
+            with open(fname, "r") as f:
+                for line in f:
+                    accessions.append(line.strip())
+        except IOError:
+            logger.error("File {} could not be read. Skipping.".format(fname))
+        return accessions
+
+    # Random utils
+    def infer_ftype(self, fname):
+        if fname.endswith(".fasta"):
+            return "fasta"
+        if fname.endswith(".txt"):
+            return "accessions"
+        elif (fname.endswith(".json")):
+            return "json"
+
+    def download_entrez_data(self, accessions, make_clusters = False):
+        ## don't fetch data that's already fetched!
+        new_accs = [x for x in accessions if x not in self.genbank_data.keys()]
+        logger.info("Fetching {} additional genbank entries".format(len(new_accs)))
+        if len(new_accs):
+            new_data = query_genbank(new_accs)
+            for k, v in new_data.iteritems():
+                self.genbank_data[k] = v
+
+        if make_clusters:
+            data_dicts = [process_genbank_record(accession, record, self.CONFIG) for \
+                accession, record in self.genbank_data.iteritems() if accession in accessions]
+            unmerged_clusters = []
+            for d in data_dicts:
+                clus = Cluster(self.CONFIG, d)
+                att = Cluster(self.CONFIG, d, cluster_type="attribution")
+                # link the attribute id to each sequence in the cluster
+                self.link_attribution_id(clus, att)
+                if clus.is_valid(): unmerged_clusters.append(clus)
+                if att.is_valid(): unmerged_clusters.append(att)
+            self.merge_clusters_into_state(unmerged_clusters)
+
+
+    def link_attribution_id(self, genomic_cluster, attribution_cluster):
+        if attribution_cluster.is_valid() and genomic_cluster.is_valid():
+            for s in genomic_cluster.sequences:
+                s.attribution_id = attribution_cluster.get_all_units()[0].attribution_id
+
+    def get_all_accessions(self):
         '''
-        Read an xml file to a metadata dataset
+        Read through all clusters to generate accession list for
+        batch submission to entrez
         '''
-        if metafile is not None:
-            import pandas as pd
-            xl = pd.ExcelFile(path + metafile)
-            meta = xl.parse("Tabelle1")
-            print meta.columns
-            meta.columns = [x.lower() for x in meta.columns]
-            print meta.columns
-            for index, row in meta.iterrows():
-                # TODO: this
+        flatten = lambda l: [item for sublist in l for item in sublist]
+        accs = flatten([c.get_all_accessions() for c in self.clusters])
+        logger.debug("These are the accessions: {}".format(accs))
+        return accs
+
+    # Merging and cleaning
+    def merge_clusters_into_state(self, clusters):
+        logger.debug("simply setting state to clusters!")
+        self.clusters.extend(clusters)
+
+    def refine_clusters_in_state(self):
+        '''
+        Read all clusters and merge clusters whose contents contain matching IDs
+        '''
+        genic_clusters = []
+        attribution_clusters = []
+
+        # Make sure that clusters look okay
+        # This should probably be included in a cluster validation class method
+        for cluster in self.clusters:
+            if cluster.cluster_type == "genic":
+                if len(cluster.strains) != 1:
+                    logger.error("Genic cluster has more than one strain, removing.")
+                    self.clusters.remove(cluster)
+                else:
+                    genic_clusters.append(cluster)
+            elif cluster.cluster_type == "attribution":
+                attribution_clusters.append(cluster)
+            elif cluster.cluster_type == "titer":
                 pass
+            else:
+                logger.error("Unknown cluster type, removing.")
 
-    # def remove_bad_docs(self):
-    #
-    #     # Not working because of key errors, they should be ints
-    #     if self.bad_docs != []:
-    #         print 'Documents that need to be removed : %s ' % (self.bad_docs)
-    #         self.bad_docs = self.bad_docs.sort().reverse()
-    #         for key in self.bad_docs:
-    #             t = self.dataset[key]
-    #             self.dataset[key] = self.dataset[-1]
-    #             self.dataset[-1] = t
-    #             self.dataset.pop()
+        merged_out = []
+        for i in range(len(genic_clusters)-1):
+            for j in range(i+1,len(genic_clusters)):
+                if genic_clusters[i].strain_id == genic_clusters[j].strain_id:
+                    logger.info("Merging clusters on strain index {}".format(genic_clusters[i].strain_id))
+                    self.merge_two_genic_clusters(cluster1=genic_clusters[i], cluster2=genic_clusters[j])
+                    merged_out.append(j)
+        # Remove the merged clusters
+        for out in merged_out:
+            self.clusters.remove(out)
 
-    def write(self, out_file):
+    def merge_two_genic_clusters(cluster1, cluster2):
         '''
-        Write self.dataset to an output file, default type is json
+        This function could be split into 5 parts:
+            1. Current function
+            2. merge_two_strains
+            3. merge_two_samples
+            4. merge_two_sequences
+            5. merge_metadata
         '''
-        print 'Writing dataset to %s' % (out_file)
-        t = time.time()
-        out = {x:[] for x in schema.tables}
+        mergable_metadata_fields = { "strain" : [],
+                                     "sample" : [],
+                                     "sequence" : [] }
+        samples1 = list(cluster1.samples[:-1])
+        samples2 = list(cluster2.samples[1:])
+        for i in range(len(samples1)):
+            sample1 = samples1[i]
+            for j in range(i+1,len(samples2)):
+                sample2 = samples2[j]
+                # Check for matching samples
+                if sample1.sample_id == sample2.sample_id:
+                    for sequence1 in sample1.children:
+                        for sequence2 in sample2.children:
+                            if sequence1.sequence_id == sequence2.sequence_id:
+                                for field in mergable_metadata_fields["sequence"]:
+                                    #TODO: This should be more robust for metadata merges
+                                    try:
+                                        if getattr(sequence1, field) != getattr(sequence2, field):
+                                            logger.error("Unmatched metadata ({}) for matching sequence ID {}: {} and {}.".format(field, sequence1.sequence_id, getattr(sequence1, field), getattr(sequcne2, field)))
+                                        else:
+                                            logger.debug("Successful merge for sequence ID {} on field {}.".format(sequence1.sequnce_id, field))
+                                    except:
+                                        logger.critical("Couldn't find field {} in sequence ID {}".format(field, sequence1.sequence_id))
+                                sample2.children.remove(sequence2)
+                    strain2.children.remove(sample2)
+        for sample in samples2:
+            for sequence in sample.children:
+                cluster1.sequences.add(sequence)
+                sequence.parent = sample
+            cluster1.samples.add(sample)
+            sample.parent = cluster1.strains[0]
 
-        for t_name in out:
-            for key, value in getattr(self, t_name).iteritems():
-                out[t_name].append(value)
-                out[t_name][-1][schema.tables_primary_keys[t_name]] = key
+    def clean_clusters(self):
+        logger.info("Cleaning clusters (move / fix / create / drop)")
+        [c.clean() for c in self.clusters]
 
-        out['dbinfo'] = [ {key: value} for key,value in self.dbinfo.iteritems() ]
-
-        # for key, value in self.strains.iteritems():
-        #     strain_id = {'strain_id': key}
-        #     strain_data = value
-        #     out['strains'].append(merge_two_dicts(strain_id,strain_data))
-        # for key, value in self.samples.iteritems():
-        #     sample_id = {'sample_id': key}
-        #     sample_data = value
-        #     out['samples'].append(merge_two_dicts(sample_id,sample_data))
-        # for key, value in self.sequences.iteritems():
-        #     sequence_id = {'sequence_id': key}
-        #     sequence_data = value
-        #     out['sequences'].append(merge_two_dicts(sequence_id,sequence_data))
-
-        with open(out_file, 'w+') as f:
-            json.dump(out, f, indent=1)
-	    print '~~~~~ Wrote output in %s seconds ~~~~~' % (time.time()-t)
-
-    def set_sequence_permissions(self, permissions, **kwargs):
-        for a in self.dataset:
-            self.dataset[a]['permissions'] = permissions
-
-    # def build_references_table(self):
-    #     '''
-    #     This is a placeholder function right now, it will build a reference
-    #     table for each upload according to the spec:
-    #     {
-    #     "pubmed_id" : {
-    #       "authors" : [
-    #         "author1",
-    #         "author2",
-    #         "author3"
-    #       ],
-    #       "journal" : "journal name",
-    #       "date" : "publication date",
-    #       "sequence_names" : [
-    #         "sequence_name1",
-    #         "sequence_name2",
-    #         "sequence_name3"
-    #       ],
-    #       "publication_name" : "name"
-    #     }
-    #     '''
-    #     refs = {
-    #     "pubmed_id" : {
-    #       "authors" : [
-    #         "author1",
-    #         "author2",
-    #         "author3"
-    #       ],
-    #       "journal" : "journal name",
-    #       "date" : "publication date",
-    #       "sequence_names" : [
-    #         "sequence_name1",
-    #         "sequence_name2",
-    #         "sequence_name3"
-    #       ],
-    #       "publication_name" : "name"
-    #     } }
-    #
-    #     self.references = refs
-
-def merge_two_dicts(x, y):
-    """Given two dicts, merge them into a new dict as a shallow copy."""
-    z = x.copy()
-    z.update(y)
-    return z
+    # Output
+    def write_to_json(self, filename):
+        logger.info("writing to JSON: {}".format(filename))
+        data = {"strains": [], "samples": [], "sequences": [], "attributions": []}
+        data["dbinfo"] = {"pathogen": self.CONFIG["pathogen"]}
+        for c in self.clusters:
+            for n in ["strains", "samples", "sequences", "attributions"]:
+                if hasattr(c, n): # if, e.g., "sequences" (n) is in the cluster (c)
+                    data[n].extend([x.get_data() for x in getattr(c, n) if x.is_valid()])
+        # remove empty values
+        for table in data:
+            if table == "dbinfo": continue
+            for block in data[table]:
+                for key in block.keys():
+                    if block[key] in [None, '', '?', 'unknown', "Unknown"]:
+                        del block[key]
+        with open(filename, 'w') as outfile:
+            json.dump(data, outfile, sort_keys=True, indent=2, ensure_ascii=False)
