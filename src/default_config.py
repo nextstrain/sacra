@@ -1,7 +1,7 @@
 from __future__ import division, print_function
 import utils.genbank_parsers as gbp
 import utils.fix_functions as fix
-import utils.create_functions as create
+# import utils.create_functions as create
 
 """
 This file sets up the default config

@@ -2,7 +2,7 @@
 ### Sacra: a data cleaning tool designed for genomic epidemiology datasets.
 
 Sacra is used primarily within [Nextstrain](https://github.com/nextstrain) and replaces functionality previously found in [nextstrain/fauna](https://github.com/nextstrain/fauna).
-**This is under devolpment and not production ready.**
+**This is under development and not production ready.**
 
 
 The general idea is to take possibly messy* data of varying input types (FASTA, CSV, JSON, accession numbers, titer tables), collect, clean and merge the data into a JSON output.
@@ -13,17 +13,52 @@ Uploading to a database is not part of sacra (see [nextstrain/flora](https://git
 ## Requirements
 * Python 2.7 (todo: make conda stuff)
 
-
 ## Input file types
 * FASTA
 * JSON
 * more to come
 
 
-## How To Run (general)
+## How To Run
+### Command line syntax
+Prior to running:
 * move input files into `sacra/input` (e.g.)
+* make sure that directory `sacra/output` (e.g.) exists locally
+
+Running on a `FASTA` or `JSON`:
 * `python src/run.py --files INPUT_FILE_PATHS --outfile OUTPUT_JSON_PATH --pathogen PATHOGEN_NAME OTHER_ARGUMENTS`
-* see `python src/run.py -h` for list of other arguments
+
+```
+optional arguments:
+  -h, --help            show this help message and exit
+  --debug               Enable debugging logging
+  --files [FILES [FILES ...]]
+                        file types: text (list of accessions), FASTA, (to do)
+                        FASTA + CSV, (to do) JSON
+  --pathogen PATHOGEN   This sets the config file
+  --accession_list [ACCESSION_LIST [ACCESSION_LIST ...]]
+                        list of strings to query genbank with
+  --outfile OUTFILE
+  --visualize_call_graph
+                        draw a graph of calls being made
+  --call_graph_fname CALL_GRAPH_FNAME
+                        filename for call graph
+
+entrez:
+  --skip_entrez         Query genbank for all accessions to help clean /
+                        correct metadata data
+
+overwrites:
+  --overwrite_fasta_header OVERWRITE_FASTA_HEADER
+                        Overwrite the config-defined FASTA header
+```
+
+### Adding new pathogens
+To perform a Sacra run on a pathogen that is not currently supported, or to update the behavior of Sacra on supported pathogens, you will need to make/edit a `<pathogen_name>.py` file in the `sacra/configs` directory.
+
+Supported pathogens:
+* Mumps
+* Zika
 
 ## How To Run (testing)
 * ensure you have `piglets.fasta`, `piglets_3_accessions.txt`, `mumps.vipr.fasta`, `mumps.fauna_download.fasta` in `sacra/input` (files on slack)
