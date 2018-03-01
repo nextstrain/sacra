@@ -171,7 +171,7 @@ class Dataset:
         for i in range(len(items)):
             for j in range(i+1,len(items)):
                 if getattr(items[i], attr) == getattr(items[j], attr):
-                    logger.warn("Found duplicate entries for {}, removing extras.".format(items[j]))
+                    logger.debug("Found duplicate entries for {}, removing extras.".format(items[j]))
                     remove.append(j)
         list(set(remove)).sort()
         remove = remove[::-1]
@@ -234,7 +234,10 @@ class Dataset:
         '''
         flatten = lambda l: [item for sublist in l for item in sublist]
         accs = flatten([c.get_all_accessions() for c in self.clusters])
-        logger.debug("These are the accessions: {}".format(accs))
+        if len(accs) > 10:
+            logger.debug("These are the first 10 accessions: {}".format(accs[:10]))
+        else:
+            logger.debug("These are the accessions: {}".format(accs))
         return accs
 
     # Merging and cleaning

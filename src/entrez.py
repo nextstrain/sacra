@@ -9,7 +9,10 @@ from Bio import SeqIO
 def query_genbank(accessions, email=None, retmax=10, n_entrez=10, gbdb="nuccore", **kwargs):
     store = {}
     # https://www.biostars.org/p/66921/
-    logger.info("Querying genbank accessions {}".format(accessions))
+    if len(accessions) > 10:
+        logger.info("Querying genbank accessions {}...".format(accessions[:10]))
+    else:
+        logger.info("Querying genbank accessions {}".format(accessions))
     if not email:
         email = os.environ['NCBI_EMAIL']
     Entrez.email = email
