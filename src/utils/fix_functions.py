@@ -197,6 +197,6 @@ def region(strain, original_region, logger):
         else:
             logger.warn("Country -> Region mapping missing for {}".format(strain.country))
 
-    if original_region and original_region is not region:
+    if original_region and original_region != region:
         logger.warn("Region incompatability!?! Provided: {} Setting to: {}".format(original_region, region))
     return region

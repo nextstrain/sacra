@@ -67,7 +67,10 @@ class Cluster:
             return next(iter(self.attributions)).is_valid()
 
     def get_all_accessions(self):
-        return [s.accession for s in self.sequences if hasattr(s, "accession")]
+        if self.cluster_type != "attribution":
+            return [s.accession for s in self.sequences if hasattr(s, "accession")]
+        else:
+            return []
 
     def clean(self):
         ### STEP 1: MOVE
