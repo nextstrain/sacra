@@ -86,6 +86,7 @@ default_config = {
             'sample_id',
             'location',
             'attribution_id'
+            'region'
         ],
         'attribution' : [
             'attribution_id',

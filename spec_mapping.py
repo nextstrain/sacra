@@ -32,6 +32,7 @@ mapping  = {
         'ct',
         'usvi_doh_sample_id',
         'sample_strain_name'
+        'region'
     ],
     'sequence' : [
         'sequence_id',
