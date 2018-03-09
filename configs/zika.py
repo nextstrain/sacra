@@ -77,27 +77,27 @@ def fix_strain_name(obj, name, logger):
 
     THIS IS WHERE DOC TESTS SHOULD GO
     '''
-        original_name = name
+    original_name = name
+    try:
+        if name in name_fix_dict:
+            name = name_fix_dict[name]
+        name = name.replace('Zika_virus', '').replace('Zikavirus', '').replace('Zika virus', '').replace('Zika', '').replace('ZIKV', '')
+        name = name.replace('Human', '').replace('human', '').replace('H.sapiens_wt', '').replace('H.sapiens_tc', '').replace('Hsapiens_tc', '').replace('H.sapiens-tc', '').replace('Homo_sapiens', '').replace('Homo sapiens', '').replace('Hsapiens', '').replace('H.sapiens', '')
+        name = name.replace('/Hu/', '')
+        name = name.replace('_Asian', '').replace('_Asia', '').replace('_asian', '').replace('_asia', '')
+        name = name.replace('_URI', '').replace('_SER', '').replace('_PLA', '').replace('_MOS', '').replace('_SAL', '')
+        name = name.replace('Aaegypti_wt', 'Aedes_aegypti').replace('Aedessp', 'Aedes_sp')
+        name = name.replace(' ', '').replace('\'', '').replace('(', '').replace(')', '').replace('//', '/').replace('__', '_').replace('.', '').replace(',', '')
+        name = re.sub('^[\/\_\-]', '', name)
         try:
-            if name in name_fix_dict:
-                name = name_fix_dict[name]
-            name = name.replace('Zika_virus', '').replace('Zikavirus', '').replace('Zika virus', '').replace('Zika', '').replace('ZIKV', '')
-            name = name.replace('Human', '').replace('human', '').replace('H.sapiens_wt', '').replace('H.sapiens_tc', '').replace('Hsapiens_tc', '').replace('H.sapiens-tc', '').replace('Homo_sapiens', '').replace('Homo sapiens', '').replace('Hsapiens', '').replace('H.sapiens', '')
-            name = name.replace('/Hu/', '')
-            name = name.replace('_Asian', '').replace('_Asia', '').replace('_asian', '').replace('_asia', '')
-            name = name.replace('_URI', '').replace('_SER', '').replace('_PLA', '').replace('_MOS', '').replace('_SAL', '')
-            name = name.replace('Aaegypti_wt', 'Aedes_aegypti').replace('Aedessp', 'Aedes_sp')
-            name = name.replace(' ', '').replace('\'', '').replace('(', '').replace(')', '').replace('//', '/').replace('__', '_').replace('.', '').replace(',', '')
-            name = re.sub('^[\/\_\-]', '', name)
-            try:
-                name = 'V' + str(int(name))
-            except:
-                pass
+            name = 'V' + str(int(name))
         except:
-            logger.error("Error modifying Zika strain: {}".format(original_name))
-        if name is not original_name:
-            logger.debug("Changed strain name from {} to {}".format(original_name, name))
-        return name
+            pass
+    except:
+        logger.error("Error modifying Zika strain: {}".format(original_name))
+    if name is not original_name:
+        logger.debug("Changed strain name from {} to {}".format(original_name, name))
+    return name
 
 ######## Config construction ########
 def make_config(args, logger):
