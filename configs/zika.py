@@ -1,3 +1,10 @@
+from __future__ import division, print_function
+import sys, re
+sys.path.append("")
+from src.default_config import default_config, common_fasta_headers
+from src.utils.file_readers import make_dict_from_file
+import src.utils.fix_functions as fix_functions
+
 ######## zika.py, config for zika builds and config tutorial ########
 '''
 This file establishes the config for running Sacra builds for zika
@@ -6,33 +13,8 @@ This config will also serve as a mini "tutorial" on how to build a sacra config 
 a specific pathogen.
 
 Note that the file is just named for the pathogen of interest, this will be referenced
-in the command line call to sacra/src/run.py by the --pathgen flag.
+in the command line call to sacra/src/run.py by the --pathogen flag.
 '''
-######## Imports ########
-'''
-Module imports required for all configs
-'''
-from __future__ import division, print_function
-import sys, re
-sys.path.append("")
-from src.default_config import default_config, common_fasta_headers
-from src.utils.file_readers import make_dict_from_file
-import src.utils.fix_functions as fix_functions
-'''
-Module imports for pathogen-specific cleaning functions
-
-None for zika, but this would be where modules used in fix functions would be imported
-'''
-
-######## Mapping dictionaries ########
-'''
-Modification functions
-
-These calls spin up dictionaries defining specific mappings that could not otherwise
-be fixed algorithmically.
-'''
-name_fix_dict = make_dict_from_file("source-data/zika_strain_name_fix.tsv")
-date_fix_dict = make_dict_from_file("source-data/zika_date_fix.tsv")
 
 ######## User-defined cleaning functions ########
 '''
@@ -71,6 +53,7 @@ All cleaning functions must follow the same structure:
     Modifications to the state of obj can be made, but they may result in downstream
     errors. Expected behavior is that only the field specified will be changed.
 '''
+name_fix_dict = make_dict_from_file("source-data/zika_strain_name_fix.tsv")
 def fix_strain_name(obj, name, logger):
     '''
     This function modifies a single zika strain name.
@@ -121,17 +104,7 @@ def make_config(args, logger):
     should happen through direct modification of this function.
     '''
     if args.overwrite_fasta_header:
-        if args.overwrite_fasta_header == "alt1":
-            config["fasta_headers"] = [
-                "accession",
-                'strain_name',
-                'collection_date',
-                'host',
-                'country',
-                'division',
-                'muv_genotype'
-            ]
-        elif args.overwrite_fasta_header == "fauna":
+        if args.overwrite_fasta_header == "fauna":
             config["fasta_headers"] = [
                 'strain_name',
                 'virus',
@@ -152,20 +125,16 @@ def make_config(args, logger):
         else:
             logger.critical("Unknown FASTA header format demanded: \"{}\"".format(args.overwrite_fasta_header)); sys.exit(2)
     else:
+        # VIPR format is default
         config["fasta_headers"] = [
+            "accession",
             'strain_name',
-            'virus',
-            'accession',
+            'segment',
             'collection_date',
-            'country',
-            'division',
-            'muv_genotype',
             'host',
-            'authors',
-            'publication_name',
-            'journal',
-            'attribution_url',
-            'accession_url'
+            'country',
+            'subtype',
+            'virus_type'
         ]
     '''
     Make sure to add the fix functions that were defined above to the new config,
