@@ -37,6 +37,7 @@ default_config = {
         "country_to_region": "source-data/geo_regions.tsv",
         "geo_synonyms": "source-data/geo_synonyms.tsv"
     },
+    'lookups' : {}, # TODO: move fix_lookups into here and process in a single place.
     "fix_functions": {
         "strain_name": fix.strain_name,
         "collection_date": fix.collection_date,

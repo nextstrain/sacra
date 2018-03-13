@@ -6,6 +6,7 @@ from cluster import Cluster
 logger = logging.getLogger(__name__)
 from entrez import query_genbank
 from utils.genbank_parsers import process_genbank_record
+from utils.populate_lookups import populate_lookups
 
 flatten = lambda l: [item for sublist in l for item in sublist]
 
@@ -16,6 +17,7 @@ class Dataset:
         self.CONFIG = CONFIG
         self.clusters = []
         self.genbank_data = {}
+        populate_lookups(self.CONFIG)
 
     # File handling
     def read_to_clusters(self, f):
