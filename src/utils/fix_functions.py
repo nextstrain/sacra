@@ -165,7 +165,8 @@ def general_location_fix(sample, category, original_value, logger):
                             label = re.match(r'^([A-Z][a-z]+)[A-Z0-9]', value).group(1).lower()
                             value = lookups["geo_synonyms"][category][label]
                         except (AttributeError, KeyError): # attribute error if the regex finds no groups. KeyError if it's not in the DB
-                            value = "_".join(value.split("_")).lower() # only run if the lookup fails
+                            return None
+                            # value = "_".join(value.split("_")).lower() # only run if the lookup fails
     else:
         value = "_".join(value.split("_")).lower() # only run if the lookup fails
 
@@ -195,7 +196,7 @@ def region(strain, original_region, logger):
         elif camelcase_to_snakecase(strain.country) in lookups["country_to_region"]:
             region = lookups["country_to_region"][camelcase_to_snakecase(strain.country)]
         else:
-            logger.warn("Country -> Region mapping missing for {}".format(strain.country))
+            logger.debug("Country -> Region mapping missing for {}".format(strain.country))
 
     if original_region and original_region != region:
         logger.warn("Region incompatability!?! Provided: {} Setting to: {}".format(original_region, region))

@@ -46,7 +46,8 @@ mapping  = {
         'sequence_url',
         'attribution',
         'sequence',
-        'sample_id'
+        'sample_id',
+        'segment'
     ],
     'attribution' : [
         'attribution_id',

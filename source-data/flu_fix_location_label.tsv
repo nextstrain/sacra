@@ -8,11 +8,13 @@ Tucum?n	Tucuman
 
 # Australia
 NorthernTerritories	NorthernTerritory
+northernterritories	NorthernTerritory
 29c	/
 NT	NorthernTerritory
 SouthAustalia	SouthAustralia
 SouthAustrallia	SouthAustralia
 SouthAustalia	SouthAustralia
+southaustalia	SouthAustralia
 SouthAustralai	SouthAustralia
 South_Australia	SouthAustralia
 SouthAustrallia	SouthAustralia
@@ -690,6 +692,7 @@ Samutprakan	SamutPrakan
 SongKhlai	Songkhla
 Suratthani	SuratThani
 thailand	Thailand
+nakhonratchaisma	Thailand
 
 # TrinidadAndTobago
 Trinidad-Tobago	Trinidad

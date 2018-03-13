@@ -1,5 +1,6 @@
 import csv
 from misc import camelcase_to_snakecase
+import re
 
 def make_dict_from_file(fname, key="label", value="fix"):
     '''
