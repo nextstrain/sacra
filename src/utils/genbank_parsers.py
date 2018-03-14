@@ -36,8 +36,17 @@ def choose_best_reference(record):
 ### SET METHODS (these become part of the config, and are then passed to process_genbank_record)
 ###             all methods have the same arguments passed to them
 def set_strain_name(data, record, source, reference, logger):
+    source = dict(source)
+    print(source)
     try:
-        data["strain_name"] = source["strain"][0]
+        if "strain" in source.keys():
+            data["strain_name"] = source["strain"][0]
+            logger.debug("Setting strain_name to {}".format(source["strain"][0]))
+        elif "isolate" in source.keys():
+            logger.debug("Setting strain_name to {}".format(source["isolate"][0]))
+            data["strain_name"] = source["isolate"][0]
+        else:
+            raise Exception
     except:
         logger.warn("\tError setting strain_name")
 
