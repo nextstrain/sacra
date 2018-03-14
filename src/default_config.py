@@ -81,7 +81,7 @@ default_config = {
             'sequencing_lab',
             'sharing',
             'sequence_url',
-            'attribution',
+            'attribution_id',
             'sequence',
             'sample_id',
             'location',
