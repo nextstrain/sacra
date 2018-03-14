@@ -1,4 +1,5 @@
 from __future__ import division, print_function
+import sys
 import logging
 from strain import Strain
 from sample import Sample
