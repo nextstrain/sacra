@@ -52,7 +52,7 @@ class Dataset:
 
             for record in SeqIO.parse(f, "fasta"):
                 data = {}
-                head = record.description.replace(" ","").split('|')
+                head = record.description.split('|')
                 for i in range(len(self.CONFIG["fasta_headers"])):
                     try:
                         data[self.CONFIG["fasta_headers"][i]] = head[i]
@@ -225,7 +225,13 @@ class Dataset:
     def link_attribution_id(self, genomic_cluster, attribution_cluster):
         if attribution_cluster.is_valid() and genomic_cluster.is_valid():
             for s in genomic_cluster.sequences:
+                logger.debug("Setting attribution id {} for sequence {}".format(attribution_cluster.get_all_units()[0].attribution_id, s))
                 s.attribution_id = attribution_cluster.get_all_units()[0].attribution_id
+        else:
+            if not attribution_cluster.is_valid():
+                logger.warn("Invalid cluster: {}".format(attribution_cluster))
+            elif genomic_cluster.is_valid():
+                logger.warn("Invalid cluster: {}".format(genomic_cluster))
 
     def get_all_accessions(self):
         '''
