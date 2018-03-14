@@ -122,6 +122,26 @@ def make_config(args, logger):
                 'journal',
                 'attribution_url'
             ]
+        elif args.overwrite_fasta_header == "sacra_rebuild":
+            config["fasta_headers"] = [
+                'accession',
+                'authors',
+                'attribution_journal',
+                'locus',
+                'unused',
+                'attribution_url',
+                'attribution_source',
+                'strain_name',
+                'unused',
+                'attribution_title',
+                'sequence_url',
+                'pathogen',
+                'collection_date',
+                'country',
+                'division',
+                'host_species',
+                'number_sequences',
+                'region']
         else:
             logger.critical("Unknown FASTA header format demanded: \"{}\"".format(args.overwrite_fasta_header)); sys.exit(2)
     else:
