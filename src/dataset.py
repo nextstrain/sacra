@@ -64,8 +64,12 @@ class Dataset:
                 att = Cluster(self.CONFIG, data, cluster_type="attribution")
                 # link the attribute id to each sequence in the cluster
                 self.link_attribution_id(clus, att)
+
                 if clus.is_valid(): clusters.append(clus)
-                if att.is_valid(): clusters.append(att)
+                if att.is_valid():
+                    clusters.append(att)
+                else:
+                    logger.warn("Invalid attribution cluster")
         return clusters
 
     def read_json_to_clusters(self, infile):

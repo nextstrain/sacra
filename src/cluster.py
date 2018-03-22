@@ -65,7 +65,8 @@ class Cluster:
         elif self.cluster_type == "attribution":
             if len(self.attributions) != 1:
                 return False
-            return next(iter(self.attributions)).is_valid()
+            else:
+                return next(iter(self.attributions)).is_valid()
 
     def get_all_accessions(self):
         if self.cluster_type != "attribution":
