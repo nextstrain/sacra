@@ -1,0 +1,54 @@
+{
+  "dbinfo" : {
+    "pathogen" : "PATHOGEN"
+  },
+  "cases" : [
+    {
+      "uid" : "CASEID",
+      "case_id" : "CASEID",
+      "owner" : "OWNER",
+      "host_species" : null,
+      "host_age": null,
+      "host_sex" : null,
+      "symptom_onset_date" : null,
+      "symptoms" : null,
+      "origin_country" : null,
+      "origin_division" : null,
+      "origin_subdivision" : null,
+      "origin_gps" : null
+    }
+  ],
+  "samples" : [
+    {
+      "uid" : "CASEID|CASEID",
+      "case_id" : "CASEID",
+      "sample_id" : "CASEID",
+      "owner" : "OWNER",
+      "collection_date" : null,
+      "collection_country" : null,
+      "collection_division" : null,
+      "collection_subdivision" : null,
+      "collection_gps" : null,
+      "collecting_lab" : null,
+      "passage" : null,
+      "tissue" : null,
+      "ct" : null
+    }
+  ],
+  "sequences" : [
+    {
+      "uid" : "CASEID|CASEID|CASEID",
+      "case_id" : "CASEID",
+      "sample_id" : "CASEID",
+      "sequence_id": "CASEID",
+      "owner" : "OWNER",
+      "sequence_locus" : null,
+      "sequence_type" : null,
+      "sequencing_lab" : null,
+      "sharing" : null,
+      "sequence_url" : null,
+      "attribution" : null,
+      "sequence" : "SEQUENCE"
+    }
+  ]
+}

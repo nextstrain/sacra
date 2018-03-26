@@ -1,0 +1,219 @@
+{
+  "dbinfo" : {
+    "pathogen" : "seasonal_flu"
+  },
+  "cases" : [
+    {
+      "uid" : "A/Adana/12/2016",
+      "case_id" : "A/Adana/12/2016",
+      "owner" : "tbedford",
+      "host_species" : "human",
+      "host_age" : "22y",
+      "host_sex" : "female",
+      "symptom_onset_date" : null,
+      "symptoms" : null,
+      "origin_country" : null,
+      "origin_division" : null,
+      "origin_subdivision" : null,
+      "origin_gps" : null,
+      "subtype" : "h1n1pdm"
+    }
+  ],
+  "samples" : [
+    {
+      "uid" : "A/Adana/12/2016|EPI_ISL_221846",
+      "case_id" : "A/Adana/12/2016",
+      "sample_id" : "EPI_ISL_221846",
+      "owner" : "tbedford",
+      "collection_date" : "2015-12-30",
+      "collection_country" : "turkey",
+      "collection_division" : "adana",
+      "collection_subdivision" : null,
+      "collection_gps" : null,
+      "collecting_lab" : "Refik Saydam National Public Health Agency",
+      "passage" : "SIAT1/MDCK1",
+      "tissue" : null,
+      "ct" : null
+    },
+    {
+      "uid" : "A/Adana/12/2016|EPI_ISL_221431",
+      "case_id" : "A/Adana/12/2016",
+      "sample_id" : "EPI_ISL_221431",
+      "owner" : "tbedford",
+      "collection_date" : "2016-01-04",
+      "collection_country" : "turkey",
+      "collection_division" : "adana",
+      "collection_subdivision" : null,
+      "collection_gps" : null,
+      "collecting_lab" : "Other Database Import",
+      "passage" : null,
+      "tissue" : null,
+      "ct" : null
+    },
+    {
+      "uid" : "A/Adana/12/2016|A/Adana/12/2016",
+      "case_id" : "A/Adana/12/2016",
+      "sample_id" : "A/Adana/12/2016",
+      "owner" : "tbedford",
+      "collection_date" : "2016-01-04",
+      "collection_country" : "turkey",
+      "collection_division" : "adana",
+      "collection_subdivision" : null,
+      "collection_gps" : null,
+      "collecting_lab" : null,
+      "passage" : null,
+      "tissue" : "nasal swab",
+      "ct" : null
+    }
+  ],
+  "sequences" : [
+    {
+      "uid" : "A/Adana/12/2016|EPI_ISL_221846|EPI760746",
+      "case_id" : "A/Adana/12/2016",
+      "sample_id" : "EPI_ISL_221846",
+      "sequence_id": "EPI760746",
+      "owner" : "tbedford",
+      "locus" : "ha",
+      "sequencing_lab" : "Crick Worldwide Influenza Centre",
+      "sharing" : "private",
+      "sequence_url" : "https://gisaid.org/epi3/EPI_ISL_221846/",
+      "attribution" : "crick_worldwide_influenza_centre",
+      "sequence" : "gattag...",
+      "gisaid_accession" : "EPI760746"
+    },
+    {
+      "uid" : "A/Adana/12/2016|EPI_ISL_221846|EPI760747",
+      "case_id" : "A/Adana/12/2016",
+      "sample_id" : "EPI_ISL_221846",
+      "sequence_id" : "EPI760747",
+      "owner" : "tbedford",
+      "locus" : "na",
+      "sequencing_lab" : "Crick Worldwide Influenza Centre",
+      "sharing" : "private",
+      "sequence_url" : "https://gisaid.org/epi3/EPI_ISL_221846/",
+      "attribution" : "crick_worldwide_influenza_centre",
+      "sequence" : "tcagca...",
+      "gisaid_accession" : "EPI760747"
+    },
+    {
+      "uid" : "A/Adana/12/2016|EPI_ISL_221431|EPI758979",
+      "case_id" : "A/Adana/12/2016",
+      "sample_id" : "EPI_ISL_221431",
+      "sequence_id" : "EPI758979",
+      "owner" : "tbedford",
+      "locus" : "ha",
+      "sequencing_lab" : null,
+      "sharing" : "private",
+      "sequence_url" : "https://gisaid.org/epi3/EPI_ISL_221431/",
+      "attribution" : null,
+      "sequence" : "gattag...",
+      "gisaid_accession" :"EPI758979"
+    },
+    {
+      "uid" : "A/Adana/12/2016|EPI_ISL_221431|EPI781655",
+      "case_id" : "A/Adana/12/2016",
+      "sample_id" : "EPI_ISL_221431",
+      "sequence_id" : "EPI781655",
+      "owner" : "tbedford",
+      "locus" : "na",
+      "sequencing_lab" : null,
+      "sharing" : "private",
+      "sequence_url" : "https://gisaid.org/epi3/EPI_ISL_221431/",
+      "attribution" : null,
+      "sequence" : "tcagca...",
+      "gisaid_accession" : "EPI781655"
+    },
+    {
+      "uid" : "A/Adana/12/2016|A/Adana/12/2016|KX097045",
+      "case_id" : "A/Adana/12/2016",
+      "sample_id" : "A/Adana/12/2016",
+      "sequence_id" : "KX097045",
+      "owner" : "tbedford",
+      "locus" : "ha",
+      "sequencing_lab" : null,
+      "sharing" : "public",
+      "sequence_url" : "https://www.ncbi.nlm.nih.gov/nuccore/KX097045",
+      "attribution" : "coskun_ari_2016_h1n1",
+      "sequence" : "gattag...",
+      "genbank_accession" : "KX097045"
+    },
+    {
+      "uid" : "A/Adana/12/2016|A/Adana/12/2016|KX364485",
+      "case_id" : "A/Adana/12/2016",
+      "sample_id" : "A/Adana/12/2016",
+      "sequence_id" : "KX364485",
+      "owner" : "tbedford",
+      "locus" : "na",
+      "sequencing_lab" : null,
+      "sharing" : "public",
+      "sequence_url" : "https://www.ncbi.nlm.nih.gov/nuccore/KX364485",
+      "attribution" : "coskun_ari_2016_h1n1",
+      "sequence" : "gattag...",
+      "genbank_accession" : "KX364485"
+    },
+  ],
+  "titers" : [
+    {
+      "uid" : "A/Adana/12/2016|A/Astrakhan/1/2011|F22/13|2016-03-21",
+      "virus_strain" : "A/Adana/12/2016",
+      "virus_sample" : "A/Adana/12/2016|EPI_ISL_221846",
+      "serum_strain" : "A/Astrakhan/1/2011",
+      "serum_id" : "F22/13",
+      "serum_host" : "ferret",
+      "serum_passage" : "MDCK",
+      "assay_date" : "2016-03-21",
+      "sharing" : "private",
+      "titer" : "640"
+    },
+    {
+      "uid" : "A/Adana/12/2016|A/Bayern/69/2009|F09/15|2016-03-21",
+      "virus_strain" : "A/Adana/12/2016",
+      "virus_sample" : "A/Adana/12/2016|EPI_ISL_221846",
+      "serum_strain" : "A/Bayern/69/2009",
+      "serum_id" : "F09/15",
+      "serum_host" : "ferret",
+      "serum_passage" : "MDCK",
+      "assay_date" : "2016-03-21",
+      "sharing" : "private",
+      "titer" : "320"
+    },
+    {
+      "uid" : "A/Adana/12/2016|A/California/7/2009|F06/16|2016-03-21",
+      "virus_strain" : "A/Adana/12/2016",
+      "virus_sample" : "A/Adana/12/2016|EPI_ISL_221846",
+      "serum_strain" : "A/California/7/2009",
+      "serum_id" : "F06/16",
+      "serum_host" : "ferret",
+      "serum_passage" : "MDCK",
+      "assay_date" : "2016-03-21",
+      "sharing" : "private",
+      "titer" : "1280"
+    }
+  ],
+  "attributions" : [
+    {
+      "uid" : "crick_worldwide_influenza_centre",
+      "owner" : "tbedford",
+      "source" : "gisaid",
+      "publication_status" : "unpublished",
+      "attribution_date" : null,
+      "publication_name" : null,
+      "attribution_journal": null,
+      "attribution_url" : null,
+      "authors" : "Vicki  Gregory, John McCauley",
+      "pubmed_id" : null
+    },
+    {
+      "uid" : "coskun_ari_2016_h1n1",
+      "owner" : "tbedford",
+      "source" : "genbank",
+      "publication_status" : "unpublished",
+      "attribution_date" : "2016-05-16",
+      "publication_name" : "H1N1 strains circulating in Turkey during 2015-2016 season",
+      "attribution_journal" : null,
+      "attribution_url" : "https://www.ncbi.nlm.nih.gov/nuccore/KX097045",
+      "authors" : "Coskun Ari,F.F., Altas,B., Bakkaloglu,Z., Bayrakdar,F., Guldemir,D., Unaldi,O., Korukluoglu,G., Aktas,A.R. and Durmaz,R.",
+      "pubmed_id" : null
+    }
+  ]
+}

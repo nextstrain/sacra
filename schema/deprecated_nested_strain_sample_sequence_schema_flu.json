@@ -1,0 +1,154 @@
+{
+  "dbinfo" : {
+    "pathogen" : "flu"
+  },
+  "strains" : [
+    {
+      "strain" : "A/Adana/12/2016",
+      "owner" : "tbedford",
+      "host" : "human",
+      "host_age" : "22y",
+      "samples" : [
+        {
+          "sample" : "EPI_ISL_221846",
+          "collection_date" : "2015-12-30",
+          "country" : "turkey",
+          "division" : "adana",
+          "subdivision" : null,
+          "gps" : null,
+          "collecting_lab" : "Refik Saydam National Public Health Agency",
+          "passage" : "SIAT1/MDCK1",
+          "tissue" : null,
+          "ct" : null,
+          "sequences" : [
+            {
+              "accession" : "EPI760746",
+              "sequencing_lab" : "Crick Worldwide Influenza Centre",
+              "initial_upload_date" : "2016-05-25",
+              "attribution" : "crick_worldwide_influenza_centre",
+              "locus" : "ha",
+              "sharing" : "private",
+              "url" : "https://gisaid.org/epi3/EPI_ISL_221846/",
+              "sequence" : "gattag..."
+            },
+            {
+              "accession" : "EPI760747",
+              "sequencing_lab" : "Crick Worldwide Influenza Centre",
+              "initial_upload_date" : "2016-05-25",
+              "attribution" : "crick_worldwide_influenza_centre",
+              "locus" : "na",
+              "sharing" : "private",
+              "url" : "https://gisaid.org/epi3/EPI_ISL_221846/",
+              "sequence" : "tcagca..."
+            }
+          ],
+          "titers" : [
+            {
+              "id" : "GZY9N5MNZK3T",
+              "serum_strain" : "A/Astrakhan/1/2011",
+              "serum_id" : "F22/13",
+              "serum_host" : "ferret",
+              "serum_passage" : "MDCK",
+              "assay_date" : "2016-03-21",
+              "sharing" : "private",
+              "titer" : "640"
+            },
+            {
+              "id" : "2JEZ7X7VS1ZH",
+              "serum_strain" : "A/Bayern/69/2009",
+              "serum_id" : "F09/15",
+              "serum_host" : "ferret",
+              "serum_passage" : "MDCK",
+              "assay_date" : "2016-03-21",
+              "sharing" : "private",
+              "titer" : "320"
+            },
+            {
+              "id" : "JBXQIFZWAYQP",
+              "serum_strain" : "A/California/7/2009",
+              "serum_id" : "F06/16",
+              "serum_host" : "ferret",
+              "serum_passage" : "MDCK",
+              "assay_date" : "2016-03-21",
+              "sharing" : "private",
+              "titer" : "1280"
+            }
+          ]
+        },
+        {
+          "sample" : "EPI_ISL_221431 ",
+          "collection_date" : "2016-01-04",
+          "country" : "turkey",
+          "division" : "adana",
+          "subdivision" : null,
+          "gps" : null,
+          "collecting_lab" : null,
+          "passage" : null,
+          "tissue" : "nasal swab",
+          "ct" : null,
+          "sequences" : [
+            {
+              "accession" : "KX097045",
+              "sequencing_lab" : null,
+              "initial_upload_date" : "2016-05-15",
+              "attribution" : "coskun_ari_2016_h1n1",
+              "locus" : "ha",
+              "sharing" : "public",
+              "url" : "https://www.ncbi.nlm.nih.gov/nuccore/KX097045",
+              "sequence" : "gattag..."
+            },
+            {
+              "accession" : "KX364485",
+              "sequencing_lab" : null,
+              "initial_upload_date" : "2016-05-15",
+              "attribution" : "coskun_ari_2016_h1n1",
+              "locus" : "na",
+              "sharing" : "public",
+              "url" : "https://www.ncbi.nlm.nih.gov/nuccore/KX364485",
+              "sequence" : "tcagca..."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "attributions" : [
+    {
+      "attribution" : "crick_worldwide_influenza_centre",
+      "owner" : "tbedford",
+      "pubmed_id" : null,
+      "source" : "gisaid",
+      "publication_status" : "unpublished",
+      "attribution_date" : null,
+      "publication_name" : null,
+      "journal": null,
+      "url" : null,
+      "authors": [
+        "Vicki  Gregory",
+        "John McCauley"
+      ],
+      "accessions" : [
+        "EPI760746",
+        "EPI760747"
+      ]
+    },
+    {
+      "attribution" : "coskun_ari_2016_h1n1",
+      "owner" : "tbedford",
+      "pubmed_id" : null,
+      "source" : "genbank",
+      "publication_status" : "unpublished",
+      "attribution_date" : "2016-05-16",
+      "publication_name" : "H1N1 strains circulating in Turkey during 2015-2016 season",
+      "journal": null,
+      "url" : "https://www.ncbi.nlm.nih.gov/nuccore/KX097045 --- this is not ideal",
+      "authors": [
+        "Coskun Ari,F.F., Altas,B., Bakkaloglu,Z., Bayrakdar,F., Guldemir,D., Unaldi,O., Korukluoglu,G., Aktas,A.R. and Durmaz,R."
+      ],
+      "accessions" : [
+        "KX097045",
+        "KX364485"
+      ]
+    }
+  ]
+}
