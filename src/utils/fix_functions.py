@@ -201,3 +201,13 @@ def region(strain, original_region, logger):
     if original_region and original_region != region:
         logger.warn("Region incompatability!?! Provided: {} Setting to: {}".format(original_region, region))
     return region
+
+def passage(obj, passage, logger):
+    if passage == None:
+        return 'unknown'
+    passage = passage.lower()
+    if passage[-1] == '_' or passage[-1] == ' ':
+        passage = passage[:-1]
+    if passage[0] == '_' or passage[0] == ' ':
+        passage = passage[1:]
+    return passage

@@ -47,6 +47,7 @@ default_config = {
         "location": fix.location,
         "region": fix.region,
         "sample_name": fix.sample_name,
+        "passage": fix.passage
     },
     # TODO: Make this a real minimal default config
     "mapping" : {
@@ -70,7 +71,8 @@ default_config = {
             'region',
             'gps',
             'collecting_lab',
-            'strain_id'
+            'strain_id',
+            'passage'
         ],
         'sequence' : [
             'sequence_id',
