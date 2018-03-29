@@ -84,6 +84,11 @@ def fix_strain_name(obj, name, logger):
         name = name_fix_dict[name]
     if name is not original_name:
         logger.debug("Changed strain name from {} to {}".format(original_name, name))
+
+    if name[0] == '_':
+        name = name[1:]
+    if name[-1] == '_':
+        name = name[:-1]
     return name
 
 
@@ -141,15 +146,17 @@ def make_config(args, logger):
     """ make the function - you can use the args to customise it. Try to minimise the customisation! """
     ## initialise with default config
     config = default_config
-    config["pathogen"] = "mumps"
+    config["pathogen"] = "flu_A"
     ## example: >114954 |  A/mallard/Gurjev/244/1982 | PB2 | A / H14N0 |  | 1982 (Month and day unknown)
+
+    ## example: 1196114 | A/Connecticut/12/2018 | EPI_ISL_302943 | NP | Original | Centers for Disease Control and Prevention
     config["fasta_headers"] = [
         'accession',
         'strain_name',
-        'segment',
-        'type',
-        'lineage',
-        'collection_date'
+        'sample_name',
+        'locus',
+        'passage',
+        'sequencing_lab'
     ]
     config["mapping"]["sample"].extend(["type", "ha_type", "na_type", "lineage"])
     config["mapping"]["sequence"].extend(["segment"])
