@@ -61,6 +61,9 @@ class Dataset:
                         data['sequence'] = str(record.seq)
                     except KeyError:
                         logger.critical("Error parsing FASTA header. Header: {}. CONFIG specifies: {}".format(head, self.CONFIG["fasta_headers"])); sys.exit(2)
+		if self.CONFIG["custom_fields"] != {}:
+		    for field in self.CONFIG["custom_fields"].keys():
+			data[field] = self.CONFIG["custom_fields"][field]
                 # logger.debug("Processing this header: {}".format(data))
                 clus = Cluster(self.CONFIG, data)
                 att = Cluster(self.CONFIG, data, cluster_type="attribution")
