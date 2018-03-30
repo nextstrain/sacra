@@ -127,7 +127,7 @@ def make_config(args, logger):
                 'accession',
                 'authors',
                 'attribution_journal',
-                'locus',
+                'segment',
                 'unused',
                 'attribution_url',
                 'attribution_source',

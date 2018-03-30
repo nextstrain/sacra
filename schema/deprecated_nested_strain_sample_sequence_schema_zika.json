@@ -26,7 +26,7 @@
               "sequencing_lab" : "Bedford lab",
               "initial_upload_date" : "2016-12-21",
               "attribution" : "black_2017_genetic",
-              "locus" : "genome",
+              "segment" : "genome",
               "sharing" : "public",
               "url" : "https://github.com/blab/zika-usvi/blob/master/data/fastas/zika_usvi_good.fasta",
               "sequence" : "gattag..."
@@ -50,7 +50,7 @@
               "sequencing_lab" : "Bedford lab",
               "initial_upload_date" : "2016-12-21",
               "attribution" : "black_2017_genetic",
-              "locus" : "genome",
+              "segment" : "genome",
               "sharing" : "public",
               "url" : "https://github.com/blab/zika-usvi/blob/master/data/fastas/zika_usvi_good.fasta",
               "sequence" : "gattag..."

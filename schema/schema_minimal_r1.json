@@ -42,7 +42,7 @@
       "sample_id" : "CASEID",
       "sequence_id": "CASEID",
       "owner" : "OWNER",
-      "sequence_locus" : null,
+      "sequence_segment" : null,
       "sequence_type" : null,
       "sequencing_lab" : null,
       "sharing" : null,

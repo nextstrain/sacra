@@ -39,7 +39,7 @@ mapping  = {
         'accession',
         'sequence_sample_name',
         'sequence_owner',
-        'locus',
+        'segment',
         'sequence_type',
         'sequencing_lab',
         'sharing',

@@ -26,7 +26,7 @@
               "sequencing_lab" : "Crick Worldwide Influenza Centre",
               "initial_upload_date" : "2016-05-25",
               "attribution" : "crick_worldwide_influenza_centre",
-              "locus" : "ha",
+              "segment" : "ha",
               "sharing" : "private",
               "url" : "https://gisaid.org/epi3/EPI_ISL_221846/",
               "sequence" : "gattag..."
@@ -36,7 +36,7 @@
               "sequencing_lab" : "Crick Worldwide Influenza Centre",
               "initial_upload_date" : "2016-05-25",
               "attribution" : "crick_worldwide_influenza_centre",
-              "locus" : "na",
+              "segment" : "na",
               "sharing" : "private",
               "url" : "https://gisaid.org/epi3/EPI_ISL_221846/",
               "sequence" : "tcagca..."
@@ -92,7 +92,7 @@
               "sequencing_lab" : null,
               "initial_upload_date" : "2016-05-15",
               "attribution" : "coskun_ari_2016_h1n1",
-              "locus" : "ha",
+              "segment" : "ha",
               "sharing" : "public",
               "url" : "https://www.ncbi.nlm.nih.gov/nuccore/KX097045",
               "sequence" : "gattag..."
@@ -102,7 +102,7 @@
               "sequencing_lab" : null,
               "initial_upload_date" : "2016-05-15",
               "attribution" : "coskun_ari_2016_h1n1",
-              "locus" : "na",
+              "segment" : "na",
               "sharing" : "public",
               "url" : "https://www.ncbi.nlm.nih.gov/nuccore/KX364485",
               "sequence" : "tcagca..."

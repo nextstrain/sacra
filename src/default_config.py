@@ -79,7 +79,7 @@ default_config = {
             'accession',
             'sequence_sample_name',
             'sequence_owner',
-            'locus',
+            'segment',
             'sequence_type',
             'sequencing_lab',
             'sharing',
@@ -111,7 +111,7 @@ default_config = {
 
 common_fasta_headers = {
     ####                1st             2nd         3rd             4th             5th             6th                 7th             8th         9th         10th                11th
-    'gisaid' : ['sequence_name', 'strain_name', 'sample_name',  'locus',            'passage',  'sequencing_lab' ],
+    'gisaid' : ['sequence_name', 'strain_name', 'sample_name',  'segment',            'passage',  'sequencing_lab' ],
     'fauna'  : ['strain',        'pathogen',    'sequence_name','collection_date',  'region',   'country',          'division',     'location', 'passage',      'source',           'age' ],
-    'vipr'   : ['sequence_name', 'strain',      'locus',        'date',             'host',     'country',          'subtype',      'pathogen' ]
+    'vipr'   : ['sequence_name', 'strain',      'segment',        'date',             'host',     'country',          'subtype',      'pathogen' ]
 }

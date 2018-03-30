@@ -197,12 +197,12 @@ elapsed = (end_time - start_time)/float(replicates)
 print("nested updates per second: %.1f" % float(1/elapsed))
 
 # Updating sequence attribute
-print("Update sequence attribute sequence_locus")
+print("Update sequence attribute sequence_segment")
 
 # Relational update
 start_time = time.time()
 for x in range(0,replicates):
-    call = r.db('relational').table('sequences').get('USVI/1/2016|VI1.1|1').update({"sequence_locus": str(x)}, durability="soft").run(conn)
+    call = r.db('relational').table('sequences').get('USVI/1/2016|VI1.1|1').update({"sequence_segment": str(x)}, durability="soft").run(conn)
 end_time = time.time()
 elapsed = (end_time - start_time)/float(replicates)
 print("relational updates per second: %.1f" % float(1/elapsed))
@@ -216,7 +216,7 @@ for x in range(0,replicates):
             'samples': {
                 'USVI/1/2016|VI1.1': {
                     'sequences': {
-                        'USVI/1/2016|VI1.1|1' : {'sequence_locus': str(x)}
+                        'USVI/1/2016|VI1.1|1' : {'sequence_segment': str(x)}
                     }
                 }
             }
@@ -228,7 +228,7 @@ print("nested updates per second: %.1f" % float(1/elapsed))
 
 # Testing read performance
 print("Testing read performance")
-print("Get all sequence attribute sequence_locus associated with strain USVI/1/2016")
+print("Get all sequence attribute sequence_segment associated with strain USVI/1/2016")
 
 # Gather relational
 start_time = time.time()
@@ -237,7 +237,7 @@ for x in range(0,replicates):
         'id',
         r.db('relational').table('sequences'),
         index='strain_name'
-    ).zip()['sequence_locus'].run(conn)
+    ).zip()['sequence_segment'].run(conn)
     # print json.dumps(list(cursor), indent=2)
 end_time = time.time()
 elapsed = (end_time - start_time)/float(replicates)
@@ -249,7 +249,7 @@ for x in range(0,replicates):
     call = (r.db('nested').table('strains').get('USVI/1/2016').do(
         lambda strain: strain['samples'].values().map(
             lambda sample: sample['sequences'].values().map(
-                lambda sequence: sequence['sequence_locus']
+                lambda sequence: sequence['sequence_segment']
             )
         )
         ).run(conn))

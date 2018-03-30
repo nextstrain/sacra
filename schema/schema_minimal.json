@@ -38,7 +38,7 @@
       "sample_name" : "1",
       "sequence_accession": "1",
       "owner" : "OWNER",
-      "sequence_locus" : null,
+      "sequence_segment" : null,
       "sequence_type" : null,
       "sequencing_lab" : null,
       "sharing" : null,

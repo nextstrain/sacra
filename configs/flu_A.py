@@ -153,7 +153,7 @@ def make_config(args, logger):
         'accession',
         'strain_name',
         'sample_name',
-        'locus',
+        'segment',
         'passage',
         'sequencing_lab'
     ]
