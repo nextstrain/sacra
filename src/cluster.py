@@ -16,9 +16,9 @@ class Cluster:
         self.CONFIG = CONFIG
         self.cluster_type = cluster_type
         if self.cluster_type == "genic":
-            self.strains = set()
-            self.samples = set()
-            self.sequences = set()
+            self.strains = []
+            self.samples = []
+            self.sequences = []
             a = Strain(self.CONFIG, data_dictionary)
             b = Sample(self.CONFIG, data_dictionary, a)
             y = Sequence(self.CONFIG, data_dictionary, b)
@@ -27,23 +27,23 @@ class Cluster:
 
             ## add to state (self) if the object is valid
             if a.is_valid():
-                self.strains.add(a)
-            self.samples.add(b)
-            self.sequences.add(y)
+                self.strains.append(a)
+            self.samples.append(b)
+            self.sequences.append(y)
         elif self.cluster_type == "titer":
-            self.titers = set()
+            self.titers = []
             # w = Titer(data_dictionary)
             # Operations
-            # self.titers.add(w)
+            # self.titers.append(w)
         elif self.cluster_type == "attribution":
-            self.attributions = set()
+            self.attributions = []
             d = Attribution(self.CONFIG, data_dictionary)
             # Operations
-            self.attributions.add(d)
+            self.attributions.append(d)
         elif self.cluster_type == "unlinked":
-            self.strains = set()
-            self.samples = set()
-            self.sequences = set()
+            self.strains = []
+            self.samples = []
+            self.sequences = []
         else:
             logger.error("Unknown cluster_type {}".format(cluster_type))
 
