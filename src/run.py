@@ -44,8 +44,8 @@ def main(args, logger):
     except AssertionError:
         logger.critical("make_config() in configs/{}.py must return a dictionary".format(args.pathogen)); sys.exit(2)
 
+    cf = {}
     if args.custom_fields != []:
-        cf = {}
         for field in args.custom_fields:
             cf[field.split(':')[0]] = ":".join(field.split(':')[1:]).replace('"', '')
 
