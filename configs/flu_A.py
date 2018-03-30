@@ -91,7 +91,6 @@ def fix_strain_name(obj, name, logger):
         name = name[:-1]
     return name
 
-
 def fix_host_species(obj, value, logger):
     num_slashes = obj.strain_name.count('/')
     if num_slashes == 4:

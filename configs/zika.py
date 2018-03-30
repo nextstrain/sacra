@@ -142,6 +142,16 @@ def make_config(args, logger):
                 'host_species',
                 'number_sequences',
                 'region']
+        elif args.overwrite_fasta_header == 'usvi':
+            #USVI/13/2016|VI13|2016-08-13|usvi|saint_thomas|saint_thomas|miseq
+            config['fasta_headers'] = [
+                'strain_name',
+                'accession',
+                'collection_date',
+                'country',
+                'division',
+                'subdivision',
+                'platform']
         else:
             logger.critical("Unknown FASTA header format demanded: \"{}\"".format(args.overwrite_fasta_header)); sys.exit(2)
     else:
