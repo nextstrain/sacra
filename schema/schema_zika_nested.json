@@ -26,7 +26,7 @@
           "sequences" : [
             {
               "sequence_accession": "1",
-              "sequence_locus" : "genome",
+              "sequence_segment" : "genome",
               "sequence_type" : "consensus",
               "sequencing_lab" : "Bedford lab",
               "sharing" : "public",
@@ -51,7 +51,7 @@
           "sequences" : [
             {
               "sequence_accession": "1",
-              "sequence_locus" : "genome",
+              "sequence_segment" : "genome",
               "sequence_type" : "consensus",
               "sequencing_lab" : "Bedford lab",
               "sharing" : "public",
@@ -91,7 +91,7 @@
           "sequences" : [
             {
               "sequence_accession": "KU853012",
-              "sequence_locus" : "genome",
+              "sequence_segment" : "genome",
               "sequence_type" : "consensus",
               "sequencing_lab" : null,
               "sharing" : "public",
@@ -115,7 +115,7 @@
           "sequences" : [
             {
               "sequence_accession": "KU853013",
-              "sequence_locus" : "genome",
+              "sequence_segment" : "genome",
               "sequence_type" : "consensus",
               "sequencing_lab" : null,
               "sharing" : "public",
