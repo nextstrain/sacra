@@ -61,9 +61,9 @@ class Dataset:
                         data['sequence'] = str(record.seq)
                     except KeyError:
                         logger.critical("Error parsing FASTA header. Header: {}. CONFIG specifies: {}".format(head, self.CONFIG["fasta_headers"])); sys.exit(2)
-		if self.CONFIG["custom_fields"] != {}:
-		    for field in self.CONFIG["custom_fields"].keys():
-			data[field] = self.CONFIG["custom_fields"][field]
+                if self.CONFIG["custom_fields"] != {}:
+                    for field in self.CONFIG["custom_fields"].keys():
+                        data[field] = self.CONFIG["custom_fields"][field]
                 # logger.debug("Processing this header: {}".format(data))
                 clus = Cluster(self.CONFIG, data)
                 att = Cluster(self.CONFIG, data, cluster_type="attribution")
@@ -286,15 +286,25 @@ class Dataset:
         merged_out = []
         for i in range(len(genic_clusters)-1):
             for j in range(i+1,len(genic_clusters)):
-                if genic_clusters[i].strain_id == genic_clusters[j].strain_id:
-                    logger.info("Merging clusters on strain index {}".format(genic_clusters[i].strain_id))
+                if genic_clusters[i].strains[0].strain_id == genic_clusters[j].strains[0].strain_id:
+                    logger.info("Merging clusters on strain index {}".format(genic_clusters[i].strains[0].strain_id))
                     self.merge_two_genic_clusters(cluster1=genic_clusters[i], cluster2=genic_clusters[j])
                     merged_out.append(j)
+
+        for i in range(len(attribution_clusters)-1):
+            for j in range(i+1,len(attribution_clusters)):
+                if attribution_clusters[i].attributions[0].attribution_id == attribution_clusters[j].attributions[0].attribution_id:
+                    logger.info("Merging clusters on attribution index {}".format(attribution_clusters[i].attributions[0].attribution_id))
+                    self.merge_two_attribution_clusters(cluster1=attribution_clusters[i], cluster2=attribution_clusters[j])
+                    merged_out.append(j)
+
         # Remove the merged clusters
         for out in merged_out:
-            self.clusters.remove(out)
+            self.clusters[out] = 'none'
+        self.clusters = [x for x in self.clusters if x != 'none']
+        print(self.clusters)
 
-    def merge_two_genic_clusters(cluster1, cluster2):
+    def merge_two_genic_clusters(self, cluster1, cluster2):
         '''
         This function could be split into 5 parts:
             1. Current function
@@ -334,6 +344,14 @@ class Dataset:
                 sequence.parent = sample
             cluster1.samples.add(sample)
             sample.parent = cluster1.strains[0]
+
+    def merge_two_attribution_clusters(self, cluster1, cluster2):
+        for field in self.CONFIG["mapping"]["attribution"]:
+            if hasattr(cluster2, field):
+                if hasattr(cluster1, field) and getattr(cluster1, field) != getattr(cluster2, field):
+                    logger.warn("Clusters with matching id:{} have mismatched field:{} {} and {}".format(cluster1.attribution_id, field, getattr(cluster1, field), getattr(cluster2, field)))
+                else:
+                    setattr(cluster1, field, getattr(cluster2, field))
 
     def clean_clusters(self):
         logger.info("Cleaning clusters (move / fix / create / drop)")
