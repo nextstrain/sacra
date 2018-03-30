@@ -103,7 +103,8 @@ default_config = {
             'authors',
             'pubmed_id'
         ]
-    }
+    },
+    'custom_fields': {}
 }
 
 

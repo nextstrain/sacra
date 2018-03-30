@@ -29,6 +29,9 @@ group.add_argument("--skip_entrez", action="store_true", help="Query genbank for
 group = parser.add_argument_group('overwrites')
 group.add_argument("--overwrite_fasta_header", type=str, help="Overwrite the config-defined FASTA header")
 
+group = parser.add_argument_group('metadata')
+group.add_argument('-c', '--custom_fields', default=[], type=str, nargs='*', help='fields that should be added to full sacra build in format field_name:"field value"')
+
 
 def main(args, logger):
     try:
@@ -40,6 +43,13 @@ def main(args, logger):
         logger.critical("Config file configs/{}.py must define a \"make_config\" function".format(args.pathogen)); sys.exit(2)
     except AssertionError:
         logger.critical("make_config() in configs/{}.py must return a dictionary".format(args.pathogen)); sys.exit(2)
+
+    if args.custom_fields != []:
+        cf = {}
+        for field in args.custom_fields:
+            cf[field.split(':')[0]] = ":".join(field.split(':')[1:]).replace('"', '')
+
+    CONFIG["custom_fields"] = cf
 
     # Initialize Dataset class
     dataset = Dataset(CONFIG)
@@ -53,6 +63,7 @@ def main(args, logger):
     if not args.skip_entrez:
         logger.info("Fetching entrez data for all available accessions to aid in cleaning the data")
         dataset.download_entrez_data(dataset.get_all_accessions(), make_clusters = False)
+    dataset.refine_clusters_in_state()
     # Clean clusters
     dataset.clean_clusters()
     # Write to JSON
