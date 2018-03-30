@@ -88,8 +88,9 @@ default_config = {
             'sequence',
             'sample_id',
             'location',
-            'attribution_id'
-            'region'
+            'attribution_id',
+            'region',
+            'platform'
         ],
         'attribution' : [
             'attribution_id',
