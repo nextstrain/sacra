@@ -63,7 +63,8 @@ def main(args, logger):
     if not args.skip_entrez:
         logger.info("Fetching entrez data for all available accessions to aid in cleaning the data")
         dataset.download_entrez_data(dataset.get_all_accessions(), make_clusters = False)
-    dataset.refine_clusters_in_state()
+    # Refine clusters (merges)
+    # dataset.refine_clusters_in_state()
     # Clean clusters
     dataset.clean_clusters()
     # Write to JSON
