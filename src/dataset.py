@@ -188,6 +188,83 @@ class Dataset:
             items.pop(index)
         return items
 
+    def parse_gb_file(self, gb):
+        '''
+        Parse genbank file
+        :return: list of documents(dictionaries of attributes) to upload
+        '''
+        try:
+            handle = open(gb, 'r')
+        except IOError:
+            raise Exception(gb, "not found")
+        else:
+            return self.parse_gb_entries(handle)
+
+    def parse_gb_entries(self, handle):
+        '''
+        Go through genbank records to get relevant virus information
+        '''
+        from Bio import SeqIO
+        from utils.genbank_parsers import convert_gb_date
+        metadata = {}
+        SeqIO_records = SeqIO.parse(handle, "genbank")
+        for record in SeqIO_records:
+            r = {}
+            r['source'] = 'genbank'
+            r['accession'] = re.match(r'^([^.]*)', record.id).group(0).upper()  # get everything before the '.'?
+            r['sequence'] = str(record.seq).lower()
+            # set up as none and overwrite
+            r["title"] = None
+            r['authors'] = None
+            r["puburl"] = None
+            r["journal"] = None
+            print("Processing genbank file for " + r['accession'])
+            # all the references (i.e. the papers / direct-submission notes)
+            references = record.annotations["references"]
+
+            if len(references):
+                # is there a reference which is not a "Direct Submission"?
+                titles = [reference.title for reference in references]
+                try:
+                    idx = [i for i, j in enumerate(titles) if j is not None and j != "Direct Submission"][0]
+                except IndexError: # fall back to direct submission
+                    idx = [i for i, j in enumerate(titles) if j is not None][0]
+                reference = references[idx] # <class 'Bio.SeqFeature.Reference'>
+                keys = reference.__dict__.keys()
+                r['title'] = reference.title
+                if "authors" in keys and reference.authors is not None:
+                    first_author = re.match(r'^([^,]*)', reference.authors).group(0)
+                    r['authors'] = first_author + " et al"
+                if "journal" in keys and reference.journal is not None:
+                    r['journal'] = reference.journal
+                if "pubmed_id" in keys and reference.pubmed_id is not None:
+                    r["puburl"] = "https://www.ncbi.nlm.nih.gov/pubmed/" + reference.pubmed_id
+            else:
+                print("Couldn't find the reference for " + s['accession'])
+
+            # print(" *** Accession: {} title: {} authors: {} journal: {} paperURL: {}".format(s['accession'], s['title'], s['authors'], s['journal'], s['puburl']))
+
+            s['url'] = "https://www.ncbi.nlm.nih.gov/nuccore/" + s['accession']
+            #s['url'] = self.get_doi_url(url, s['title'], first_author)
+
+            record_features = record.features
+            for feat in record_features:
+                if feat.type == 'source':
+                    qualifiers = feat.qualifiers
+                    if 'collection_date' in qualifiers:
+                        r['collection_date'] = convert_gb_date(qualifiers['collection_date'][0])
+                    if 'country' in qualifiers:
+                        r['country'] = re.match(r'^([^:]*)', qualifiers['country'][0]).group(0)
+                    if 'strain' in qualifiers:
+                        r['strain'] = qualifiers['strain'][0]
+                    elif 'isolate' in qualifiers:
+                        r['strain'] = qualifiers['isolate'][0]
+                    else:
+                        print("Couldn't parse strain name for " + s['accession'])
+            metadata[r['strain']] = r
+        handle.close()
+        print(str(len(metadata)) + " genbank entries parsed")
+        return metadata
 
     def get_accessions_from_file(self, fname):
         accessions = []
@@ -302,7 +379,7 @@ class Dataset:
         for out in merged_out:
             self.clusters[out] = 'none'
         self.clusters = [x for x in self.clusters if x != 'none']
-        print(self.clusters)
+	print(self.clusters)
 
     def merge_two_genic_clusters(self, cluster1, cluster2):
         '''
