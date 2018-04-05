@@ -6,8 +6,8 @@ from src.utils.file_readers import make_dict_from_file
 import src.utils.fix_functions as fix_functions
 
 ### modified functions ###
-name_fix_dict = make_dict_from_file("source-data/mumps_strain_name_fix.tsv")
-date_fix_dict = make_dict_from_file("source-data/mumps_date_fix.tsv")
+name_fix_dict = make_dict_from_file("source-data/flu_A_strain_name_fix.tsv")
+date_fix_dict = make_dict_from_file("source-data/flu_A_date_fix.tsv")
 
 def flu_fix_patterns(name):
     # various name patterns that need to be fixed
