@@ -103,16 +103,16 @@ def make_config(args, logger):
     NOTE: addition of command line arguments is not recommended, most changes
     should happen through direct modification of this function.
     '''
-    # VIPR format is default
-    # >1007|KP339095|S|2004_05_29|Mouse|Guinea|NA
+    # This correspond to ViPR format when selecting "custom format", "select all", "add"
+    # >KU978807|Guinea_Faranah|S|NA|Human|Guinea|NA|Lassa_mammarenavirus
+    # >KM822025|LASV225_NIG_2010|S|2010|Human|Nigeria|NA|Lassa_mammarenavirus
     config["fasta_headers"] = [
-        'strain_name',
         'accession',
+        'strain_name',
         'segment',
         'collection_date',
         'host',
-        'country',
-        'subtype'
+        'country'
     ]
     '''
     Make sure to add the fix functions that were defined above to the new config,
