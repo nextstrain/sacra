@@ -6,6 +6,7 @@ import sys
 sys.path.append('')
 # import config
 from utils.colorLogging import ColorizingStreamHandler
+from temporary import try_to_add_attributions_via_genbank
 
 try:
     from pycallgraph import PyCallGraph
@@ -59,10 +60,15 @@ def main(args, logger):
     # ditto for accessions if provided as strings on the command line
     if args.accession_list:
         dataset.download_entrez_data(args.accession_list, make_clusters = True)
+
     # Download additional entrez data which the cleaning functions make make use of
     if not args.skip_entrez:
         logger.info("Fetching entrez data for all available accessions to aid in cleaning the data")
         dataset.download_entrez_data(dataset.get_all_accessions(), make_clusters = False)
+    if args.pathogen == "lassa":
+        try_to_add_attributions_via_genbank(dataset)
+
+
     # Refine clusters (merges)
     # dataset.refine_clusters_in_state()
     # Clean clusters
