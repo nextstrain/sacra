@@ -82,6 +82,22 @@ def fix_strain_name(obj, name, logger):
         logger.debug("Changed strain name from {} to {}".format(original_name, name))
     return name
 
+def fix_host_species(obj, host, logger):
+    '''
+    This function modifies a single host species
+
+    THIS IS WHERE DOC TESTS SHOULD GO
+    '''
+    original_host = host
+    try:
+        host = host.lower()
+        host = host.replace('mouse', 'rodent')
+    except:
+        logger.error("Error modifying lassa strain: {}".format(original_host))
+    if host is not original_host:
+        logger.debug("Changed strain name from {} to {}".format(original_host, host))
+    return host
+
 ######## Config construction ########
 def make_config(args, logger):
     '''
@@ -111,7 +127,7 @@ def make_config(args, logger):
         'strain_name',
         'segment',
         'collection_date',
-        'host',
+        'host_species',
         'country'
     ]
     '''
@@ -122,6 +138,7 @@ def make_config(args, logger):
     and for fix functions that are either defined above, or in sacra/src/utils/fix_functions.py
     '''
     config["fix_functions"]["strain_name"] = fix_strain_name
+    config["fix_functions"]["host_species"] = fix_host_species
     config["fix_lookups"]["strain_name_to_location"] = "source-data/lassa_location_fix.tsv"
     config["fix_lookups"]["strain_name_to_date"] = "source-data/lassa_date_fix.tsv"
     return config
