@@ -4,9 +4,11 @@ import logging
 import argparse
 import sys
 sys.path.append('')
-# import config
 from utils.colorLogging import ColorizingStreamHandler
-from temporary import try_to_add_attributions_via_genbank
+from utils.read_datafile_to_dictionaries import read_datafile_to_dictionaries
+from utils.read_metafile_to_dictionaries import read_metafile_to_dictionaries
+from entrez import retrieve_entrez_metadata
+
 
 try:
     from pycallgraph import PyCallGraph
@@ -17,21 +19,22 @@ except:
 
 parser = argparse.ArgumentParser(description="Cleaning & combining of genomic & titer data")
 parser.add_argument("--debug", action="store_const", dest="loglevel", const=logging.DEBUG, help="Enable debugging logging")
-parser.add_argument("--files", default=[], type=str, nargs='*', help="file types: text (list of accessions), FASTA, (to do) FASTA + CSV, (to do) JSON")
+parser.add_argument("--datafiles", "-f", default=[], dest="datafiles", type=str, nargs='*', help="primary data file types: text (list of accessions), FASTA, JSON")
+parser.add_argument("--metafiles", "-m", default=[], dest="metafiles", type=str, nargs='*', help="metadata file types: CSV, TSV, XLS")
 parser.add_argument("--pathogen", required=True, type=str, help="This sets the config file")
-parser.add_argument("--accession_list", default=[], type=str, nargs='*', help="list of strings to query genbank with")
-parser.add_argument("--outfile", default="output/test_output.json")
-parser.add_argument("--visualize_call_graph", action="store_true", default=False, help="draw a graph of calls being made")
-parser.add_argument("--call_graph_fname", default="output/graphviz_test.png", help="filename for call graph")
-
+# parser.add_argument("--accession_list", default=[], type=str, nargs='*', help="list of strings to query genbank with")
+# parser.add_argument("--outfile", default="output/test_output.json")
+# parser.add_argument("--visualize_call_graph", action="store_true", default=False, help="draw a graph of calls being made")
+# parser.add_argument("--call_graph_fname", default="output/graphviz_test.png", help="filename for call graph")
+#
 group = parser.add_argument_group('entrez')
-group.add_argument("--skip_entrez", action="store_true", help="Query genbank for all accessions to help clean / correct metadata data")
-
-group = parser.add_argument_group('overwrites')
-group.add_argument("--overwrite_fasta_header", type=str, help="Overwrite the config-defined FASTA header")
-
-group = parser.add_argument_group('metadata')
-group.add_argument('-c', '--custom_fields', default=[], type=str, nargs='*', help='fields that should be added to full sacra build in format field_name:"field value"')
+group.add_argument("--use_entrez_to_improve_data", "--entrez", dest="use_entrez_to_improve_data", action="store_true", help="Query genbank for all accessions to help clean / correct metadata data")
+#
+# group = parser.add_argument_group('overwrites')
+# group.add_argument("--overwrite_fasta_header", type=str, help="Overwrite the config-defined FASTA header")
+#
+# group = parser.add_argument_group('metadata')
+# group.add_argument('-c', '--custom_fields', default=[], type=str, nargs='*', help='fields that should be added to full sacra build in format field_name:"field value"')
 
 
 def main(args, logger):
@@ -45,36 +48,34 @@ def main(args, logger):
     except AssertionError:
         logger.critical("make_config() in configs/{}.py must return a dictionary".format(args.pathogen)); sys.exit(2)
 
-    cf = {}
-    if args.custom_fields != []:
-        for field in args.custom_fields:
-            cf[field.split(':')[0]] = ":".join(field.split(':')[1:]).replace('"', '')
-
-    CONFIG["custom_fields"] = cf
-
-    # Initialize Dataset class
     dataset = Dataset(CONFIG)
-    # Read data from files
-    for f in args.files:
-        dataset.read_to_clusters(f)
-    # ditto for accessions if provided as strings on the command line
-    if args.accession_list:
-        dataset.download_entrez_data(args.accession_list, make_clusters = True)
+    for f in args.datafiles:
+        (filetype, data_dictionaries) = read_datafile_to_dictionaries(f)
+        dataset.make_units_from_data_dictionaries(filetype, data_dictionaries)
 
-    # Download additional entrez data which the cleaning functions make make use of
-    if not args.skip_entrez:
-        logger.info("Fetching entrez data for all available accessions to aid in cleaning the data")
-        dataset.download_entrez_data(dataset.get_all_accessions(), make_clusters = False)
-    if args.pathogen == "lassa":
-        try_to_add_attributions_via_genbank(dataset)
+    dataset.clean_data_units()
 
+    for f in args.metafiles:
+        (tag, list_of_dicts) = read_metafile_to_dictionaries(f)
+        dataset.make_metadata_units(tag, list_of_dicts)
 
-    # Refine clusters (merges)
-    # dataset.refine_clusters_in_state()
-    # Clean clusters
-    dataset.clean_clusters()
-    # Write to JSON
-    dataset.write_to_json(args.outfile)
+    if args.use_entrez_to_improve_data:
+        dataset.get_all_accessions()
+        list_of_dicts = retrieve_entrez_metadata()
+        dataset.make_metadata_units("accession", list_of_dicts)
+
+    dataset.clean_metadata_units()
+
+    dataset.inject_metadata_into_data()
+
+    dataset.merge_units()
+
+    dataset.validate_units()
+
+    dataset.write_valid_units()
+
+    dataset.write_invalid_units()
+
 
 
 if __name__=="__main__":
@@ -85,11 +86,4 @@ if __name__=="__main__":
     root_logger.setLevel(args.loglevel if args.loglevel else logging.INFO)
     root_logger.addHandler(ColorizingStreamHandler())
     logger = logging.getLogger(__name__)
-
-    if args.visualize_call_graph:
-        graphviz = GraphvizOutput()
-        graphviz.output_file = args.call_graph_fname
-        with PyCallGraph(config=Config(groups=True), output=graphviz):
-            main(args, logger)
-    else:
-        main(args, logger)
+    main(args, logger)
