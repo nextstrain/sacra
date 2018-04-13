@@ -23,11 +23,10 @@ class Strain(Unit):
     def ensure_id(self):
         """Ensure strain_id exists. So if there's strain_name, fix it, else create it. Then set strain_id as strain_name"""
         if not hasattr(self, "strain_id"):
-            # if hasattr(self, "strain_name"):
-            #     self.fix_single("strain_name")
-            #     self.strain_id = self.strain_name
-            # else:
-            logger.error("Neither strain_name not strain_id! - create function not yet implemented (although I don't see how one could have this!)")
+            if hasattr(self, "strain_name"):
+                self.strain_id = self.strain_name
+            else:
+                logger.error("Neither strain_name not strain_id! - create function not yet implemented (although I don't see how one could have this!)")
 
     def is_valid(self):
         return hasattr(self, "strain_id")
