@@ -22,10 +22,9 @@ class Attribution(Unit):
 
         ## init must set attribution_id
         if not hasattr(self, "attribution_id"):
-            raise Exception
-            self.fix_single("authors")
-            self.fix_single("attribution_date")
-            self.fix_single("attribution_id")
+            setattr(self, "attribution_id", self.authors)
+            # self.fix_single("attribution_date")
+            # self.fix_single("attribution_id")
 
 
         # logger.debug("Attribution data: {}".format(self.__dict__))

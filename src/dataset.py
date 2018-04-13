@@ -30,18 +30,22 @@ class Dataset:
         """
         sets linked units into state
         """
-        logger.info("Making units from filetype {} & data {}".format(filetype, dicts))
+        logger.info("Making units from filetype {} & data".format(filetype))
+        for data_dict in dicts:
+            dummy_strain = Strain(self.CONFIG, data_dict)
+            dummy_sample = Sample(self.CONFIG, data_dict, dummy_strain)
+            dummy_sequence = Sequence(self.CONFIG, data_dict, dummy_sample)
+            self.strains.append(dummy_strain)
+            self.samples.append(dummy_sample)
+            self.sequences.append(dummy_sequence)
+            if "authors" in data_dict.keys():
+                dummy_attribution = Attribution(self.CONFIG, data_dict)
+                self.attributions.append(dummy_attribution)
+                dummy_attribution.parent = dummy_sequence
+                dummy_sequence.children.append(dummy_attribution)
+            self.validate_unit_links()
 
-        dummy_strain = Strain(self.CONFIG, dicts[0])
-        dummy_sample = Sample(self.CONFIG, dicts[0], dummy_strain)
-        dummy_sequence = Sequence(self.CONFIG, dicts[0], dummy_sample)
-        dummy_attribution = Attribution(self.CONFIG, dicts[0])
-        dummy_sequence.children.append(dummy_attribution)
-        dummy_attribution.parent = dummy_sequence
-        self.strains.append(dummy_strain)
-        self.samples.append(dummy_sample)
-        self.sequences.append(dummy_sequence)
-        self.attributions.append(dummy_attribution)
+    def validate_unit_links(self):
         try:
             for strain in self.strains:
                 try:
@@ -60,7 +64,7 @@ class Dataset:
             for sequence in self.sequences:
                 try:
                     assert isinstance(sequence.parent, Sample)
-                    assert len(sequence.children) == 1
+                    assert len(sequence.children) < 2
                 except AssertionError:
                     logger.critical("Error linking w.r.t. sequence {}".format(sequence))
                     raise Exception
