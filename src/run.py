@@ -59,23 +59,25 @@ def main(args, logger):
 
     dataset = Dataset(CONFIG)
     for f in args.datafiles:
-        (filetype, data_dictionaries) = read_datafile_to_dictionaries(f)
+        (filetype, data_dictionaries) = read_datafile_to_dictionaries(f, CONFIG)
         dataset.make_units_from_data_dictionaries(filetype, data_dictionaries)
 
     dataset.clean_data_units()
 
-    for f in args.metafiles:
-        (tag, list_of_dicts) = read_metafile_to_dictionaries(f)
-        dataset.make_metadata_units(tag, list_of_dicts)
+    if len(args.metafiles) > 0:
+        logger.info("Reading metadata files")
+        for f in args.metafiles:
+            (tag, list_of_dicts) = read_metafile_to_dictionaries(f)
+            dataset.make_metadata_units(tag, list_of_dicts)
 
     if args.use_entrez_to_improve_data:
         dataset.get_all_accessions()
         list_of_dicts = retrieve_entrez_metadata()
         dataset.make_metadata_units("accession", list_of_dicts)
 
-    dataset.clean_metadata_units()
-
-    dataset.inject_metadata_into_data()
+    if (len(args.metafiles) > 0) or args.use_entrez_to_improve_data:
+        dataset.clean_metadata_units()
+        dataset.inject_metadata_into_data()
 
     dataset.merge_units()
 
