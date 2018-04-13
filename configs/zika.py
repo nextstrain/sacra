@@ -98,13 +98,13 @@ def make_config(args, logger):
     '''
     Options can be added based on arguments specified by src/run.py
     You can add new arguments to the run script, and build logic around
-    them here. Below is an example for the --overwrite_fasta_header flag.
+    them here. Below is an example for the --custom_fasta_header flag.
 
     NOTE: addition of command line arguments is not recommended, most changes
     should happen through direct modification of this function.
     '''
-    if args.overwrite_fasta_header:
-        if args.overwrite_fasta_header == "fauna":
+    if args.custom_fasta_header:
+        if args.custom_fasta_header == "fauna":
             config["fasta_headers"] = [
                 'strain_name',
                 'virus',
@@ -122,7 +122,7 @@ def make_config(args, logger):
                 'journal',
                 'attribution_url'
             ]
-        elif args.overwrite_fasta_header == "sacra_rebuild":
+        elif args.custom_fasta_header == "sacra_rebuild":
             config["fasta_headers"] = [
                 'accession',
                 'authors',
@@ -142,7 +142,7 @@ def make_config(args, logger):
                 'host_species',
                 'number_sequences',
                 'region']
-        elif args.overwrite_fasta_header == 'usvi':
+        elif args.custom_fasta_header == 'usvi':
             #USVI/13/2016|VI13|2016-08-13|usvi|saint_thomas|saint_thomas|miseq
             config['fasta_headers'] = [
                 'strain_name',
@@ -153,7 +153,7 @@ def make_config(args, logger):
                 'subdivision',
                 'platform']
         else:
-            logger.critical("Unknown FASTA header format demanded: \"{}\"".format(args.overwrite_fasta_header)); sys.exit(2)
+            logger.critical("Unknown FASTA header format demanded: \"{}\"".format(args.custom_fasta_header)); sys.exit(2)
     else:
         # VIPR format is default
         config["fasta_headers"] = [
