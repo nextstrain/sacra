@@ -33,9 +33,18 @@ group.add_argument("--use_entrez_to_improve_data", "--entrez", dest="use_entrez_
 # group = parser.add_argument_group('overwrites')
 # group.add_argument("--overwrite_fasta_header", type=str, help="Overwrite the config-defined FASTA header")
 #
-# group = parser.add_argument_group('metadata')
+group = parser.add_argument_group('metadata')
+group.add_argument('--custom_fasta_header', default=None, type=str, help='custom fasta header field name assigned in pathogen config')
 # group.add_argument('-c', '--custom_fields', default=[], type=str, nargs='*', help='fields that should be added to full sacra build in format field_name:"field value"')
 
+def provision_directories(logger):
+    import os
+    if not os.path.isdir('input'):
+        logger.info("Directory no ./input directory found; creating.")
+        os.makedirs('input')
+    if not os.path.isdir('output'):
+        logger.info("Directory no ./output directory found; creating.")
+        os.makedirs('output')
 
 def main(args, logger):
     try:
@@ -86,4 +95,5 @@ if __name__=="__main__":
     root_logger.setLevel(args.loglevel if args.loglevel else logging.INFO)
     root_logger.addHandler(ColorizingStreamHandler())
     logger = logging.getLogger(__name__)
+    provision_directories(logger)
     main(args, logger)
