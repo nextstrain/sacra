@@ -102,9 +102,46 @@ class Dataset:
     def get_all_accessions(self):
         return ['ACC1']
 
-
     def merge_units(self):
-        pass
+        types = [ 'strains', 'samples', 'sequences', 'attributions', 'titers' ]
+        for t in types:
+            self.merge_on_unit_type(t)
+
+    def merge_on_unit_type(self, unit_type):
+        logger.info("Merging on {}".format(unit_type))
+        counter = 0
+        units = getattr(self, unit_type)
+        for i in range(len(units)-1):
+            for j in range(i+1,len(units)):
+                first = units[i]
+                second = units[j]
+                assert first is not second, logger.error("Error. Tried to match unit with itself.")
+                first_id = getattr(first, "{}_id".format(unit_type[:-1]))
+                second_id = getattr(second, "{}_id".format(unit_type[:-1]))
+                if first_id == second_id:
+                    logger.info("Merging units with matching ID: {}".format(first_id))
+                    self.merge(first, second)
+                    counter += 1
+        logger.info("Merged {} {} units based on matching IDs (not necessarily all the same IDs)".format(counter, unit_type))
+
+    def merge(self, unit1, unit2):
+        assert unit1.unit_type == unit2.unit_type, logger.error("Attempted to merge 2 units with different types: {} & {}".format(unit1.unit_type, unit2.unit_type))
+
+        # Set parents/children
+        if unit1.unit_type != "attribution":
+            assert unit1.parent == unit2.parent, logger.error("Attempted to merge 2 units with different parents.")
+
+        unit1.children.extend(unit2.children)
+
+        # Overwrite metadata
+        for field in self.CONFIG["mapping"][unit1.unit_type]:
+            if hasattr(unit2, field) and (not hasattr(unit1, field)):
+                setattr(unit1, field, getattr(unit2, field))
+            elif hasattr(unit1, field) and hasattr(unit2, field):
+                f1 = getattr(unit1, field)
+                f2 = getattr(unit2, field)
+                if f1 != f2:
+                    logger.error("Trying to merge units with mismatched field {}: {} and {}. Defaulting (possibly incorrectly) to {}.".format(field, f1, f2, f1))
 
     def validate_units(self):
         pass
