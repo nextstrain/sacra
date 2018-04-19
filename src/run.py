@@ -46,6 +46,9 @@ def provision_directories(logger):
         logger.info("Directory no ./output directory found; creating.")
         os.makedirs('output')
 
+def get_all_accessions(d):
+    return [ seq.accession for seq in d.sequences ]
+
 def main(args, logger):
     try:
         CONFIG = __import__("configs.{}".format(args.pathogen), fromlist=['']).make_config(args, logger)
@@ -71,8 +74,8 @@ def main(args, logger):
             dataset.make_metadata_units(tag, list_of_dicts)
 
     if args.use_entrez_to_improve_data:
-        dataset.get_all_accessions()
-        list_of_dicts = retrieve_entrez_metadata()
+        accs = get_all_accessions(dataset)
+        list_of_dicts = retrieve_entrez_metadata(accs, CONFIG)
         dataset.make_metadata_units("accession", list_of_dicts)
 
     if (len(args.metafiles) > 0) or args.use_entrez_to_improve_data:
