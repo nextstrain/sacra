@@ -26,6 +26,8 @@ class Attribution(Unit):
             # self.fix_single("attribution_date")
             # self.fix_single("attribution_id")
 
+        if self.authors == "None":
+            del self.authors
 
         # logger.debug("Attribution data: {}".format(self.__dict__))
 

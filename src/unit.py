@@ -56,3 +56,9 @@ class Unit(object):
             if self.children and self.children != []:
                 for child in self.children:
                     child.setprop(name, value, overwrite, parents=False)
+
+    def getprop(self, name):
+        return
+
+    def hasprop(self, name):
+        return

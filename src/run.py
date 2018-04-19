@@ -23,7 +23,7 @@ parser.add_argument("--datafiles", "-f", default=[], dest="datafiles", type=str,
 parser.add_argument("--metafiles", "-m", default=[], dest="metafiles", type=str, nargs='*', help="metadata file types: CSV, TSV, XLS")
 parser.add_argument("--pathogen", required=True, type=str, help="This sets the config file")
 # parser.add_argument("--accession_list", default=[], type=str, nargs='*', help="list of strings to query genbank with")
-# parser.add_argument("--outfile", default="output/test_output.json")
+parser.add_argument("-o","--outfile", default="output/test_output.json")
 # parser.add_argument("--visualize_call_graph", action="store_true", default=False, help="draw a graph of calls being made")
 # parser.add_argument("--call_graph_fname", default="output/graphviz_test.png", help="filename for call graph")
 #
@@ -82,13 +82,16 @@ def main(args, logger):
         dataset.clean_metadata_units()
         dataset.inject_metadata_into_data()
 
+    dataset.update_units_post_metadata_inj()
+
     dataset.merge_units()
 
     dataset.validate_units()
 
-    dataset.write_valid_units()
-
-    dataset.write_invalid_units()
+    valid_file = args.outfile
+    invalid_file = 'output/invalid.json'
+    dataset.write_valid_units(valid_file)
+    dataset.write_invalid_units(invalid_file)
 
 
 

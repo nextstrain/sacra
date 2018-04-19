@@ -38,11 +38,12 @@ class Dataset:
             self.strains.append(dummy_strain)
             self.samples.append(dummy_sample)
             self.sequences.append(dummy_sequence)
-            if "authors" in data_dict.keys():
-                dummy_attribution = Attribution(self.CONFIG, data_dict)
-                self.attributions.append(dummy_attribution)
-                dummy_attribution.parent = dummy_sequence
-                dummy_sequence.children.append(dummy_attribution)
+            if "authors" not in data_dict.keys():
+                data_dict["authors"] = "None"
+            dummy_attribution = Attribution(self.CONFIG, data_dict)
+            self.attributions.append(dummy_attribution)
+            dummy_attribution.parent = dummy_sequence
+            dummy_sequence.children.append(dummy_attribution)
             self.validate_unit_links()
 
     def validate_unit_links(self):
@@ -106,6 +107,17 @@ class Dataset:
     def get_all_accessions(self):
         return ['ACC1']
 
+    def update_units_post_metadata_inj(self):
+        '''
+        This will need to be updated with strains/sequences/sampes at some point.
+        '''
+        for attr in self.attributions:
+            if attr.attribution_id == "None" and hasattr(attr, "authors"):
+                attr.attribution_id = attr.authors
+            else:
+                self.attributions.remove(attr)
+
+
     def merge_units(self):
         types = [ 'strains', 'samples', 'sequences', 'attributions', 'titers' ]
         for t in types:
@@ -113,20 +125,27 @@ class Dataset:
 
     def merge_on_unit_type(self, unit_type):
         logger.info("Merging on {}".format(unit_type))
-        counter = 0
+        out = []
         units = getattr(self, unit_type)
         for i in range(len(units)-1):
             for j in range(i+1,len(units)):
-                first = units[i]
-                second = units[j]
-                assert first is not second, logger.error("Error. Tried to match unit with itself.")
-                first_id = getattr(first, "{}_id".format(unit_type[:-1]))
-                second_id = getattr(second, "{}_id".format(unit_type[:-1]))
-                if first_id == second_id:
-                    logger.info("Merging units with matching ID: {}".format(first_id))
-                    self.merge(first, second)
-                    counter += 1
-        logger.info("Merged {} {} units based on matching IDs (not necessarily all the same IDs)".format(counter, unit_type))
+                if units[j] not in out:
+                    first = units[i]
+                    second = units[j]
+                    assert first is not second, logger.error("Error. Tried to match unit with itself.")
+                    first_id = getattr(first, "{}_id".format(unit_type[:-1]))
+                    second_id = getattr(second, "{}_id".format(unit_type[:-1]))
+                    if first_id == "None" or second_id == "None":
+                        continue
+                    if first_id == second_id:
+                        logger.info("Merging units with matching ID: {}".format(first_id))
+                        self.merge(first, second)
+                        out.append(second)
+        out = list(set(out))
+        for bad in out:
+            units.remove(bad)
+        setattr(self, unit_type, units)
+        logger.info("Merged {} {} units based on matching IDs (not necessarily all the same IDs)".format(len(out), unit_type))
 
     def merge(self, unit1, unit2):
         assert unit1.unit_type == unit2.unit_type, logger.error("Attempted to merge 2 units with different types: {} & {}".format(unit1.unit_type, unit2.unit_type))
@@ -150,8 +169,22 @@ class Dataset:
     def validate_units(self):
         pass
 
-    def write_valid_units(self):
-        pass
+    def write_valid_units(self, filename):
+        logger.info("writing to JSON: {}".format(filename))
+        data = {"strains": [], "samples": [], "sequences": [], "attributions": []}
+        data["dbinfo"] = {"pathogen": self.CONFIG["pathogen"]}
+        for n in ["strains", "samples", "sequences", "attributions"]:
+            if hasattr(self, n): # if, e.g., "sequences" (n) is in the self
+                data[n].extend([x.get_data() for x in getattr(self, n) if x.is_valid()])
+        # remove empty values
+        for table in data:
+            if table == "dbinfo": continue
+            for block in data[table]:
+                for key in block.keys():
+                    if block[key] in [None, '', '?', 'unknown', "Unknown"]:
+                        del block[key]
+        with open(filename, 'w') as outfile:
+            json.dump(data, outfile, sort_keys=True, indent=2, ensure_ascii=False)
 
-    def write_invalid_units(self):
+    def write_invalid_units(self, filename):
         pass
