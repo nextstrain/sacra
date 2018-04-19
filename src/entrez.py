@@ -6,9 +6,27 @@ from pdb import set_trace
 from Bio import Entrez
 from Bio import SeqIO
 
-def retrieve_entrez_metadata():
-    logger.info("TODO: retrieve_entrez_metadata")
-    return [];
+def retrieve_entrez_metadata(accessions, CONFIG, genbank_data={}):
+    from utils.genbank_parsers import process_genbank_record
+    new_accs = [x for x in accessions if x not in genbank_data.keys()]
+    logger.info("Fetching {} additional genbank entries".format(len(new_accs)))
+    if len(new_accs):
+        new_data = query_genbank(new_accs)
+        for k, v in new_data.iteritems():
+            genbank_data[k] = v
+
+    data_dicts = [process_genbank_record(accession, record, CONFIG) for \
+        accession, record in genbank_data.iteritems() if accession in accessions]
+    return data_dicts
+        # unmerged_clusters = []
+        # for d in data_dicts:
+        #     clus = Cluster(self.CONFIG, d)
+        #     att = Cluster(self.CONFIG, d, cluster_type="attribution")
+        #     # link the attribute id to each sequence in the cluster
+        #     self.link_attribution_id(clus, att)
+        #     if clus.is_valid(): unmerged_clusters.append(clus)
+        #     if att.is_valid(): unmerged_clusters.append(att)
+        # self.merge_clusters_into_state(unmerged_clusters)
 
 def query_genbank(accessions, email=None, retmax=10, n_entrez=10, gbdb="nuccore", **kwargs):
     store = {}
