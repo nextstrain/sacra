@@ -78,26 +78,39 @@ class Dataset:
         except:
             import pdb; pdb.set_trace()
 
-
     def clean_data_units(self):
         logger.info("CLEAN DATA UNITS")
+
+    def make_metadata_units(self, tag, dicts):
+        logger.info("Making metadata units based on tag: {}".format(tag))
+        for d in dicts:
+            self.metadata.append(Metadata(self.CONFIG, tag, d))
 
     def clean_metadata_units(self):
         logger.info("CLEAN METADATA UNITS")
 
     def inject_metadata_into_data(self):
+        ALL_VALID_FIELDS = self.CONFIG['mapping']['strain'] + self.CONFIG['mapping']['sample'] + self.CONFIG['mapping']['sequence'] + self.CONFIG['mapping']['attribution']
         logger.info("injecting metadata")
-        for u in self.metadata:
-            if u.tag == "accession":
-                for sequence in self.sequences:
-                    if sequence.accession == u.accession:
-                        setattr(sequence.parent, "country", u.country)
+        for m  in self.metadata:
+            if m.tag == 'accession':
+                for s in self.sequences:
+                    if m.accession == s.accession:
+                        self.inject_single_meta_unit(m, s, ALL_VALID_FIELDS)
+            self.metadata.remove(m)
 
+    def inject_single_meta_unit(self, meta, unit, valid_fields):
+        for field in valid_fields:
+            if hasattr(meta, field) and not hasattr(unit, field):
+                setattr(unit, field, getattr(meta, field))
+        self.reassign_fields_to_correct_unit(unit)
 
-    def make_metadata_units(self, tag, dicts):
-        logger.info("Making metadata uinit for {} {}".format(tag, dicts))
-        for d in dicts:
-            self.metadata.append(Metadata(self.CONFIG, tag, d))
+    def reassign_fields_to_correct_unit(self, unit):
+        '''
+        Look at all fields in a unit, and push them through parent/children
+        links so that they are in the correct unit type.
+        '''
+        pass
 
     def get_all_accessions(self):
         return ['ACC1']
