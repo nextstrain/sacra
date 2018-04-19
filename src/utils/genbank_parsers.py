@@ -37,7 +37,6 @@ def choose_best_reference(record):
 ###             all methods have the same arguments passed to them
 def set_strain_name(data, record, source, reference, logger):
     source = dict(source)
-    print(source)
     try:
         if "strain" in source.keys():
             data["strain_name"] = source["strain"][0]
