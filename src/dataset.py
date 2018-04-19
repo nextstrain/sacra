@@ -90,27 +90,18 @@ class Dataset:
         logger.info("CLEAN METADATA UNITS")
 
     def inject_metadata_into_data(self):
-        ALL_VALID_FIELDS = self.CONFIG['mapping']['strain'] + self.CONFIG['mapping']['sample'] + self.CONFIG['mapping']['sequence'] + self.CONFIG['mapping']['attribution']
+        vf = self.CONFIG['mapping']['strain'] + self.CONFIG['mapping']['sample'] + self.CONFIG['mapping']['sequence'] + self.CONFIG['mapping']['attribution']
         logger.info("injecting metadata")
         for m  in self.metadata:
             if m.tag == 'accession':
                 for s in self.sequences:
                     if m.accession == s.accession:
-                        self.inject_single_meta_unit(m, s, ALL_VALID_FIELDS)
-            self.metadata.remove(m)
+                        self.inject_single_meta_unit(m, s, vf)
 
     def inject_single_meta_unit(self, meta, unit, valid_fields):
         for field in valid_fields:
-            if hasattr(meta, field) and not hasattr(unit, field):
-                setattr(unit, field, getattr(meta, field))
-        self.reassign_fields_to_correct_unit(unit)
-
-    def reassign_fields_to_correct_unit(self, unit):
-        '''
-        Look at all fields in a unit, and push them through parent/children
-        links so that they are in the correct unit type.
-        '''
-        pass
+            if hasattr(meta, field):
+                unit.setprop(field, getattr(meta, field))
 
     def get_all_accessions(self):
         return ['ACC1']
