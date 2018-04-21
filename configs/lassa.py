@@ -55,6 +55,7 @@ All cleaning functions must follow the same structure:
 '''
 name_fix_dict = make_dict_from_file("source-data/lassa_strain_name_fix.tsv")
 def fix_strain_name(obj, name, logger):
+
     '''
     This function modifies a single lassa strain name.
 
@@ -89,13 +90,16 @@ def fix_host_species(obj, host, logger):
     THIS IS WHERE DOC TESTS SHOULD GO
     '''
     original_host = host
+    if host is None:
+        return "unknown"
+
     try:
         host = host.lower()
         host = host.replace('mouse', 'rodent')
     except:
-        logger.error("Error modifying lassa strain: {}".format(original_host))
+        logger.error("Error modifying host strain: {}".format(original_host))
     if host is not original_host:
-        logger.debug("Changed strain name from {} to {}".format(original_host, host))
+        logger.debug("Changed host from {} to {}".format(original_host, host))
     return host
 
 ######## Config construction ########

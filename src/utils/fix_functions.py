@@ -60,7 +60,6 @@ def collection_date(sample, original_date, logger):
     Input date could be YYYY_MM_DD, reformat to YYYY-MM-DD
     E.G. 2002_04_25 to 2002-04-25
     '''
-
     # the first time this function runs the database needs to be loaded into memory
     if lookups["strain_name_to_date"] is None and sample.CONFIG["fix_lookups"]["strain_name_to_date"] is not None:
         lookups["strain_name_to_date"] = make_dict_from_file(sample.CONFIG["fix_lookups"]["strain_name_to_date"])

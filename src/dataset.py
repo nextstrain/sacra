@@ -52,18 +52,47 @@ class Dataset:
         # Read the fasta
         with open(infile, "rU") as f:
 
+            meta = {}
+            with open("input/lassaMeta.txt", 'rU') as metaFh:
+                _ = metaFh.readline() # header
+                for line in metaFh:
+                    fields = line.strip().split("\t")
+                    if fields[3] == "2017":
+                        dd = ['XX', 'XX', '17']
+                    else:
+                        dd = fields[3].split("/")
+                    meta[fields[0]] = {
+                        "district": fields[2],
+                        "date": "20{}-{}-{}".format(dd[2], dd[1], dd[0])
+                    }
+
             for record in SeqIO.parse(f, "fasta"):
                 data = {}
-                head = record.description.split('|')
-                for i in range(len(self.CONFIG["fasta_headers"])):
-                    try:
-                        data[self.CONFIG["fasta_headers"][i]] = head[i]
-                        data['sequence'] = str(record.seq)
-                    except KeyError:
-                        logger.critical("Error parsing FASTA header. Header: {}. CONFIG specifies: {}".format(head, self.CONFIG["fasta_headers"])); sys.exit(2)
+                # head = record.description.split('|')
+                data['strain_name'] = record.description
+                data['sequence'] = str(record.seq)
+
+                # for i in range(len(self.CONFIG["fasta_headers"])):
+                #     try:
+                #         data[self.CONFIG["fasta_headers"][i]] = head[i]
+                #         data['sequence'] = str(record.seq)
+                #     except KeyError:
+                #         logger.critical("Error parsing FASTA header. Header: {}. CONFIG specifies: {}".format(head, self.CONFIG["fasta_headers"])); sys.exit(2)
                 if self.CONFIG["custom_fields"] != {}:
                     for field in self.CONFIG["custom_fields"].keys():
                         data[field] = self.CONFIG["custom_fields"][field]
+
+                if data['strain_name'] not in meta:
+                    logger.warn("No metadata for {}. Excluding.".format(data['strain_name']))
+                    continue
+
+                data["accession"] = data['strain_name'] + "_" + data['segment']
+
+                data["district"] = meta[data['strain_name']]["district"]
+                data["collection_date"] = meta[data['strain_name']]["date"]
+                # print(data["strain_name"], data["date"])
+
+                # import pdb; pdb.set_trace()
                 # logger.debug("Processing this header: {}".format(data))
                 clus = Cluster(self.CONFIG, data)
                 att = Cluster(self.CONFIG, data, cluster_type="attribution")

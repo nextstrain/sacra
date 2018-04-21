@@ -11,7 +11,7 @@ def try_to_add_attributions_via_genbank(dataset):
         accession = seq_obj.accession
         print("accession: {}".format(accession))
         if not accession in dataset.genbank_data:
-            print("{} NOT FOUND IN GENBANK DATA".format(accession))
+            # print("{} NOT FOUND IN GENBANK DATA".format(accession))
             continue
         data = dataset.genbank_data[accession]
         source = [x for x in data.features if x.type == "source"][0].qualifiers
