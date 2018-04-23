@@ -17,7 +17,6 @@ def attribution_id(obj, existing_id, logger):
     elif hasattr(obj, "authors"):
         value = obj.authors
     else:
-        logger.warn("attribution_id set to None")
         value = None
     if existing_id and existing_id is not value:
         logger.warn("Attribution ID somehow provided and does not equal fixed ID ({} vs {})".format(existing_id, value))
@@ -34,8 +33,8 @@ def sample_name(obj, existing_name, logger):
 
 def strain_name(strain, original_name, logger):
     # the first time this function runs the database needs to be loaded into memory
-    if lookups["strain_name_to_strain_name"] is None and sample.CONFIG["fix_lookups"]["strain_name_to_strain_name"] is not None:
-        lookups["strain_name_to_strain_name"] = make_dict_from_file(sample.CONFIG["fix_lookups"]["strain_name_to_strain_name"])
+    if lookups["strain_name_to_strain_name"] is None and strain.parent.CONFIG["fix_lookups"]["strain_name_to_strain_name"] is not None:
+        lookups["strain_name_to_strain_name"] = make_dict_from_file(strain.parent.CONFIG["fix_lookups"]["strain_name_to_strain_name"])
 
     name = original_name
 

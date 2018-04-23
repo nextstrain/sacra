@@ -46,16 +46,19 @@ class Unit(object):
         return {k:v for k, v in self.__dict__.iteritems() if k in self.CONFIG["mapping"][self.unit_type]}
 
     def setprop(self, name, value, overwrite=False, parents=True):
-        if name in self.CONFIG["mapping"][self.unit_type]:
-            if not hasattr(self, name) or overwrite:
-                setattr(self, name, value)
+        if self.unit_type != 'metadata':
+            if name in self.CONFIG["mapping"][self.unit_type]:
+                if not hasattr(self, name) or overwrite:
+                    setattr(self, name, value)
+            else:
+                if self.parent:
+                    if parents:
+                        self.parent.setprop(name, value, overwrite)
+                if self.children and self.children != []:
+                    for child in self.children:
+                        child.setprop(name, value, overwrite, parents=False)
         else:
-            if self.parent:
-                if parents:
-                    self.parent.setprop(name, value, overwrite)
-            if self.children and self.children != []:
-                for child in self.children:
-                    child.setprop(name, value, overwrite, parents=False)
+            setattr(self, name, value)
 
     def getprop(self, name):
         return

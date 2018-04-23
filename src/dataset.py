@@ -1,8 +1,4 @@
 from __future__ import division, print_function
-import logging
-logger = logging.getLogger(__name__)
-
-import json
 import os, sys
 from strain import Strain
 from sample import Sample
@@ -10,7 +6,9 @@ from sequence import Sequence
 # from titer import Titer
 from attribution import Attribution
 from metadata import Metadata
-
+import json
+import logging
+logger = logging.getLogger(__name__)
 class Dataset:
 
     # Initializer
@@ -81,6 +79,7 @@ class Dataset:
 
     def clean_data_units(self):
         logger.info("CLEAN DATA UNITS")
+        [unit.fix() for unit in self.get_all_units()]
 
     def make_metadata_units(self, tag, dicts):
         logger.info("Making metadata units based on tag: {}".format(tag))
@@ -88,7 +87,10 @@ class Dataset:
             self.metadata.append(Metadata(self.CONFIG, tag, d))
 
     def clean_metadata_units(self):
-        logger.info("CLEAN METADATA UNITS")
+        # TODO: This needs to be fixed with better smart setters and getters
+        # logger.info("CLEAN METADATA UNITS")
+        # [unit.fix() for unit in self.metadata]
+        pass
 
     def inject_metadata_into_data(self):
         vf = self.CONFIG['mapping']['strain'] + self.CONFIG['mapping']['sample'] + self.CONFIG['mapping']['sequence'] + self.CONFIG['mapping']['attribution']
@@ -107,15 +109,24 @@ class Dataset:
     def get_all_accessions(self):
         return ['ACC1']
 
+    def get_all_units(self):
+        return self.strains + self.samples + self.sequences + self.attributions
+
     def update_units_post_metadata_inj(self):
         '''
-        This will need to be updated with strains/sequences/sampes at some point.
+        This will need to be updated with strains/sequences/samples at some point.
         '''
         for attr in self.attributions:
-            if attr.attribution_id == "None" and hasattr(attr, "authors"):
-                attr.attribution_id = attr.authors
-            else:
-                self.attributions.remove(attr)
+            if hasattr(attr, "authors"):
+                self.CONFIG['fix_functions']['authors'](attr, attr.authors, logger)
+
+                if attr.attribution_id == "None":
+                    attr.attribution_id = attr.authors
+
+
+
+            attr.parent.attribution_id = attr.attribution_id
+
 
 
     def merge_units(self):
@@ -152,7 +163,10 @@ class Dataset:
 
         # Set parents/children
         if unit1.unit_type != "attribution":
-            assert unit1.parent == unit2.parent, logger.error("Attempted to merge 2 units with different parents.")
+            try:
+                assert unit1.parent == unit2.parent, logger.error("Attempted to merge 2 units with different parents.")
+            except:
+                return
 
         unit1.children.extend(unit2.children)
 
@@ -164,7 +178,8 @@ class Dataset:
                 f1 = getattr(unit1, field)
                 f2 = getattr(unit2, field)
                 if f1 != f2:
-                    logger.error("Trying to merge units with mismatched field {}: {} and {}. Defaulting (possibly incorrectly) to {}.".format(field, f1, f2, f1))
+                    logger.error("Trying to merge units with mismatched field {}:\
+                     {} and {}. Defaulting (possibly incorrectly) to {}.".format(field, f1, f2, f1))
 
     def validate_units(self):
         pass
@@ -178,7 +193,8 @@ class Dataset:
                 data[n].extend([x.get_data() for x in getattr(self, n) if x.is_valid()])
         # remove empty values
         for table in data:
-            if table == "dbinfo": continue
+            if table == "dbinfo":
+                continue
             for block in data[table]:
                 for key in block.keys():
                     if block[key] in [None, '', '?', 'unknown', "Unknown"]:

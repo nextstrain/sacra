@@ -49,6 +49,7 @@ All cleaning functions must follow the same structure:
           error - for cases that will likely cause downstream errors
           critical - fatal errors; automatically kills process
 
+
 3. Return a modified <attribute_name>
     Modifications to the state of obj can be made, but they may result in downstream
     errors. Expected behavior is that only the field specified will be changed.
@@ -81,6 +82,22 @@ def fix_strain_name(obj, name, logger):
     if name is not original_name:
         logger.debug("Changed strain name from {} to {}".format(original_name, name))
     return name
+
+def fix_segment(obj, seg, logger):
+    '''
+    '''
+    return 'wholeGenome'
+
+def fix_authors(obj, authors, logger):
+    if hasattr(obj, 'authors') and obj.authors is not None:
+        authors = authors.split(' ')[0]
+
+        if hasattr(obj.parent.parent, 'collection_date'):
+            authors = authors + getattr(obj.parent.parent, 'collection_date')
+
+        if hasattr(obj, 'attribution_title'):
+            authors = authors+getattr(obj, 'attribution_title')
+    return authors
 
 ######## Config construction ########
 def make_config(args, logger):
@@ -173,7 +190,10 @@ def make_config(args, logger):
     Inside of the config dictionary, there are sub-dicts for fix lookups by dictionary
     and for fix functions that are either defined above, or in sacra/src/utils/fix_functions.py
     '''
+    config['mapping']['metadata'] = config['mapping']['strain'] + config['mapping']['sample'] + config['mapping']['sequence'] + config['mapping']['attribution']
     config["fix_functions"]["strain_name"] = fix_strain_name
+    config["fix_functions"]["authors"] = fix_authors
+    config["fix_functions"]["segment"] = fix_segment
     config["fix_lookups"]["strain_name_to_location"] = "source-data/zika_location_fix.tsv"
     config["fix_lookups"]["strain_name_to_date"] = "source-data/zika_date_fix.tsv"
     return config

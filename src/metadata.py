@@ -10,6 +10,7 @@ class Metadata(Unit):
     def __init__(self, CONFIG, tag, metadict):
         super(Metadata, self).__init__()
         self.unit_type = "metadata"
+        self.CONFIG = CONFIG
         self.tag = tag
         for field in metadict:
             setattr(self, field, metadict[field])
