@@ -45,10 +45,10 @@ class Unit(object):
     def get_data(self):
         return {k:v for k, v in self.__dict__.iteritems() if k in self.CONFIG["mapping"][self.unit_type]}
 
-    def setprop(self, name, value, overwrite=False, parents=True):
+    def setprop(self, name, value, overwrite=True, parents=True):
         if self.unit_type != 'metadata':
             if name in self.CONFIG["mapping"][self.unit_type]:
-                if not hasattr(self, name) or overwrite:
+                if not hasattr(self, name) or (getattr(self, name) != None) or overwrite:
                     setattr(self, name, value)
             else:
                 if self.parent:
