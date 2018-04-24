@@ -45,6 +45,9 @@ def read_fasta_to_dicts(fname, CONFIG):
         for record in SeqIO.parse(f, "fasta"):
             data = {}
             head = record.description.split(CONFIG['fasta_separator_character'])
+            if len(head) != len(CONFIG["fasta_headers"]):
+                logger.warn("Skipping {} which had {} fields (expected {})".format(record.description, len(head), len(CONFIG["fasta_headers"])))
+                continue
             for i in range(len(CONFIG["fasta_headers"])):
                 try:
                     data[CONFIG["fasta_headers"][i]] = head[i]

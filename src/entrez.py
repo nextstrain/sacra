@@ -58,6 +58,7 @@ def query_genbank(accessions, email=None, retmax=10, n_entrez=10, gbdb="nuccore"
             accs.remove(not_found)
             esearch(accs)
         else: # success :)
+            logger.debug("esearch success")
             for i, x in enumerate(list_accs):
                 acc_gi_map[x] = res["IdList"][i]
 
