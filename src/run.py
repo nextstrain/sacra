@@ -83,7 +83,7 @@ def main(args, logger):
         dataset.clean_metadata_units()
         dataset.inject_metadata_into_data()
 
-    dataset.update_units_pre_merge()
+        dataset.update_units_pre_merge()
 
     dataset.merge_units()
 
