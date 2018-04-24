@@ -18,7 +18,7 @@ class Unit(object):
             setattr(self, name, self.CONFIG["fix_functions"][name](self, getattr(self, name), logger))
         except KeyError: ## the cleaning function wasn't set
             pass
-        except AttributeError: ## the piece of state doesn't exist - run the fix fn with "None" as the value
+        except AttributeError: ## the piece of state doesn't exist - run the fix fn with None as the value
             setattr(self, name, self.CONFIG["fix_functions"][name](self, None, logger))
 
     def fix(self):

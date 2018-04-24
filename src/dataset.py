@@ -139,17 +139,18 @@ class Dataset:
         out = []
         units = getattr(self, unit_type)
         for i in range(len(units)-1):
-            for j in range(i+1,len(units)):
+            for j in range(i+1, len(units)):
                 if units[j] not in out:
                     first = units[i]
                     second = units[j]
-                    assert first is not second, logger.error("Error. Tried to match unit with itself.")
+                    assert first is not second, logger.error("Error. Tried to match \
+                        unit with itself.")
                     first_id = getattr(first, "{}_id".format(unit_type[:-1]))
                     second_id = getattr(second, "{}_id".format(unit_type[:-1]))
-                    if first_id == "None" or second_id == "None":
+                    if first_id is None or second_id is None:
                         continue
                     if first_id == second_id:
-                        logger.info("Merging units with matching ID: {}".format(first_id))
+                        logger.debug("Merging units with matching ID: {}".format(first_id))
                         self.merge(first, second)
                         out.append(second)
         out = list(set(out))
@@ -164,7 +165,7 @@ class Dataset:
         # Set parents/children
         if unit1.unit_type != "attribution":
             try:
-                assert unit1.parent == unit2.parent, logger.error("Attempted to merge 2 units with different parents.")
+                assert unit1.parent == unit2.parent, logger.error("Attempted to merge 2 units with different parents: {} and {}".format(unit1.parent, unit2.parent))
             except:
                 return
 
@@ -175,17 +176,20 @@ class Dataset:
             if hasattr(unit2, field) and (not hasattr(unit1, field)):
                 setattr(unit1, field, getattr(unit2, field))
             elif hasattr(unit1, field) and hasattr(unit2, field):
-                f1 = getattr(unit1, field)
-                f2 = getattr(unit2, field)
-                if f1 != f2:
-                    logger.error("Trying to merge units with mismatched field {}:\
-                     {} and {}. Defaulting (possibly incorrectly) to {}.".format(field, f1, f2, f1))
+                _f1 = getattr(unit1, field)
+                _f2 = getattr(unit2, field)
+                if _f1 != _f2:
+                    u1id = getattr(unit1, "{}_id".format(unit1.unit_type))
+                    logger.warn("Units with matching ID {} have mismatching {}:\n\
+                        1. {}\n\
+                        2. {}\n\
+                        Defaulting (possibly incorrectly) to (1).".format(u1id, field, _f1, _f2))
 
     def validate_units(self):
         pass
 
     def write_valid_units(self, filename):
-        logger.info("writing to JSON: {}".format(filename))
+        logger.info("Writing to JSON: {}".format(filename))
         data = {"strains": [], "samples": [], "sequences": [], "attributions": []}
         data["dbinfo"] = {"pathogen": self.CONFIG["pathogen"]}
         for n in ["strains", "samples", "sequences", "attributions"]:

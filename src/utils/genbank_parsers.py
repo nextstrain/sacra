@@ -14,7 +14,7 @@ def process_genbank_record(accession, record, config):
     reference = choose_best_reference(record)
     data = {}
     data["accession"] = accession
-    logger.info("Processing entrez seqrecord for {} ({})".format(accession, record.description))
+    logger.debug("Processing entrez seqrecord for {} ({})".format(accession, record.description))
     # other set methods are defined in the config
     for name, fn in config["genbank_setters"].iteritems():
         fn(data, record, source, reference, logger)

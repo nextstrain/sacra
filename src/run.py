@@ -23,7 +23,7 @@ parser.add_argument("--datafiles", "-f", default=[], dest="datafiles", type=str,
 parser.add_argument("--metafiles", "-m", default=[], dest="metafiles", type=str, nargs='*', help="metadata file types: CSV, TSV, XLS")
 parser.add_argument("--pathogen", required=True, type=str, help="This sets the config file")
 # parser.add_argument("--accession_list", default=[], type=str, nargs='*', help="list of strings to query genbank with")
-parser.add_argument("-o","--outfile", default="output/test_output.json")
+parser.add_argument("-o", "--outfile", default="output/test_output.json")
 # parser.add_argument("--visualize_call_graph", action="store_true", default=False, help="draw a graph of calls being made")
 # parser.add_argument("--call_graph_fname", default="output/graphviz_test.png", help="filename for call graph")
 #
@@ -51,8 +51,9 @@ def get_all_accessions(d):
 
 def main(args, logger):
     try:
-        CONFIG = __import__("configs.{}".format(args.pathogen), fromlist=['']).make_config(args, logger)
-        assert(type(CONFIG) is dict)
+        CONFIG = __import__("configs.{}".format(args.pathogen), \
+            fromlist=['']).make_config(args, logger)
+        assert type(CONFIG) is dict, logger.error("")
     except ImportError:
         logger.critical("Could not load config! File configs/{}.py must exist!".format(args.pathogen)); sys.exit(2)
     except AttributeError:
@@ -95,9 +96,9 @@ def main(args, logger):
 
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     args = parser.parse_args()
-    ## L O G G I N G
+    ## LOGGING:
     # https://docs.python.org/2/howto/logging-cookbook.html#multiple-handlers-and-formatters
     root_logger = logging.getLogger('')
     root_logger.setLevel(args.loglevel if args.loglevel else logging.INFO)
