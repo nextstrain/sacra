@@ -88,16 +88,47 @@ def fix_segment(obj, seg, logger):
     '''
     return 'wholeGenome'
 
-def fix_authors(obj, authors, logger):
-    if hasattr(obj, 'authors') and obj.authors is not None:
-        authors = authors.split(' ')[0]
+def pre_merge_fix_attribution_id(obj, attr_id, logger):
+    """Overwrite the default method to fix attribution ID for merges.
 
+    Return a modified attribution ID.
+
+    Function contains two parts:
+    1. Specific fixes and their reasoning (commented)
+    2. General programmatic fixes
+
+    Only applies to Attribution units (ignores sequences with attribution_id field)
+    """
+
+    # Specific fixes
+    ## Fix multiple Direct Submissions by a single lab.
+    if hasattr(obj, 'authors'):
+        if obj.attribution_title == "Direct Submission":
+            new_id = obj.authors.split(' ')[0] + obj.attribution_journal.split(' ')[1]
+            return new_id
+
+    # Programmatic fixes
+    if obj.unit_type != 'attribution':
+        return attr_id
+    else:
+        if hasattr(obj, 'authors') and obj.authors is not None:
+            new_id = obj.authors.split(' ')[0]
+        else:
+            new_id = ''
         if hasattr(obj.parent.parent, 'collection_date'):
-            authors = authors + getattr(obj.parent.parent, 'collection_date')
+            year = obj.parent.parent.collection_date.split('-')[-1]
+            new_id = new_id + year
 
         if hasattr(obj, 'attribution_title'):
-            authors = authors+getattr(obj, 'attribution_title')
-    return authors
+            split_title = obj.attribution_title.split(' ')
+            if len(split_title) > 1:
+                first_two_words = split_title[0] + split_title[1]
+                new_id = new_id + first_two_words
+            elif len(split_title) == 1:
+                first_word = split_title[0]
+                new_id = new_id + first_word
+        logger.debug("Set {} as attribution_id".format(new_id))
+    return new_id
 
 ######## Config construction ########
 def make_config(args, logger):
@@ -192,7 +223,7 @@ def make_config(args, logger):
     '''
     config['mapping']['metadata'] = config['mapping']['strain'] + config['mapping']['sample'] + config['mapping']['sequence'] + config['mapping']['attribution']
     config["fix_functions"]["strain_name"] = fix_strain_name
-    config["fix_functions"]["authors"] = fix_authors
+    config["pre_merge_fix_functions"]["attribution"]["attribution_id"] = pre_merge_fix_attribution_id
     config["fix_functions"]["segment"] = fix_segment
     config["fix_lookups"]["strain_name_to_location"] = "source-data/zika_location_fix.tsv"
     config["fix_lookups"]["strain_name_to_date"] = "source-data/zika_date_fix.tsv"

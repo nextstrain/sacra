@@ -47,7 +47,16 @@ default_config = {
         "location": fix.location,
         "region": fix.region,
         "sample_name": fix.sample_name,
-        "passage": fix.passage
+        "passage": fix.passage,
+        "authors": fix.authors
+    },
+    "pre_merge_fix_functions": {
+        "strain": {},
+        "sample": {},
+        "sequence": {},
+        "attribution": {
+            "attribution_id": fix.pm_attribution_id
+        }
     },
     # TODO: Make this a real minimal default config
     "mapping" : {
@@ -93,7 +102,6 @@ default_config = {
             'platform'
         ],
         'attribution' : [
-            'attribution_id',
             'attribution_owner',
             'attribution_source',
             'publication_status',
@@ -102,6 +110,7 @@ default_config = {
             'attribution_journal',
             'attribution_url',
             'authors',
+            'attribution_id',
             'pubmed_id'
         ]
     },

@@ -37,7 +37,7 @@ class Dataset:
             self.samples.append(dummy_sample)
             self.sequences.append(dummy_sequence)
             if "authors" not in data_dict.keys():
-                data_dict["authors"] = "None"
+                data_dict["authors"] = None
             dummy_attribution = Attribution(self.CONFIG, data_dict)
             self.attributions.append(dummy_attribution)
             dummy_attribution.parent = dummy_sequence
@@ -110,27 +110,27 @@ class Dataset:
         return ['ACC1']
 
     def get_all_units(self):
+        """ Return a list of all non-metadata units stored in state."""
         return self.strains + self.samples + self.sequences + self.attributions
 
-    def update_units_post_metadata_inj(self):
-        '''
-        This will need to be updated with strains/sequences/samples at some point.
-        '''
+    def update_units_pre_merge(self):
+        """Modify in place units that need to be re-cleaned using injected metadata.
+
+        TODO: this method will need to be expanded for non-attribution units and
+        made to be programmatic.
+        """
+
         for attr in self.attributions:
-            if hasattr(attr, "authors"):
-                self.CONFIG['fix_functions']['authors'](attr, attr.authors, logger)
-
-                if attr.attribution_id == "None":
-                    attr.attribution_id = attr.authors
-
-
+            # import pdb; pdb.set_trace()
+            if attr.attribution_id == None:
+                attr.attribution_id = self.CONFIG['pre_merge_fix_functions']['attribution']['attribution_id']\
+                    (attr, attr.attribution_id, logger)
 
             attr.parent.attribution_id = attr.attribution_id
 
-
-
     def merge_units(self):
-        types = [ 'strains', 'samples', 'sequences', 'attributions', 'titers' ]
+        """Modify unit parent/child links to create a tree of matching IDs."""
+        types = ['strains', 'samples', 'sequences', 'attributions', 'titers']
         for t in types:
             self.merge_on_unit_type(t)
 

@@ -78,11 +78,11 @@ def main(args, logger):
         list_of_dicts = retrieve_entrez_metadata(accs, CONFIG)
         dataset.make_metadata_units("accession", list_of_dicts)
 
-    if (len(args.metafiles) > 0) or args.use_entrez_to_improve_data:
+    if args.metafiles or args.use_entrez_to_improve_data:
         dataset.clean_metadata_units()
         dataset.inject_metadata_into_data()
 
-    dataset.update_units_post_metadata_inj()
+    dataset.update_units_pre_merge()
 
     dataset.merge_units()
 

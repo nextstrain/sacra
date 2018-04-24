@@ -210,3 +210,41 @@ def passage(obj, passage, logger):
     if passage[0] == '_' or passage[0] == ' ':
         passage = passage[1:]
     return passage
+
+def authors(obj, authors, logger):
+    return authors
+
+def pm_attribution_id(obj, attr_id, logger):
+    """Return a modified attribution ID.
+
+    Function contains two parts:
+    1. Specific fixes and their reasoning (commented)
+    2. General programmatic fixes
+
+    Only applies to Attribution units (ignores sequences with attribution_id field)
+    """
+
+    # Specific fixes
+
+    # Programmatic fixes
+    if obj.unit_type != 'attribution':
+        return attr_id
+    else:
+        if hasattr(obj, 'authors') and obj.authors is not None:
+            new_id = obj.authors.split(' ')[0]
+        else:
+            new_id = ''
+        if hasattr(obj.parent.parent, 'collection_date'):
+            year = obj.parent.parent.collection_date.split('-')[-1]
+            new_id = new_id + year
+
+        if hasattr(obj, 'attribution_title'):
+            split_title = obj.attribution_title.split(' ')
+            if len(split_title) > 1:
+                first_two_words = split_title[0] + split_title[1]
+                new_id = new_id + first_two_words
+            elif len(split_title) == 1:
+                first_word = split_title[0]
+                new_id = new_id + first_word
+        logger.debug("Set {} as attribution_id".format(new_id))
+    return new_id

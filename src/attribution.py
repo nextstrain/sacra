@@ -13,8 +13,7 @@ class Attribution(Unit):
         super(Attribution, self).__init__()
         self.unit_type = "attribution"
         self.CONFIG = CONFIG
-        # logger.info("Attribution class initializing")
-        # save data to state
+
         sm = CONFIG["mapping"]
         for field in sm["attribution"]:
             if field in data_dictionary.keys():
@@ -23,14 +22,6 @@ class Attribution(Unit):
         ## init must set attribution_id
         if not hasattr(self, "attribution_id"):
             setattr(self, "attribution_id", self.authors)
-            # self.fix_single("attribution_date")
-            # self.fix_single("attribution_id")
-
-        if self.authors == "None":
-            del self.authors
-
-        # logger.debug("Attribution data: {}".format(self.__dict__))
-
 
     def is_valid(self):
-        return hasattr(self, "attribution_id") and self.attribution_id is not None
+        return hasattr(self, "attribution_id") and self.attribution_id is not None #pylint: disable=E1101
