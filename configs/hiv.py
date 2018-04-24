@@ -86,6 +86,7 @@ def make_config(args, logger):
         'strain_name',
         'accession'
     ]
+    config["fasta_separator_character"] = "."
     '''
     Make sure to add the fix functions that were defined above to the new config,
     otherwise they will never be executed and sacra will default to incorrect fxns.

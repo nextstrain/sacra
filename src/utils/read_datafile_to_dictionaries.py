@@ -44,7 +44,7 @@ def read_fasta_to_dicts(fname, CONFIG):
 
         for record in SeqIO.parse(f, "fasta"):
             data = {}
-            head = record.description.split('|')
+            head = record.description.split(CONFIG['fasta_separator_character'])
             for i in range(len(CONFIG["fasta_headers"])):
                 try:
                     data[CONFIG["fasta_headers"][i]] = head[i]
