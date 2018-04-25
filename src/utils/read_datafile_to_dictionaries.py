@@ -44,7 +44,10 @@ def read_fasta_to_dicts(fname, CONFIG):
 
         for record in SeqIO.parse(f, "fasta"):
             data = {}
+            if record.description in CONFIG["fasta_header_swaps"]:
+                record.description = CONFIG["fasta_header_swaps"][record.description]
             head = record.description.split(CONFIG['fasta_separator_character'])
+
             if len(head) != len(CONFIG["fasta_headers"]):
                 logger.warn("Skipping {} which had {} fields (expected {})".format(record.description, len(head), len(CONFIG["fasta_headers"])))
                 continue

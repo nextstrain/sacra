@@ -87,6 +87,12 @@ def make_config(args, logger):
         'accession'
     ]
     config["fasta_separator_character"] = "."
+    config["fasta_header_swaps"] = {
+        "C.MW.2007.702010141_CH141.w12.KC156212": "C.MW.2007.702010141_CH141_w12.KC156212",
+        "CD.MW.2008.CH492.PL.031108.UT.2.KY112314": "CD.MW.2008.CH492_PL_031108_UT_2.KY112314",
+        "C.MW.2008.CH492.PL.031108.UT.12.KY112312": "C.MW.2008.CH492_PL_031108_UT_12.KY112312",
+        "C.ZA.2006.C.CAP45.w65.455dps.4_17_T14B.JX976730": "C.ZA.2006.C_CAP45_w65_455dps_4_17_T14B.JX976730"
+    }
     '''
     Make sure to add the fix functions that were defined above to the new config,
     otherwise they will never be executed and sacra will default to incorrect fxns.

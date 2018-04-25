@@ -13,6 +13,7 @@ default_config = {
     "pathogen": False, # this forces the config to be user specified, as False won't work...
     "fasta_headers": False, # must define in user config
     "fasta_separator_character": '|',
+    "fasta_header_swaps": {},
     "genbank_setters": {
         # see src/utils/genbank_parsers to understand these functions
         "set_strain_name": gbp.set_strain_name,
