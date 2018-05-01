@@ -86,6 +86,21 @@ class Dataset:
         for d in dicts:
             self.metadata.append(Metadata(self.CONFIG, tag, d))
 
+    def make_metadata_unit_from_args(self, l):
+        """Create a metadata unit based on metadata specified at command line.
+
+        Stores created unit in self.metadata.
+        Currently assumes all data should be injected at attribution level.
+        """
+        logger.info("Making meatadata unit from custom fields.")
+        d = {}
+        for item in l:
+            item = item.split(':')
+            key, value = item[0], item[1]
+            value = value.strip('\"')
+            d[key] = value
+        self.metadata.append(Metadata(self.CONFIG, "attribution", d))
+
     def clean_metadata_units(self):
         # TODO: This needs to be fixed with better smart setters and getters
         # logger.info("CLEAN METADATA UNITS")
