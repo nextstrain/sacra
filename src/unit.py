@@ -8,10 +8,6 @@ class Unit(object):
         self.parent = None
         self.children = []
 
-    def move(self):
-        ## move names. I'm guessing this will need to use self.parent & self.child methods
-        pass
-
     def fix_single(self, name):
         """ try to apply the fix function (as defined in the config) to a single piece of state (name) """
         try:
@@ -35,9 +31,6 @@ class Unit(object):
         except KeyError: ## the cleaning function wasn't set
             pass
 
-    def create(self):
-        pass;
-
     def drop(self):
         ## drop values. This is dangerous - make sure all objects.move() have completed
         pass
@@ -50,6 +43,7 @@ class Unit(object):
             if name in self.CONFIG["mapping"][self.unit_type]:
                 if not hasattr(self, name) or (getattr(self, name) != None) or overwrite:
                     setattr(self, name, value)
+                    print(name, getattr(self, name))
             else:
                 if self.parent:
                     if parents:

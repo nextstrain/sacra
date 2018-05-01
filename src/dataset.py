@@ -86,20 +86,10 @@ class Dataset:
         for d in dicts:
             self.metadata.append(Metadata(self.CONFIG, tag, d))
 
-    def make_metadata_unit_from_args(self, l):
-        """Create a metadata unit based on metadata specified at command line.
-
-        Stores created unit in self.metadata.
-        Currently assumes all data should be injected at attribution level.
-        """
-        logger.info("Making meatadata unit from custom fields.")
-        d = {}
-        for item in l:
-            item = item.split(':')
-            key, value = item[0], item[1]
-            value = value.strip('\"')
-            d[key] = value
-        self.metadata.append(Metadata(self.CONFIG, "attribution", d))
+    def apply_command_line_arguments_everywhere(self, cmdargs):
+        for key in cmdargs.keys(): # read straight from command line args
+            for strain in self.strains:
+                strain.setprop(key, cmdargs[key])
 
     def clean_metadata_units(self):
         # TODO: This needs to be fixed with better smart setters and getters
@@ -111,9 +101,9 @@ class Dataset:
         vf = self.CONFIG['mapping']['strain'] + self.CONFIG['mapping']['sample'] + self.CONFIG['mapping']['sequence'] + self.CONFIG['mapping']['attribution']
         logger.info("injecting metadata")
         for m  in self.metadata:
-            if m.tag == 'accession':
+            if m.tag == 'attribution':
                 for s in self.sequences:
-                    if m.accession == s.accession:
+                    if m.attribution_id == s.attribution_id:
                         self.inject_single_meta_unit(m, s, vf)
 
     def inject_single_meta_unit(self, meta, unit, valid_fields):

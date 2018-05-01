@@ -80,9 +80,11 @@ def main(args, logger):
         dataset.make_metadata_units("accession", list_of_dicts)
 
     if args.custom_fields:
-        dataset.make_metadata_unit_from_args(args.custom_fields)
-
-    import pdb; pdb.set_trace()
+        cmdargs = {}
+        for cmdarg in args.custom_fields:
+            key, value = cmdarg.split(':')[0], cmdarg.split(':')[1]
+            cmdargs[key] = value
+        dataset.apply_command_line_arguments_everywhere(cmdargs)
 
     if dataset.metadata:
         dataset.clean_metadata_units()
