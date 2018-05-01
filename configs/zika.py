@@ -100,9 +100,12 @@ def pre_merge_fix_attribution_id(obj, attr_id, logger):
     Only applies to Attribution units (ignores sequences with attribution_id field)
     """
 
+    if hasattr(obj, 'attribution_id') and obj.attribution_id is not None:
+        return attr_id
+
     # Specific fixes
     ## Fix multiple Direct Submissions by a single lab.
-    if hasattr(obj, 'authors'):
+    if hasattr(obj, 'authors') and hasattr(obj, 'attribution_journal'):
         if obj.attribution_title == "Direct Submission":
             new_id = obj.authors.split(' ')[0] + obj.attribution_journal.split(' ')[1]
             return new_id
