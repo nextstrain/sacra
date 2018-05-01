@@ -35,7 +35,7 @@ group.add_argument("--use_entrez_to_improve_data", "--entrez", dest="use_entrez_
 #
 group = parser.add_argument_group('metadata')
 group.add_argument('--custom_fasta_header', default=None, type=str, help='custom fasta header field name assigned in pathogen config')
-# group.add_argument('-c', '--custom_fields', default=[], type=str, nargs='*', help='fields that should be added to full sacra build in format field_name:"field value"')
+group.add_argument('-c', '--custom_fields', default=[], type=str, nargs='*', help='fields that should be added to full sacra build in format field_name:"field value"')
 
 def provision_directories(logger):
     import os
@@ -79,7 +79,12 @@ def main(args, logger):
         list_of_dicts = retrieve_entrez_metadata(accs, CONFIG)
         dataset.make_metadata_units("accession", list_of_dicts)
 
-    if args.metafiles or args.use_entrez_to_improve_data:
+    if args.custom_fields:
+        dataset.make_metadata_unit_from_args(args.custom_fields)
+
+    import pdb; pdb.set_trace()
+
+    if dataset.metadata:
         dataset.clean_metadata_units()
         dataset.inject_metadata_into_data()
 
@@ -93,8 +98,6 @@ def main(args, logger):
     invalid_file = 'output/invalid.json'
     dataset.write_valid_units(valid_file)
     dataset.write_invalid_units(invalid_file)
-
-
 
 if __name__ == "__main__":
     args = parser.parse_args()
