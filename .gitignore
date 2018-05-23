@@ -4,11 +4,10 @@
 environment*
 
 # Data
-data/*
-input/*
-output/*
-log/*
-environment*
+data/
+input/
+output/
+log/
 
 # Python created files
 __pycache__
