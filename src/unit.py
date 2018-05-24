@@ -52,7 +52,7 @@ class Unit(object):
             # check to make sure there's not already a value here
             if (not hasattr(self, name)) or getattr(self, name) == None or overwrite:
                 setattr(self, name, value)
-                print("set {} on {}".format(name, self.unit_type))
+                # print("set {} on {}".format(name, self.unit_type))
 
         # tell the parents and the children to set the prop on themselves (pseudo recursively)
         # note that a field may be set on multiple units, so this isn't in an "else" clause
