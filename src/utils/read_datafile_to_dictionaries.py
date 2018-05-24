@@ -1,12 +1,25 @@
+"""Primary datafile reading functions.
+
+Called by src/run.py to correctly parse primary input files.
+
+Todo:
+    * Add parser for accession list (.txt) files
+    * Add parser for sacra output (.json) files
+"""
 from __future__ import division, print_function
+import sys
 import logging
 logger = logging.getLogger(__name__)
 
 def read_datafile_to_dictionaries(fname, CONFIG):
-    """ returns a [filetype, [list of dictionaries]] """
+    """Return a (filetype, [list of dictionaries]).
+
+    The filetype is inferred from the filename, and the list
+    of dictionaries is then constructed based on the inferred
+    filetype."""
     logger.info("Reading {} to dictionaries.".format(fname))
 
-    ftype = infer_ftype(fname)
+    ftype = infer_ftype(fname.lower())
 
     if ftype == "ACCESSIONS":
         data_dicts = []
@@ -15,31 +28,35 @@ def read_datafile_to_dictionaries(fname, CONFIG):
     elif ftype == "JSON":
         data_dicts = []
     else:
-        logger.error("Unknown input filetype for {}. Fatal.".format(f)); sys.exit(2)
+        logger.error("Unknown input filetype for {}. Fatal.".format(ftype)); sys.exit(2)
 
     return (ftype, data_dicts)
 
 def infer_ftype(fname):
-    if fname.endswith(".fasta"):
-        return "FASTA"
-    if fname.endswith(".txt"):
-        return "ACCESSIONS"
-    elif (fname.endswith(".json")):
-        return "JSON"
+    """Determind filetypes by reading fname suffixes."""
+    if fname.endswith(".fasta") or fname.endswith(".fa"):
+        ftype = "FASTA"
+    elif fname.endswith(".txt"):
+        ftype = "ACCESSIONS"
+    elif fname.endswith(".json"):
+        ftype = "JSON"
+    else:
+        logger.error("Unknown file type for file: {}".format(fname))
+    return ftype
 
 def read_fasta_to_dicts(fname, CONFIG):
-    from Bio import SeqIO
-    '''
-    Take a fasta file and a list of information contained in its headers
-    and build a dataset object from it.
+    """Construct a list of dictionaries from a FASTA file.
 
-    # TODO: This should return a docs structure
-    # (list of docs dicts) instead of its current behavior
-    '''
-    logger.info('Reading in FASTA from %s.' % (fname))
+    We define a FASTA block as one line of metadata (denoted by a `>`)
+    and its associated nucleotide sequence in the following line(s).
+
+    Each {key (str): value (str)} dictionary represents one block of
+    data from the FASTA file. The keys of each dictionary correspond
+    to the FASTA header fields defined in the CONFIG file."""
+    from Bio import SeqIO
+    logger.info('Reading in FASTA from {}.'.format(fname))
 
     data_dicts = []
-    # Read the fasta
     with open(fname, "rU") as f:
 
         for record in SeqIO.parse(f, "fasta"):
