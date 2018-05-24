@@ -43,7 +43,7 @@ class Unit(object):
             if name in self.CONFIG["mapping"][self.unit_type]:
                 if not hasattr(self, name) or (getattr(self, name) != None) or overwrite:
                     setattr(self, name, value)
-                    print(name, getattr(self, name))
+                    # print(name, getattr(self, name))
             else:
                 if self.parent:
                     if parents:

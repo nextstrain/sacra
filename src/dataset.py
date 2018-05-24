@@ -101,9 +101,9 @@ class Dataset:
         vf = self.CONFIG['mapping']['strain'] + self.CONFIG['mapping']['sample'] + self.CONFIG['mapping']['sequence'] + self.CONFIG['mapping']['attribution']
         logger.info("injecting metadata")
         for m  in self.metadata:
-            if m.tag == 'attribution':
+            if m.tag == 'accession':
                 for s in self.sequences:
-                    if m.attribution_id == s.attribution_id:
+                    if m.accession == s.accession:
                         self.inject_single_meta_unit(m, s, vf)
 
     def inject_single_meta_unit(self, meta, unit, valid_fields):

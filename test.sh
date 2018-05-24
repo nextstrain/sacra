@@ -3,7 +3,8 @@
 WERE_ERRORS=0
 
 function commandFailed {
-  echo -e "****** WARNING: Command on line $1 failed. ******"
+  LINE="$(sed "${1}q;d" test.sh)"
+  echo -e "WARNING: This command failed: ${LINE}"
   WERE_ERRORS=1
 }
 
