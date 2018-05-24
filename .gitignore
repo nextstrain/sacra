@@ -6,13 +6,14 @@ environment*
 # Data
 data/
 input/
+!test/input/
 output/
 log/
 
 # Python created files
 __pycache__
 *.pyc
-.DS_Store
+**/.DS_Store
 
 # Code duplicated for python3
 2to3/*
