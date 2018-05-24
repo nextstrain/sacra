@@ -38,21 +38,29 @@ class Unit(object):
     def get_data(self):
         return {k:v for k, v in self.__dict__.iteritems() if k in self.CONFIG["mapping"][self.unit_type]}
 
-    def setprop(self, name, value, overwrite=True, parents=True):
-        if self.unit_type != 'metadata':
-            if name in self.CONFIG["mapping"][self.unit_type]:
-                if not hasattr(self, name) or (getattr(self, name) != None) or overwrite:
-                    setattr(self, name, value)
-                    # print(name, getattr(self, name))
-            else:
-                if self.parent:
-                    if parents:
-                        self.parent.setprop(name, value, overwrite)
-                if self.children and self.children != []:
-                    for child in self.children:
-                        child.setprop(name, value, overwrite, parents=False)
-        else:
+    def setprop(self, name, value, overwrite=True, try_to_set_on_parents=True):
+        """
+        This sets an attribute (e.g. "country" or "author") on the relevent unit by jumping into parents / children until
+        the unit type has that attribute (known via the CONFIG).
+        """
+        if self.unit_type == "metadata":
+            # @barneypotter could you add a comment here?
             setattr(self, name, value)
+            return
+
+        if name in self.CONFIG["mapping"][self.unit_type]:
+            # check to make sure there's not already a value here
+            if (not hasattr(self, name)) or getattr(self, name) == None or overwrite:
+                setattr(self, name, value)
+                print("set {} on {}".format(name, self.unit_type))
+
+        # tell the parents and the children to set the prop on themselves (pseudo recursively)
+        # note that a field may be set on multiple units, so this isn't in an "else" clause
+        if self.parent and try_to_set_on_parents:
+            self.parent.setprop(name, value, overwrite)
+        if self.children and self.children != []:
+            for child in self.children:
+                child.setprop(name, value, overwrite, try_to_set_on_parents=False)
 
     def getprop(self, name):
         return

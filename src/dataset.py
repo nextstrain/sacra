@@ -90,6 +90,7 @@ class Dataset:
         for key in cmdargs.keys(): # read straight from command line args
             for strain in self.strains:
                 strain.setprop(key, cmdargs[key])
+        # see self.strains[0].children[0].children[0].children[0].attribution_id has been set :)
 
     def clean_metadata_units(self):
         # TODO: This needs to be fixed with better smart setters and getters
