@@ -95,6 +95,9 @@ group.add_argument('-c', '--custom_fields',
 def provision_directories(logger):
     """Build input and output directories if they don't exist."""
     import os
+    if not os.path.isdir('test/output'):
+        logger.info("Directory no ./test/output directory found; creating.")
+        os.makedirs('test/output')
     if not os.path.isdir('input'):
         logger.info("Directory no ./input directory found; creating.")
         os.makedirs('input')
