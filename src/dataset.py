@@ -1,32 +1,82 @@
+"""Sacra dataset object class.
+
+This module defines a Dataset class, the fundamental unit of a Sacra run.
+A Dataset object acts as a structured container for sequence and titer data,
+as well as associated metadata. Metadata is separated into three basic
+divisions representative of biological phenomena and linked in a
+one-to-many-to-many fashion:
+
+    1. Strain: a single strain of pathogen in a single host organism. If two
+        samples/sequences share a strain, it means they came from the same
+        infection in the same host, or were grown in the same culture.
+    2. Sample: a sampling event of a given strain. Multiple samples
+        can be drawn from a single strain, separated either physically within-
+        host (e.g. serum and urine samples) or temporally in the case of
+        chronic infections.
+    3. Sequence: a nucleotide sequnce produced by a sequencing run. One sample
+        may give rise to multiple sequences.
+
+Each sequence may be additionally linked to attribution information.
+
+Todo:
+    * Writing to Fasta (full headers)
+    * Writing to Fasta (augur headers) + metadata TSV
+    * Reading from Sacra JSON format
+    * Parsing of TSV/CSV metadata tables (e.g. from GISAID)
+    * Titer handling
+"""
 from __future__ import division, print_function
-import os, sys
+import json
+import logging
 from strain import Strain
 from sample import Sample
 from sequence import Sequence
 # from titer import Titer
 from attribution import Attribution
 from metadata import Metadata
-import json
-import logging
+
 logger = logging.getLogger(__name__)
+
 class Dataset:
+    """Wrapper class that links, cleans, and stores data.
+
+    A Dataset object can also inject metadata derived from auxiliary files
+    and write its data to new files.
+    """
 
     # Initializer
     def __init__(self, CONFIG):
-        logger.info("Dataset init")
+        """Initialize a dataset object.
+
+        No functions are called at the time of initialization, and the only
+        non-empty class attribute at the time of initialization is the
+        pathogen-specific config file that controls the run.
+        """
+        logger.info("Dataset initializing.")
         self.CONFIG = CONFIG
         self.logger = logger
+
+        # All types of units that a Dataset can handle are initilized
+        # as empty lists
         self.strains = []
         self.samples = []
         self.sequences = []
         self.attributions = []
         self.titers = []
         self.metadata = []
-        # populate_lookups(self.CONFIG)
 
     def make_units_from_data_dictionaries(self, filetype, dicts):
-        """
-        sets linked units into state
+        """Set linked units into state.
+
+        Takes a list of dictionaries and converts the metadata stored within them
+        into three data units (four if attribution information is included).
+
+        Each dictionary is created by parsing primary input files and maps
+        field names to metadata, with field names being derived from the spec
+        in the CONFIG dictionary.
+
+        Todo:
+            * Ensure that this works for JSON input files
         """
         logger.info("Making units from filetype {} & data".format(filetype))
         for data_dict in dicts:
@@ -113,7 +163,8 @@ class Dataset:
                 unit.setprop(field, getattr(meta, field))
 
     def get_all_accessions(self):
-        return ['ACC1']
+        """ Return a list of all accession names stored in state."""
+        return [ seq.accession for seq in self.sequences ]
 
     def get_all_units(self):
         """ Return a list of all non-metadata units stored in state."""
@@ -128,7 +179,7 @@ class Dataset:
 
         for attr in self.attributions:
             # import pdb; pdb.set_trace()
-            if attr.attribution_id == None:
+            if attr.attribution_id is None:
                 attr.attribution_id = self.CONFIG['pre_merge_fix_functions']['attribution']['attribution_id']\
                     (attr, attr.attribution_id, logger)
 
