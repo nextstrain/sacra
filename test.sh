@@ -17,13 +17,15 @@ trap 'commandFailed $LINENO' ERR
 
 
 echo -e "\nRunning zika ViPR test data, with entrez queries"
-python src/run.py -f test/input/zika_test.fasta -o test/output/zika_test.json --pathogen zika --use_entrez_to_improve_data > test/test.log 2>&1
+python src/run.py -f test/input/zika_test.fasta -o test/output/zika_test.json --pathogen zika --use_entrez_to_improve_data >> test/test.log 2>&1
 
 echo -e "Diffing against expected output"
 diff -s test/expected-output/zika_test.json test/output/zika_test.json > /dev/null
 
+echo "" >> test/test.log && echo "--------------------" >> test/test.log && echo "" >> test/test.log
+
 echo -e "\nRunning zika USVI test data, with command line overrides"
-python src/run.py -f test/input/zika_usvi.fasta -o test/output/zika_usvi.json --pathogen zika --custom_fields authors:"Black et al" attribution_id:"Black2017Zika" attribution_url:"https://github.com/blab/zika-usvi" attribution_title:"Genetic characterization of the Zika virus epidemic in the US Virgin Islands" attribution_date:"2017" attribution_source:"github" --custom_fasta_header usvi > test/test.log 2>&1
+python src/run.py -f test/input/zika_usvi.fasta -o test/output/zika_usvi.json --pathogen zika --custom_fields authors:"Black et al" attribution_id:"Black2017Zika" attribution_url:"https://github.com/blab/zika-usvi" attribution_title:"Genetic characterization of the Zika virus epidemic in the US Virgin Islands" attribution_date:"2017" attribution_source:"github" --custom_fasta_header usvi >> test/test.log 2>&1
 
 echo -e "Diffing against expected output"
 diff -s test/expected-output/zika_usvi.json test/output/zika_usvi.json > /dev/null
