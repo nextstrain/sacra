@@ -133,7 +133,9 @@ disable=print-statement,
         C0326,
         C0413,
         R0914,
+        W0106,
         W0403,
+        W0702,
         W1202,
 
 # Enable the message, report, category or checker with the given id(s). You can
@@ -458,7 +460,7 @@ variable-naming-style=snake_case
 max-args=5
 
 # Maximum number of attributes for a class (see R0902).
-max-attributes=7
+max-attributes=12
 
 # Maximum number of boolean expressions in a if statement
 max-bool-expr=5

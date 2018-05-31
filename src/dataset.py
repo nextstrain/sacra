@@ -37,14 +37,13 @@ from metadata import Metadata
 
 logger = logging.getLogger(__name__)
 
-class Dataset:
+class Dataset(object):
     """Wrapper class that links, cleans, and stores data.
 
     A Dataset object can also inject metadata derived from auxiliary files
     and write its data to new files.
     """
 
-    # Initializer
     def __init__(self, CONFIG):
         """Initialize a dataset object.
 
@@ -79,26 +78,58 @@ class Dataset:
             * Ensure that this works for JSON input files
         """
         logger.info("Making units from filetype {} & data".format(filetype))
+
         for data_dict in dicts:
-            dummy_strain = Strain(self.CONFIG, data_dict)
-            dummy_sample = Sample(self.CONFIG, data_dict, dummy_strain)
-            dummy_sequence = Sequence(self.CONFIG, data_dict, dummy_sample)
-            self.strains.append(dummy_strain)
-            self.samples.append(dummy_sample)
-            self.sequences.append(dummy_sequence)
+            # Initialize Strain, Sample, and Sequence objects.
+            # Parent/child links are initialized by passing Strain/Sample
+            # ojbects to Sample/Sequence initializers.
+            strain_obj = Strain(self.CONFIG, data_dict)
+            sample_obj = Sample(self.CONFIG, data_dict, strain_obj)
+            sequence_obj = Sequence(self.CONFIG, data_dict, sample_obj)
+
+            # Add new Strain, Sample, Sequence objects to state
+            self.strains.append(strain_obj)
+            self.samples.append(sample_obj)
+            self.sequences.append(sequence_obj)
+
+            # Handle Attributions if they exist, or set attribution to None
             if "authors" not in data_dict.keys():
                 data_dict["authors"] = None
-            dummy_attribution = Attribution(self.CONFIG, data_dict)
-            self.attributions.append(dummy_attribution)
-            dummy_attribution.parent = dummy_sequence
-            dummy_sequence.children.append(dummy_attribution)
+            attribution_obj = Attribution(self.CONFIG, data_dict)
+            self.attributions.append(attribution_obj)
+            # Manually link sequences with their attribution
+            attribution_obj.parent = sequence_obj
+            sequence_obj.children.append(attribution_obj)
+
+            # Validate that parent/child links are of the correct type
             self.validate_unit_links()
 
     def validate_unit_links(self):
+        """Ensure that all unit links are of the proper number and type.
+
+        Strains:
+            * Should not have a parent (i.e. parent is None)
+            * Should have one or more children
+
+        Samples:
+            * Should have a parent of type Strain
+            * Should have one or more children
+
+        Sequences:
+            * Should have a parent of type Sample
+            * Should have zero or one children
+
+        Attributions:
+            * Should have a parent of type Sequence
+            * Should not have any children (i.e. children == [])
+
+        Todo:
+            As a separate function, create a checker for titers.
+        """
         try:
             for strain in self.strains:
                 try:
-                    assert strain.parent == None
+                    assert strain.parent is None
                     assert len(strain.children) >= 1
                 except AssertionError:
                     logger.critical("Error linking w.r.t. strain {}".format(strain))
@@ -120,29 +151,44 @@ class Dataset:
             for attribution in self.attributions:
                 try:
                     assert isinstance(attribution.parent, Sequence)
-                    assert len(attribution.children) == 0
+                    assert not attribution.children
                 except AssertionError:
                     logger.critical("Error linking w.r.t. attribution {}".format(attribution))
                     raise Exception
         except:
+            # On failure, open a debugger.
+            # At some point this should be handled by a better error handler.
             import pdb; pdb.set_trace()
 
     def clean_data_units(self):
-        logger.info("CLEAN DATA UNITS")
-        [unit.fix() for unit in self.get_all_units()]
+        """Apply config-defined cleaning functions to each unit."""
+        logger.info("Cleaning all primary data units")
+        [ unit.fix() for unit in self.get_all_units() ]
 
     def make_metadata_units(self, tag, dicts):
+        """Create new metadata units from dictionaries, append to state.
+
+        Similar to make_units_from_data_dictionaries, but does not require
+        parent/child relationships, as metadata will be injected to existing
+        units with preexisting links.
+        """
         logger.info("Making metadata units based on tag: {}".format(tag))
         for d in dicts:
             self.metadata.append(Metadata(self.CONFIG, tag, d))
 
     def apply_command_line_arguments_everywhere(self, cmdargs):
-        for key in cmdargs.keys(): # read straight from command line args
+        """Apply specific metadata, specified at cmd line, to all units.
+
+        This will most often be used for attribution information, and does
+        not use metadata units as their injection only happens once per unit.
+        This, instead applies to all strains (therefore all downstream units).
+        """
+        for key in cmdargs.keys():
             for strain in self.strains:
                 strain.setprop(key, cmdargs[key])
-        # see self.strains[0].children[0].children[0].children[0].attribution_id has been set :)
 
     def clean_metadata_units(self):
+        """Apply cleaning functions to metadata units."""
         # TODO: This needs to be fixed with better smart setters and getters
         # logger.info("CLEAN METADATA UNITS")
         # [unit.fix() for unit in self.metadata]
@@ -163,22 +209,22 @@ class Dataset:
                 unit.setprop(field, getattr(meta, field))
 
     def get_all_accessions(self):
-        """ Return a list of all accession names stored in state."""
+        """Return a list of all accession names stored in state."""
         return [ seq.accession for seq in self.sequences ]
 
     def get_all_units(self):
-        """ Return a list of all non-metadata units stored in state."""
+        """Return a list of all non-metadata units stored in state."""
         return self.strains + self.samples + self.sequences + self.attributions
 
     def update_units_pre_merge(self):
         """Modify in place units that need to be re-cleaned using injected metadata.
 
-        TODO: this method will need to be expanded for non-attribution units and
-        made to be programmatic.
+        Todo:
+            This method will need to be expanded for non-attribution units and
+            made to be programmatic.
         """
 
         for attr in self.attributions:
-            # import pdb; pdb.set_trace()
             if attr.attribution_id is None:
                 attr.attribution_id = self.CONFIG['pre_merge_fix_functions']['attribution']['attribution_id']\
                     (attr, attr.attribution_id, logger)
