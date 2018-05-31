@@ -2,11 +2,18 @@ import logging
 logger = logging.getLogger(__name__)
 
 class Unit(object):
-    """The parent class for Strain, Sample, Sequence, Attribution, """
+    """The parent class for Strain, Sample, Sequence, Attribution, and Titer.
+
+    Todo:
+        * Implement titers as a subclass
+        * Implement hasprop and getprop (as analogues to hasattr and getattr)
+    """
     def __init__(self):
         self.unit_type = "dbinfo"
         self.parent = None
         self.children = []
+
+        self.CONFIG = {}
 
     def fix_single(self, name):
         """ try to apply the fix function (as defined in the config) to a single piece of state (name) """
@@ -32,38 +39,69 @@ class Unit(object):
             pass
 
     def drop(self):
+        """TBD"""
+        # @jameshadfield: could you write a docstring for this method?
+        # Not sure what is meant by "drop values"
         ## drop values. This is dangerous - make sure all objects.move() have completed
         pass
 
     def get_data(self):
+        """Return a dictionary of all metadata fields defined in config mapping."""
         return {k:v for k, v in self.__dict__.iteritems() if k in self.CONFIG["mapping"][self.unit_type]}
 
-    def setprop(self, name, value, overwrite=True, try_to_set_on_parents=True):
-        """
-        This sets an attribute (e.g. "country" or "author") on the relevent unit by jumping into parents / children until
+    def setprop(self, name, value, overwrite=True, _try_to_set_on_parents=True):
+        """Set a field in the proper location within a dataset structure.
+
+        This sets an attribute (e.g. "country" or "author") on the relevent
+        unit by jumping into parents / children until
         the unit type has that attribute (known via the CONFIG).
         """
+
+        # Metadata units do not have parent/child links, so in their case
+        # the setprop is the same as setattr.
         if self.unit_type == "metadata":
-            # @barneypotter could you add a comment here?
             setattr(self, name, value)
             return
 
+        # For non-Metadata units, first check if the
         if name in self.CONFIG["mapping"][self.unit_type]:
-            # check to make sure there's not already a value here
-            if (not hasattr(self, name)) or getattr(self, name) == None or overwrite:
+            # Check to make sure there's not already a value, if there is,
+            # only overwrite if overwrite flag is set to True.
+            if (not hasattr(self, name)) or getattr(self, name) is None or overwrite:
                 setattr(self, name, value)
-                # print("set {} on {}".format(name, self.unit_type))
 
-        # tell the parents and the children to set the prop on themselves (pseudo recursively)
-        # note that a field may be set on multiple units, so this isn't in an "else" clause
-        if self.parent and try_to_set_on_parents:
+        # Pseudo-recursively call setprop on parents and children
+        # Note: fields may be set on multiple units, so this isn't in an "else" clause
+        if self.parent and _try_to_set_on_parents:
             self.parent.setprop(name, value, overwrite)
         if self.children and self.children != []:
             for child in self.children:
-                child.setprop(name, value, overwrite, try_to_set_on_parents=False)
+                # Setting _try_to_set_on_parents to False prevents stack overflow
+                child.setprop(name, value, overwrite, _try_to_set_on_parents=False)
 
-    def getprop(self, name):
-        return
+    def getprop(self, name, _output=None, _try_to_get_on_parents=True):
+        """Return a list of all attributes of a given name in a dataset."""
+        if _output is None:
+            _output = []
+
+        # First, check if the field exists in the input unit
+        if hasattr(self, name):
+            _output.append(getattr(self, name))
+
+        # Pseudo-recursively call getprop on parents and children
+        if self.parent and _try_to_get_on_parents:
+            self.parent.getprop(name, _output)
+        if self.children and self.children != []:
+            for child in self.children:
+                # Setting _try_to_get_on_parents to False prevents stack overflow
+                child.getprop(name, _output, _try_to_get_on_parents=False)
+
+        return list(set(_output))
 
     def hasprop(self, name):
-        return
+        """Return a count of the number of times an attribute exists in a dataset."""
+        return len(self.getprop(name))
+
+    def __str__(self):
+        """Overwrite default __str__ method for units."""
+        return "Unit type {}".format(self.unit_type)
