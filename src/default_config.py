@@ -50,7 +50,8 @@ default_config = {
         "region": fix.region,
         "sample_name": fix.sample_name,
         "passage": fix.passage,
-        "authors": fix.authors
+        "authors": fix.authors,
+        "host_species": fix.host_species
     },
     "pre_merge_fix_functions": {
         "strain": {},
@@ -100,7 +101,6 @@ default_config = {
             'sample_id',
             'location',
             'attribution_id',
-            'region',
             'platform'
         ],
         'attribution' : [

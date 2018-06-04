@@ -1,5 +1,5 @@
-import re, sys
-import csv
+from __future__ import print_function
+import re
 from misc import camelcase_to_snakecase, snakecase_to_camelcase
 from file_readers import parse_geo_synonyms, make_dict_from_file
 
@@ -63,7 +63,7 @@ def collection_date(sample, original_date, logger):
     # the first time this function runs the database needs to be loaded into memory
     if lookups["strain_name_to_date"] is None and sample.CONFIG["fix_lookups"]["strain_name_to_date"] is not None:
         lookups["strain_name_to_date"] = make_dict_from_file(sample.CONFIG["fix_lookups"]["strain_name_to_date"])
-    if lookups["strain_name_to_date"] is not None and sample.parent.strain_name in lookups["strain_name_to_date"]:
+    if lookups["strain_name_to_date"] is not None and sample.getprop("strain_name")[0] in lookups["strain_name_to_date"]:
         date = lookups["strain_name_to_date"][sample.parent.strain_name]
     else:
         date = original_date
@@ -102,6 +102,13 @@ def collection_date(sample, original_date, logger):
                 date = groups[2] + "-" + month_str_to_num[groups[1].lower()] + "-" + day
             except KeyError:
                 date = groups[2] + "-XX-XX"
+        elif re.match(r'^\w+-\d\d\d\d', date):
+            groups = re.match(r'^(\w+)-(\d\d\d\d)', date).groups()
+            month_str_to_num = {"jan": "01", "feb": "02", "mar": "03", "apr": "04", "may": "05", "jun": "06", "jul": "07", "aug": "08", "sep": "09", "oct": "10", "nov": "11", "dec": "12", "january": "01", "february": "02", "march": "03", "april": "04", "june": "06", "july": "07", "august": "08", "sepember": "09", "october": "10", "november": "11", "december": "12"}
+            try:
+                date = groups[1] + "-" + month_str_to_num[groups[0].lower()] + "-XX"
+            except KeyError:
+                date = groups[1] + "-XX-XX"
         else:
             logger.warn("Couldn't reformat this date: " + date + ", setting to None")
             date = None
@@ -110,7 +117,7 @@ def collection_date(sample, original_date, logger):
     if date is not original_date:
         logger.debug("Changed date from {} to {}".format(original_date, date))
     if date is None:
-        logger.warn("Date for {} is None!".format(sample.parent.strain_id))
+        logger.warn("Date for {} is None!".format(sample))
     return date
 
 def country(sample, value, logger):
@@ -214,6 +221,19 @@ def passage(obj, passage, logger):
 def authors(obj, authors, logger):
     return authors
 
+def host_species(obj, species, logger):
+    if species is None:
+        return species
+    species = species.lower()
+    aliases = { 'homo sapiens' : 'human',
+                'h.sapiens' : 'human',
+                'h sapiens': 'human',
+                'homosapiens': 'human',
+                'homo_sapiens': 'human'}
+    if species in aliases.keys():
+        species = aliases[species]
+    return species
+
 def pm_attribution_id(obj, attr_id, logger):
     """Return a modified attribution ID.
 
@@ -234,7 +254,7 @@ def pm_attribution_id(obj, attr_id, logger):
             new_id = obj.authors.split(' ')[0]
         else:
             new_id = ''
-        if hasattr(obj.parent.parent, 'collection_date'):
+        if  hasattr(obj.parent.parent, 'collection_date'):
             year = obj.parent.parent.collection_date.split('-')[-1]
             new_id = new_id + year
 
@@ -247,4 +267,5 @@ def pm_attribution_id(obj, attr_id, logger):
                 first_word = split_title[0]
                 new_id = new_id + first_word
         logger.debug("Set {} as attribution_id".format(new_id))
+    print('returning new id: {}'.format(new_id))
     return new_id
