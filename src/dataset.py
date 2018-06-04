@@ -194,12 +194,25 @@ class Dataset(object):
         # TODO: This needs to be fixed with better smart setters and getters
         logger.info("Cleaning metadata units")
         [unit.fix() for unit in self.metadata]
-        pass
 
     def inject_metadata_into_data(self):
+        """Add metadata stored in Metadata units to primary dataset.
+
+        Metadata are injected at a certain 'level' based on their tag to
+        avoid duplicate injection. Only valid fields (i.e. fields defined
+        within the config) are applied.
+
+        Todo:
+            * Inject metadata units that are not tagged 'accession'
+        """
+        # Define all valid fields from the config
+        # Remove '_id' fields, as they are handled separately later
         vf = self.CONFIG['mapping']['strain'] + self.CONFIG['mapping']['sample'] + self.CONFIG['mapping']['sequence'] + self.CONFIG['mapping']['attribution']
         logger.info("injecting metadata")
         vf = [ field for field in vf if not field.endswith('_id')]
+
+        # Iterate over all metadata units, and inject if they match on the
+        # proper field for their tag
         for m  in self.metadata:
             if m.tag == 'accession':
                 for s in self.sequences:
@@ -207,9 +220,15 @@ class Dataset(object):
                         self.inject_single_meta_unit(m, s, vf)
 
     def inject_single_meta_unit(self, meta, unit, valid_fields):
+        """For all valid fields in a given unit, inject them using setprop.
+
+        Fields are considered valid if they are defined in the config.
+
+        Setprop will pseudo-recursively find the proper linked unit to which
+        metadata should be applied."""
+        # pylint: disable=R0201
         for field in valid_fields:
             if hasattr(meta, field):
-                logger.info("injecting field {} from {}".format(field, meta))
                 unit.setprop(field, getattr(meta, field), overwrite=False)
 
     def get_all_accessions(self):
@@ -235,46 +254,88 @@ class Dataset(object):
             attr.parent.attribution_id = attr.attribution_id
 
     def merge_units(self):
-        """Modify unit parent/child links to create a tree of matching IDs."""
+        """Modify unit parent/child links to create a tree of matching IDs.
+
+        The list 'types' is ordered so that more basal units are merged first,
+        ensuring that the treelike structure of units (other than attributions)
+        is maintined.
+        """
         types = ['strains', 'samples', 'sequences', 'attributions', 'titers']
         for t in types:
             self.merge_on_unit_type(t)
 
     def merge_on_unit_type(self, unit_type):
+        """Merge units of a given unit type if they have matching primary keys.
+
+        Options for unit types are: strain, sample, sequence, attribution, and titer.
+
+        """
         logger.info("Merging on {}".format(unit_type))
         out = []
+
+        # Make all pairwise comparisons of units of the same type
         units = getattr(self, unit_type)
         for i in range(len(units)-1):
             for j in range(i+1, len(units)):
+
+                # Ignore units that have already been merged out (i.e. merged with)
+                # another unit, but not yet removed from the list of units.
                 if units[j] not in out:
                     first = units[i]
                     second = units[j]
+
+                    # Catch for duplicated unit bug.
                     assert first is not second, logger.error("Error. Tried to match \
                         unit with itself.")
+
+                    # Find names of the two units, if both exist and they match,
+                    # merge the units.
                     first_id = getattr(first, "{}_id".format(unit_type[:-1]))
                     second_id = getattr(second, "{}_id".format(unit_type[:-1]))
                     if first_id is None or second_id is None:
                         continue
                     if first_id == second_id:
                         logger.debug("Merging units with matching ID: {}".format(first_id))
-                        self.merge(first, second)
+                        self.merge_two_units(first, second)
+
+                        # After the merge, add the second unit to a 'to be removed' list.
                         out.append(second)
+
+        # Remove all the merged units from lists in state
         out = list(set(out))
         for bad in out:
             units.remove(bad)
         setattr(self, unit_type, units)
         logger.info("Merged {} {} units based on matching IDs (not necessarily all the same IDs)".format(len(out), unit_type))
 
-    def merge(self, unit1, unit2):
+    def merge_two_units(self, unit1, unit2):
+        """Merge two units of the same type with the same key.
+
+        Keys are will be <unit_type>_id field in the unit's state.
+
+        There are two major steps for merge_two_units:
+            1. Make sure that the units share a parent. If they do, append all the
+               children of unit2 to the children of unit1.
+            2. Add metadata fields described in unit2 to unit1, if they do not
+               already exist.
+
+        Todo:
+            * At the moment, if two metadata fields are in conflict, the merge
+              will default to the first in the list (which is very arbitrary).
+              There should be a more reasoned way of choosing which metadata field
+              is correct, or of aborting the merge if the units are being merged
+              erroneously.
+        """
         assert unit1.unit_type == unit2.unit_type, logger.error("Attempted to merge 2 units with different types: {} & {}".format(unit1.unit_type, unit2.unit_type))
 
         # Set parents/children
         if unit1.unit_type != "attribution":
             try:
+                # This check covers the rare case that two units have the same ID,
+                # since IDs are programatically derived they are not necessarily unique.
                 assert unit1.parent == unit2.parent, logger.error("Attempted to merge 2 units with different parents: {} and {}".format(unit1.parent, unit2.parent))
             except:
-                return
-
+                raise TypeError
         unit1.children.extend(unit2.children)
 
         # Overwrite metadata
@@ -284,6 +345,7 @@ class Dataset(object):
             elif hasattr(unit1, field) and hasattr(unit2, field):
                 _f1 = getattr(unit1, field)
                 _f2 = getattr(unit2, field)
+                # Report to the user if there is a potential conflict in metadata
                 if _f1 != _f2:
                     u1id = getattr(unit1, "{}_id".format(unit1.unit_type))
                     logger.warn("Units with matching ID {} have mismatching {}:\n\
@@ -306,14 +368,19 @@ class Dataset(object):
         for unit in self.get_all_units():
             unit.ensure_metadata_assignment(all_fields, self)
 
-    def write_valid_units(self, filename):
+    def write_valid_units_to_json(self, filename):
+        """Write all fields in the config to a JSON according to the Sacra spec.
+
+        Todo:
+            * Handling for titers.
+        """
         logger.info("Writing to JSON: {}".format(filename))
         data = {"strains": [], "samples": [], "sequences": [], "attributions": []}
         data["dbinfo"] = {"pathogen": self.CONFIG["pathogen"]}
         for n in ["strains", "samples", "sequences", "attributions"]:
             if hasattr(self, n): # if, e.g., "sequences" (n) is in the self
                 data[n].extend([x.get_data() for x in getattr(self, n) if x.is_valid()])
-        # remove empty values
+        # Remove empty values
         for table in data:
             if table == "dbinfo":
                 continue
@@ -325,4 +392,8 @@ class Dataset(object):
             json.dump(data, outfile, sort_keys=True, indent=2, ensure_ascii=False)
 
     def write_invalid_units(self, filename):
+        """Write units flagged as invalid to a separate JSON.
+
+        This JSON still needs to have a spec before this QOL function can be written.
+        """
         pass

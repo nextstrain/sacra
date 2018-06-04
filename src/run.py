@@ -173,7 +173,7 @@ def main(args, logger):
 
     valid_file = args.outfile
     invalid_file = 'output/invalid.json'
-    dataset.write_valid_units(valid_file)
+    dataset.write_valid_units_to_json(valid_file)
     dataset.write_invalid_units(invalid_file)
 
 if __name__ == "__main__":
