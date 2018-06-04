@@ -1,3 +1,4 @@
+from __future__ import print_function
 import logging
 logger = logging.getLogger(__name__)
 
@@ -48,6 +49,22 @@ class Unit(object):
     def get_data(self):
         """Return a dictionary of all metadata fields defined in config mapping."""
         return {k:v for k, v in self.__dict__.iteritems() if k in self.CONFIG["mapping"][self.unit_type]}
+
+    def ensure_metadata_assignment(self, all_fields, dataset):
+        """Ensure that metadata fields match unit type mapping.
+
+        If metadata fields are incorrectly placed, try moving them to the proper
+        linked unit. Otherwise, add the unit to dataset.invalid_units.
+        """
+        unit_type_specific_fields = self.CONFIG["mapping"][self.unit_type]
+        for field in dir(self):
+            if field in all_fields and field not in unit_type_specific_fields:
+                try:
+                    self.setprop(field, getattr(self, field))
+                    delattr(self, field)
+                except:
+                    logger.warn("Bad unit found, consider removing.")
+                    dataset.invalid_units.append(self)
 
     def setprop(self, name, value, overwrite=True, _try_to_set_on_parents=True):
         """Set a field in the proper location within a dataset structure.

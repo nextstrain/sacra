@@ -64,6 +64,8 @@ class Dataset(object):
         self.titers = []
         self.metadata = []
 
+        self.invalid_units = []
+
     def make_units_from_data_dictionaries(self, filetype, dicts):
         """Set linked units into state.
 
@@ -190,13 +192,14 @@ class Dataset(object):
     def clean_metadata_units(self):
         """Apply cleaning functions to metadata units."""
         # TODO: This needs to be fixed with better smart setters and getters
-        # logger.info("CLEAN METADATA UNITS")
-        # [unit.fix() for unit in self.metadata]
+        logger.info("Cleaning metadata units")
+        [unit.fix() for unit in self.metadata]
         pass
 
     def inject_metadata_into_data(self):
         vf = self.CONFIG['mapping']['strain'] + self.CONFIG['mapping']['sample'] + self.CONFIG['mapping']['sequence'] + self.CONFIG['mapping']['attribution']
         logger.info("injecting metadata")
+        vf = [ field for field in vf if not field.endswith('_id')]
         for m  in self.metadata:
             if m.tag == 'accession':
                 for s in self.sequences:
@@ -206,7 +209,8 @@ class Dataset(object):
     def inject_single_meta_unit(self, meta, unit, valid_fields):
         for field in valid_fields:
             if hasattr(meta, field):
-                unit.setprop(field, getattr(meta, field))
+                logger.info("injecting field {} from {}".format(field, meta))
+                unit.setprop(field, getattr(meta, field), overwrite=False)
 
     def get_all_accessions(self):
         """Return a list of all accession names stored in state."""
@@ -226,8 +230,7 @@ class Dataset(object):
 
         for attr in self.attributions:
             if attr.attribution_id is None:
-                attr.attribution_id = self.CONFIG['pre_merge_fix_functions']['attribution']['attribution_id']\
-                    (attr, attr.attribution_id, logger)
+                attr.attribution_id = self.CONFIG['pre_merge_fix_functions']['attribution']['attribution_id'](attr, attr.attribution_id, logger)
 
             attr.parent.attribution_id = attr.attribution_id
 
@@ -288,8 +291,20 @@ class Dataset(object):
                         2. {}\n\
                         Defaulting (possibly incorrectly) to (1).".format(u1id, field, _f1, _f2))
 
+    def get_all_metadata_fields(self):
+        """Return a list of all possible metadata fields."""
+        return self.CONFIG["mapping"]["strain"] + self.CONFIG["mapping"]["sample"] + self.CONFIG["mapping"]["sequence"] + self.CONFIG["mapping"]["attribution"]
+
     def validate_units(self):
-        pass
+        """Ensure that all units in self are valid according a suite of tests.
+
+        Current tests:
+            * ensure_metadata_assignment: make sure that metadata is assigned
+              to the correct unit types, and if not, move it as necessary.
+        """
+        all_fields = self.get_all_metadata_fields()
+        for unit in self.get_all_units():
+            unit.ensure_metadata_assignment(all_fields, self)
 
     def write_valid_units(self, filename):
         logger.info("Writing to JSON: {}".format(filename))
