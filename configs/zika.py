@@ -119,7 +119,7 @@ def pre_merge_fix_attribution_id(obj, attr_id, logger):
         else:
             new_id = ''
         if hasattr(obj.parent.parent, 'collection_date'):
-            year = obj.parent.parent.collection_date.split('-')[-1]
+            year = obj.parent.parent.collection_date.split('-')[0]
             new_id = new_id + year
 
         if hasattr(obj, 'attribution_title'):
