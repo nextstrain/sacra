@@ -60,14 +60,31 @@ class Unit(object):
         # Metadata units do not have parent/child links, so in their case
         # the setprop is the same as setattr.
         if self.unit_type == "metadata":
-            setattr(self, name, value)
-            return
+            if not hasattr(self):
+                # print("M: Field not present, writing")
+                setattr(self, name, value)
+                return
+            elif getattr(self, name) is None:
+                # print("M: Field equal to none, writing")
+                setattr(self, name, value)
+                return
+            elif overwrite:
+                # print("M: Overwrite set to True, overwriting")
+                setattr(self, name, value)
+                return
 
         # For non-Metadata units, first check if the
         if name in self.CONFIG["mapping"][self.unit_type]:
             # Check to make sure there's not already a value, if there is,
             # only overwrite if overwrite flag is set to True.
-            if (not hasattr(self, name)) or getattr(self, name) is None or overwrite:
+            if not hasattr(self, name):
+                # print("U: field not present, writing")
+                setattr(self, name, value)
+            elif getattr(self, name) is None:
+                # print("U: field equal to none, writing")
+                setattr(self, name, value)
+            elif overwrite:
+                # print("U: Overwrite set to True, overwriting")
                 setattr(self, name, value)
 
         # Pseudo-recursively call setprop on parents and children
