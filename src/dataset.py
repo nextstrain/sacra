@@ -391,6 +391,30 @@ class Dataset(object):
         with open(filename, 'w') as outfile:
             json.dump(data, outfile, sort_keys=True, indent=2, ensure_ascii=False)
 
+    def write_valid_units_to_fasta(self, filename, tsv_metadata=False):
+        """Write all sequences in the dataset to a Fasta file."""
+        all_fields = self.get_all_metadata_fields()
+        augur_headers = ['strain_id', 'pathogen', 'accession', 'collection_date', 'region', 'country', 'division', 'location', 'submitting_lab', 'host_age', 'host_gender']
+        with open(filename, 'w') as f:
+            for accession in self.sequences:
+                line = '>{}\n'.format(accession.getprop('sequence_id')[0])
+                f.write(line)
+                f.write(accession.getprop('sequence')[0]+'\n')
+        if tsv_metadata:
+            tsv_filename = filename.split('.')[0]+'.tsv'
+            with open(tsv_filename, 'w') as f:
+                head = 'sequence_id\t' + '\t'.join(augur_headers) + '\n'
+                f.write(head)
+                for accession in self.sequences:
+                    line = accession.getprop('sequence_id')[0]
+                    for header in augur_headers:
+                        if accession.hasprop(header):
+                            line = line + '\t{}'.format(accession.getprop(header)[0])
+                        else:
+                            line = line + '\tNone'
+                    line = line + '\n'
+                    f.write(line)
+
     def write_invalid_units(self, filename):
         """Write units flagged as invalid to a separate JSON.
 
