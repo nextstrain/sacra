@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """Sacra control script.
 
 This module serves as the command line interface with which users will
