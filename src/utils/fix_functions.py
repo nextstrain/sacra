@@ -64,7 +64,7 @@ def collection_date(sample, original_date, logger):
     if lookups["strain_name_to_date"] is None and sample.CONFIG["fix_lookups"]["strain_name_to_date"] is not None:
         lookups["strain_name_to_date"] = make_dict_from_file(sample.CONFIG["fix_lookups"]["strain_name_to_date"])
     if lookups["strain_name_to_date"] is not None and sample.getprop("strain_name")[0] in lookups["strain_name_to_date"]:
-        date = lookups["strain_name_to_date"][sample.parent.strain_name]
+        date = lookups["strain_name_to_date"][sample.getprop("strain_name")[0]]
     else:
         date = original_date
 
@@ -138,8 +138,8 @@ def general_location_fix(sample, category, original_value, logger):
     # the first time this function runs the databases needs to be loaded into memory
     if lookups["geo_synonyms"] is None and sample.CONFIG["fix_lookups"]["geo_synonyms"] is not None:
         lookups["geo_synonyms"] = parse_geo_synonyms(sample.CONFIG["fix_lookups"]["geo_synonyms"])
-    if lookups["strain_name_to_location"] is not None and sample.parent.strain_id in lookups["strain_name_to_location"]:
-        value = lookups["strain_name_to_location"][sample.parent.strain_id]
+    if lookups["strain_name_to_location"] is not None and sample.getprop("strain_id")[0] in lookups["strain_name_to_location"]:
+        value = lookups["strain_name_to_location"][sample.getprop("strain_id")[0]]
 
     value = original_value
     if value is None:
@@ -254,8 +254,8 @@ def pm_attribution_id(obj, attr_id, logger):
             new_id = obj.authors.split(' ')[0]
         else:
             new_id = ''
-        if  hasattr(obj.parent.parent, 'collection_date'):
-            year = obj.parent.parent.collection_date.split('-')[-1]
+        if obj.getprop('collection_date')[0]:
+            year = obj.getprop('collection_date')[0].split('-')[-1]
             new_id = new_id + year
 
         if hasattr(obj, 'attribution_title'):
