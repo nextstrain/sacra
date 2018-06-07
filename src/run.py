@@ -70,6 +70,11 @@ parser.add_argument("--pathogen",
 parser.add_argument("-o", "--outfile",
                     default="output/test_output.json",
                     help="name of output file (requires full path)")
+parser.add_argument("--output_format",
+                    default="json",
+                    help="expected format of output file(s). json (default), fasta, \
+                    or fasta_plus_tsv. fasta_plus_tsv will replace .fasta suffix \
+                    from specified output filename with .tsv")
 
 group = parser.add_argument_group('entrez')
 group.add_argument("--use_entrez_to_improve_data", "--entrez",
@@ -174,7 +179,12 @@ def main(args, logger):
 
     valid_file = args.outfile
     invalid_file = 'output/invalid.json'
-    dataset.write_valid_units_to_json(valid_file)
+    if args.output_format == 'json':
+        dataset.write_valid_units_to_json(valid_file)
+    elif args.output_format == 'fasta':
+        dataset.write_valid_units_to_fasta(valid_file)
+    elif args.output_format == 'fasta_plus_tsv':
+        dataset.write_valid_units_to_fasta(valid_file, tsv_metadata=True)
     dataset.write_invalid_units(invalid_file)
 
 if __name__ == "__main__":
