@@ -60,6 +60,9 @@ def collection_date(sample, original_date, logger):
     E.G. 2002_04_25 to 2002-04-25
     '''
 
+    if date == 'XXXX-XX-XX':
+        return date
+
     # the first time this function runs the database needs to be loaded into memory
     if lookups["strain_name_to_date"] is None and sample.CONFIG["fix_lookups"]["strain_name_to_date"] is not None:
         lookups["strain_name_to_date"] = make_dict_from_file(sample.CONFIG["fix_lookups"]["strain_name_to_date"])
@@ -117,7 +120,8 @@ def collection_date(sample, original_date, logger):
     if date is not original_date:
         logger.debug("Changed date from {} to {}".format(original_date, date))
     if date is None:
-        logger.warn("Date for {} is None!".format(sample))
+        logger.debug("Date for {} is None!".format(sample))
+        date = 'XXXX-XX-XX'
     return date
 
 def country(sample, value, logger):
