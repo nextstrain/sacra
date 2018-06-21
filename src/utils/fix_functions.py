@@ -42,8 +42,10 @@ def strain_name(strain, original_name, logger):
         name = lookups["strain_name_to_strain_name"][name]
 
     name = (
-        name.replace(' ', '').replace('\'', '').replace('(', '').replace(')', '').replace('//', '/').replace('.', '').replace(',', '')
-            .replace('H3N2', '').replace('Human', '').replace('human', '').replace('duck', '').replace('environment', '')
+        name.replace(' ', '').replace('\'', '').replace('(', '').replace(')', '')
+        .replace('//', '/').replace('.', '').replace(',', '')
+        .replace('H3N2', '').replace('Human', '').replace('human', '')
+        .replace('duck', '').replace('environment', '')
         )
     try:
         name = 'V' + str(int(name))
@@ -60,8 +62,8 @@ def collection_date(sample, original_date, logger):
     E.G. 2002_04_25 to 2002-04-25
     '''
 
-    if date == 'XXXX-XX-XX':
-        return date
+    if original_date == 'XXXX-XX-XX':
+        return original_date
 
     # the first time this function runs the database needs to be loaded into memory
     if lookups["strain_name_to_date"] is None and sample.CONFIG["fix_lookups"]["strain_name_to_date"] is not None:
@@ -206,7 +208,7 @@ def region(strain, original_region, logger):
         elif camelcase_to_snakecase(strain.country) in lookups["country_to_region"]:
             region = lookups["country_to_region"][camelcase_to_snakecase(strain.country)]
         else:
-            logger.warn("Country -> Region mapping missing for {}".format(strain.country))
+            logger.debug("Country -> Region mapping missing for {}".format(strain.country))
 
     if original_region and original_region != region:
         logger.warn("Region incompatability!?! Provided: {} Setting to: {}".format(original_region, region))
