@@ -173,7 +173,7 @@ def main(args, logger):
 
         dataset.update_units_pre_merge()
 
-    dataset.merge_units()
+    # dataset.merge_units()
 
     dataset.validate_units()
 

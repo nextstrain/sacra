@@ -104,7 +104,7 @@ class Dataset(object):
             sequence_obj.children.append(attribution_obj)
 
             # Validate that parent/child links are of the correct type
-            self.validate_unit_links()
+            # self.validate_unit_links()
 
     def validate_unit_links(self):
         """Ensure that all unit links are of the proper number and type.
